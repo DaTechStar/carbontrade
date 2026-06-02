@@ -85,13 +85,13 @@
 .dark {
     --background: oklch(0.145 0 0);
     --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
+    --card: oklch(0.18 0 0);
     --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
+    --popover: oklch(0.18 0 0);
     --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
+    --primary: oklch(0.875 0.286 165);
+    --primary-foreground: oklch(0.145 0 0);
+    --secondary: oklch(0.623 0.214 259.8);
     --secondary-foreground: oklch(0.985 0 0);
     --muted: oklch(0.269 0 0);
     --muted-foreground: oklch(0.708 0 0);
@@ -100,7 +100,7 @@
     --destructive: oklch(0.704 0.191 22.216);
     --border: oklch(1 0 0 / 10%);
     --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
+    --ring: oklch(0.875 0.286 165);
     --chart-1: oklch(0.87 0 0);
     --chart-2: oklch(0.556 0 0);
     --chart-3: oklch(0.439 0 0);
@@ -108,12 +108,12 @@
     --chart-5: oklch(0.269 0 0);
     --sidebar: oklch(0.205 0 0);
     --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary: oklch(0.875 0.286 165);
     --sidebar-primary-foreground: oklch(0.985 0 0);
     --sidebar-accent: oklch(0.269 0 0);
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+    --sidebar-ring: oklch(0.875 0.286 165);
 }
 
 @layer base {
@@ -128,5 +128,26 @@
     }
   html {
     @apply font-sans;
-    }
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 20px oklch(0.875 0.286 165 / 40%);
+  }
+  .border-glow {
+    box-shadow: 0 0 15px oklch(0.875 0.286 165 / 15%);
+  }
+  .glass-panel {
+    @apply bg-background/60 backdrop-blur-xl border border-border/50 shadow-2xl;
+  }
+  .glass-card {
+    @apply bg-card/40 backdrop-blur-md border border-border/30 shadow-lg hover:border-primary/40 transition-colors duration-300;
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+  }
+  .bg-gradient-radial {
+    background-image: radial-gradient(circle at center, var(--tw-gradient-stops));
+  }
 }

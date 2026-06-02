@@ -1,0 +1,369 @@
+{
+  "common": {
+    "navbar": {
+      "trading": "İşlem",
+      "markets": "Piyasalar",
+      "copyExperts": "Uzmanları Kopyala",
+      "learn": "Öğren",
+      "logIn": "Giriş Yap",
+      "signUp": "Kayıt Ol"
+    }
+  },
+  "landing": {
+    "hero": {
+      "title1": "Herkes İçin",
+      "title2": "Yenilikçi Kopya",
+      "title3": "İşlem Platformu",
+      "activeUsers": "1.007.000+ Aktif Kullanıcı",
+      "googleRating": "Google Puanı 4.5",
+      "description": "Sonsuz olasılıkların platformu. Uzmanlar işlem yaptığında siz de yaparsınız. Kâr ettiklerinde siz de edersiniz. Hesabınızı dakikalar içinde açın!",
+      "getStarted": "Başlayın",
+      "placeholderTitle": "Görsel Yer Tutucu",
+      "placeholderDesc": "GIF / 3D varlığınız buraya eklenecek. Boyutlar ve parlayan çerçeve hazır.",
+      "copyActive": "Kopyalama Aktif"
+    },
+    "smartCopy": {
+      "title1": "Kopya Ticaretinin",
+      "title2": "Yeni Evrimi",
+      "description": "Basit kopyalamanın ötesine geçen bir platform tasarladık. Gelişmiş stratejiler uygulayın, piyasayı tersine çevirin ve kolektif zekâyı kullanın.",
+      "features": {
+        "autoIntel": {
+          "title": "Otomatik Zekâ",
+          "description": "Otomatik pozisyon kopyalama ile en iyi yatırımcıları takip edin. Manuel müdahale olmadan başarılarını milisaniye milisaniye yansıtın."
+        },
+        "inverse": {
+          "title": "Akışa Karşı Git",
+          "description": "Sürekli kaybedenler mi tespit ettiniz? Benzersiz ters işlem özelliğimizi kullanarak otomatik olarak karşı tarafı alın."
+        },
+        "community": {
+          "title": "Topluluk Sinerjisi",
+          "description": "50.000'den fazla aktif yatırımcıdan oluşan canlı bir topluluğa katılın. 12 dilde sohbet edin, stratejiler paylaşın ve birlikte işlem yapın."
+        }
+      }
+    },
+    "marketTabs": {
+      "title1": "En Düşük Maliyetle",
+      "title2": "Küresel Piyasalarda İşlem Yapın!",
+      "description": "1000'den fazla en likit Para Birimi, Endeks, Emtia, Hisse CFD, ETF ve dahası ile 0.0 pip'ten başlayan PRIME ECN spreadlere hızlı ve kolay erişim."
+    },
+    "infrastructure": {
+      "title1": "Kurumsal Düzeyde",
+      "title2": "Altyapı",
+      "description": "Ultra düşük gecikmeli, yüksek frekanslı işlem motorumuzla güvenle işlem yapın. Profesyoneller için inşa edildi, herkese açık.",
+      "executionSpeed": "Ortalama İşlem Hızı",
+      "tightSpreads": "Ultra Dar Spreadler",
+      "uptime": "Sunucu Çalışma Süresi Garantisi",
+      "tradableAssets": "İşlem Yapılabilir Varlıklar"
+    },
+    "leaderboard": {
+      "title1": "Elit",
+      "title2": "Performanscılar",
+      "description": "Seçebileceğiniz 1000'den fazla lider. Şeffaf performans ölçümleri, gerçek zamanlı PnL raporlaması ve doğrulanmış geçmiş kayıtlar.",
+      "viewFull": "Tam Sıralamayı Gör",
+      "copy": "Kopyala",
+      "gain": "Kazanç",
+      "allTimeGain": "Toplam kazanç",
+      "risk": "Risk",
+      "thisWeek": "bu hafta"
+    },
+    "appPreview": {
+      "title1": "Bir Dokunuşla",
+      "title2": "Profesyonelleri Kopyala.",
+      "description": "AppTrader ile her yerden küresel piyasalara erişin. Kayıt olun, bağlanın ve cebinizden elit yatırımcıları kopyalamaya başlayın.",
+      "download": "AppTrader'ı İndir",
+      "portfolioValue": "Portföy Değeri"
+    },
+    "onboarding": {
+      "title1": "3 Basit Adımda",
+      "title2": "İşlem Yapmaya Başlayın",
+      "steps": {
+        "register": {
+          "title": "KAYIT OL",
+          "description": "Gerçek hesap açın ve dakikalar içinde işlem yapmaya başlayın."
+        },
+        "fund": {
+          "title": "FONU YÜKLE",
+          "description": "Geniş güvenli yatırım yöntemi yelpazesiyle hesabınızı fonlayın."
+        },
+        "trade": {
+          "title": "İŞLEM YAP",
+          "description": "Tüm varlık sınıflarında 1000'den fazla araca anında erişin."
+        }
+      }
+    },
+    "security": {
+      "title1": "Mutlak Kontrol.",
+      "title2": "Sıfır Taviz.",
+      "description": "Kuruluşumuzdan bu yana fonlarınızın güvenliğini ön planda tuttuk. Varlıklarınızın kurumsal düzeyde güvenlik ile korunduğunu bilerek güvenle işlem yapın.",
+      "executionAccuracy": "İşlem Doğruluğu",
+      "clientSatisfaction": "Müşteri Memnuniyeti",
+      "regulated": {
+        "title": "Tam Olarak Düzenlenmiş Kuruluş",
+        "desc": "SLIBC ve FSCA tarafından belirlenen finansal düzenlemelere sıkı sıkıya bağlı kalarak faaliyet gösteriyoruz."
+      },
+      "segregated": {
+        "title": "Ayrı Müşteri Fonları",
+        "desc": "Fonlarınız ayrı bir hesapta güvenle tutulmaktadır. İşlem hesapları negatif bakiye korumasına sahiptir."
+      },
+      "award": {
+        "title": "Ödüllü Platform",
+        "desc": "Sarsılmaz güvenilirliği, sağlam doğrulama ve çok katmanlı güvenlik protokolleri ile sektör uzmanları tarafından küresel olarak tanındı."
+      }
+    },
+    "footer": {
+      "tagline": "Hem yeni başlayanlar hem de profesyoneller için en gelişmiş yapay zeka destekli işlem platformu. Kurumsal düzeyde işlem herkes için.",
+      "products": "Ürünler",
+      "tradingPlatform": "İşlem Platformu",
+      "mobileApp": "Mobil Uygulama",
+      "aiAssistant": "AI Asistan",
+      "dataAnalytics": "Veri Analitiği",
+      "company": "Şirket",
+      "aboutUs": "Hakkımızda",
+      "careers": "Kariyer",
+      "blog": "Blog",
+      "press": "Basın",
+      "contact": "İletişim",
+      "subscribe": "Abone Ol",
+      "subscribeDesc": "En son işlem içgörüleri ve platform haberleriyle güncel kalın.",
+      "emailPlaceholder": "E-posta adresiniz",
+      "allRightsReserved": "Tüm hakları saklıdır.",
+      "privacyPolicy": "Gizlilik Politikası",
+      "termsOfService": "Hizmet Koşulları",
+      "amlPolicy": "AML Politikası"
+    }
+  },
+  "trading": {
+    "hero": {
+      "badge": "Kurumsal Düzeyde ECN Köprüsü",
+      "title1": "Kurumsal Düzeyde Yürütme",
+      "title2": "Tüm Bireysel Yatırımcılar İçin",
+      "desc": "Geleneksel perakende brokerlarının yüksek spread oranlarından kaçının. Kopya işlemlerinizi ve manuel emirlerinizi, tam olarak 0.0 pip spread ile Equinix NY4'teki küresel Tier-1 likidite merkezlerine doğrudan yönlendirin.",
+      "cta1": "Gerçek Hesap Aç",
+      "cta2": "ECN Spreadlerini Keşfet"
+    },
+    "latency": {
+      "title": "NY4 Equinix Sunucu İşlem Yürütme Gecikmesi",
+      "carbonTitle": "CarbonTrade ECN Yürütmesi",
+      "carbonDesc": "0.05 ms (Ultra Hızlı)",
+      "carbonSub": "Equinix NY4 likidite havuzlarına bağlanan fiber optik köprü.",
+      "legacyTitle": "Geleneksel Perakende Broker Platformları",
+      "legacyDesc": "120.00 ms (Tipik Gecikme)",
+      "legacySub": "Sunucu gecikmelerine, yeniden fiyat tekliflerine (requote) ve piyasa yapıcı arbitrajına yatkın.",
+      "noteTitle": "Hız Neden Önemlidir:",
+      "noteDesc": "Seçkin yatırımcıların kopyalanması, birebir aynı yürütme oranlarını sağlamak için milisaniyenin altında işlem hızı gerektirir. Gecikmeyi 0.05 ms'ye düşürerek emirleriniz, kopyalanan uzmanla tamamen aynı fiyattan gerçekleşir ve kayma (slippage) tamamen önlenir."
+    },
+    "requotes": {
+      "badge": "Masa Arkası İşlem Yok (No Dealing Desk)",
+      "title1": "Şunun için tasarlandı:",
+      "title2": "Sıfır Yeniden Fiyat Teklifi",
+      "step1": {
+        "title": "Doğrudan Emir Yönlendirme",
+        "desc": "İşlemleriniz aracı masaları tamamen devre dışı bırakır. Kopyalarınız doğrudan ana bankalara yönlendirilir ve müdahale olmaksızın standart piyasa fiyatı sağlanır."
+      },
+      "step2": {
+        "title": "Akıllı Emir Yönlendirme (SOR)",
+        "desc": "CarbonTrade, her işlem için mümkün olan en düşük giriş fiyatını güvence altına almak amacıyla birden fazla küresel likidite havuzunu dinamik olarak tarar."
+      },
+      "step3": {
+        "title": "Yüksek Kaliteli Altyapı Barındırma",
+        "desc": "ECN köprümüz, Equinix NY4 veri merkezinde fiziksel olarak barındırılmakta olup, dünyanın en büyük borsa ağlarıyla fiber optik bağlantı sağlar."
+      }
+    },
+    "spreads": {
+      "title1": "Gerçek Spreadler vs",
+      "title2": "ECN Avantajı",
+      "desc": "Tipik perakende brokerlarının ortalama spread oranlarını, CarbonTrade'in kurumsal düzeydeki sıfır pip spreadleriyle yan yana karşılaştırın.",
+      "badge": "ECN Varlık Komisyon Matrisi",
+      "ecnTab": "CarbonTrade ECN",
+      "legacyTab": "Geleneksel Perakende",
+      "avgSpread": "Ortalama Spread",
+      "feePerLot": "İşlem Ücreti / Lot",
+      "disclaimer": "* ECN spreadleri küresel likidite derinliğine bağlı olarak dalgalanır. Doğrudan piyasa erişimi (DMA) yapıları, masa müdahalesi olmadan anında yürütülür.",
+      "eurusd": {
+        "asset": "EUR/USD (Forex)",
+        "standard": "Ortalama 1.6 Pip",
+        "ecn": "0.0 - 0.2 Pip",
+        "cost": "$16.00 / lot",
+        "ecnCost": "$2.00 / lot",
+        "note": "Standart spreadler %150 oranında artırılmıştır"
+      },
+      "btc": {
+        "asset": "Bitcoin / USD (Kripto)",
+        "standard": "$45.00 Spread",
+        "ecn": "$0.10 - $1.00 Spread",
+        "cost": "$45.00 / birim",
+        "ecnCost": "$0.80 / birim",
+        "note": "ECN akışları aracı masayı devre dışı bırakır"
+      },
+      "gold": {
+        "asset": "Spot Altın / USD (Emtia)",
+        "standard": "Ortalama 2.5 Pip",
+        "ecn": "0.0 - 0.5 Pip",
+        "cost": "$25.00 / lot",
+        "ecnCost": "$4.00 / lot",
+        "note": "Yüksek piyasa oynaklığı sırasında spread artışı uygulanmaz"
+      },
+      "us100": {
+        "asset": "US 100 Endeksi (NASDAQ)",
+        "standard": "2.0 Puan Spread",
+        "ecn": "0.2 - 0.5 Puan",
+        "cost": "$20.00 / lot",
+        "ecnCost": "$3.50 / lot",
+        "note": "Doğrudan kurumsal akışlar"
+      }
+    },
+    "chart": {
+      "title": "Gerçek Zamanlı Likidite Akışı Önizlemesi",
+      "desc": "Doğrudan rüzgar alan ECN piyasa fiyatlarını görmek için varlıklar arasında geçiş yapın. Equinix NY4 fiyatlandırma merkezlerimiz tarafından desteklenmektedir."
+    }
+  },
+  "markets": {
+    "hero": {
+      "badge": "1000+'den Fazla Likit Varlık",
+      "title1": "Küresel Pazarlarda İşlem Yapın",
+      "title2": "Kesinlikle Sıfır Fiyat Artışıyla",
+      "desc": "Katkısız kurumsal fiyatlandırmaya erişin. Forex, Kripto, Endeksler, Emtialar ve Hisseler üzerinde sorunsuz bir şekilde işlem yapın, korunma (hedge) oluşturun veya uzmanları kopyalayın.",
+      "cta": "Keşfetmeye Başla"
+    },
+    "assets": {
+      "title": "Desteklenen Varlık Portföyleri",
+      "desc": "Beş küresel pazarı kapsayan derin likidite havuzları. Milisaniyenin altında ECN hızıyla işlenir."
+    },
+    "quoteFeeds": {
+      "title": "Gerçek Zamanlı Fiyat Akışları",
+      "desc": "Likidite toplayıcılarımızla etkileşime geçin. Gerçek zamanlı fiyat akışlarını görüntülemek için alt kategorileri seçin."
+    },
+    "safety": {
+      "title": "Güvenli ve Tamamen Şeffaf Ortam",
+      "desc": "Güvenlik standartlarına tam uyum içinde işlem yapın ve kopyalayın. Tüm bireysel mevduatlar, negatif bakiye koruması ile desteklenen ayrı banka kasalarında güvenle saklanır."
+    },
+    "cards": {
+      "forex": {
+        "title": "Para Birimleri (Forex)",
+        "desc": "Majör, minör ve egzotik çiftlerde işlem yapın. Doğrudan ham fiyat verilerinden sağlanır.",
+        "leverage": "1:500 Kaldıraç",
+        "spreads": "0.0 Pip'ten İtibaren",
+        "instruments": "EUR/USD, GBP/USD, USD/JPY"
+      },
+      "crypto": {
+        "title": "Kripto Paralar",
+        "desc": "Profesyonel kripto tüccarlarını kopyalayın veya büyük dijital varlıkları satın alın. Günün her saati likidite akışı.",
+        "leverage": "1:50 Kaldıraç",
+        "spreads": "Ham ECN Spreadleri",
+        "instruments": "Bitcoin, Ethereum, Solana, Ripple"
+      },
+      "indices": {
+        "title": "Küresel Endeksler",
+        "desc": "Önemli ekonomik sektörlere geniş yatırım yapın. Şeffaf komisyonlarla doğrudan erişim.",
+        "leverage": "1:100 Kaldıraç",
+        "spreads": "0.2 Puan'dan İtibaren",
+        "instruments": "S&P 500, Nasdaq 100, Dow Jones"
+      },
+      "stocks": {
+        "title": "Hisse Senedi CFD'leri",
+        "desc": "Teknoloji liderleri, mavi çipler & uluslararası büyüme varlıklarında doğrudan işlem yapın.",
+        "leverage": "1:20 Kaldıraç",
+        "spreads": "Ultra düşük spread fiyat artışı",
+        "instruments": "Tesla, Apple, Amazon, Meta, Netflix"
+      },
+      "commodities": {
+        "title": "Emtialar",
+        "desc": "Kararlı koşullar altında altın, gümüş, ham petrol ve Brent Spot kullanarak sermayenizi koruyun.",
+        "leverage": "1:100 Kaldıraç",
+        "spreads": "Sıfır spread komisyonu",
+        "instruments": "Gold, Silver, Brent Oil, Crude Oil"
+      }
+    },
+    "labels": {
+      "pricing": "ECN Fiyatlandırması:",
+      "highlighted": "Öne Çıkanlar:",
+      "crypto": "Kripto",
+      "forex": "Forex",
+      "commodities": "Emtia",
+      "segregated": "Ayrılmış Müşteri Fonları",
+      "protection": "Negatif Bakiye Koruması",
+      "vaults": "Denetlenmiş Tier-1 Banka Kasaları"
+    }
+  },
+  "copyExperts": {
+    "hero": {
+      "badge": "Doğrulanmış Performans Takipçileri",
+      "title1": "Uzman Yatırımcıları Kopyalayın.",
+      "title2": "Birebir Aynı Getiriyi Elde Edin.",
+      "desc": "Neden tek başınıza işlem yapasınız? Doğrulanmış başarı geçmişine sahip uzmanları otomatik olarak takip edin. Fon dağıtım parametrelerini, güvenli kayma korumalarını veya ters kopya ayarlarını tek bir dokunuşla uygulayın.",
+      "cta": "Master Dizine Katıl"
+    },
+    "how": {
+      "title": "Kopya İşlemler Nasıl Çalışır?",
+      "desc": "Modern sermaye için tasarlanmış, gecikmesiz ve sorunsuz bir işlem yürütme hattı."
+    },
+    "timeline": {
+      "step1": {
+        "title": "Seçkin Uzmanları Seçin",
+        "desc": "Doğrulanmış yatırımcı dizinimizi inceleyin. Kazanma oranları, ortalama düşüşler (drawdown) ve geçmiş kar eğrileri gibi metrikleri takip edin."
+      },
+      "step2": {
+        "title": "Sermaye Ayırın ve Güvenliği Belirleyin",
+        "desc": "Yatırım limitlerinizi tanımlayın. Kayma (slippage) kilitlerini yapılandırın ve geleneksel veya ters kopyalama pozisyonlarını seçin."
+      },
+      "step3": {
+        "title": "Otomatik Birebir Kopyalama",
+        "desc": "ECN NY4 motorumuz işlemleri 0.05 ms içinde kopyalayarak anında birebir aynı fiyatları elde etmenizi sağlar."
+      }
+    },
+    "directory": {
+      "title": "Seçkin Yatırımcılar Dizini",
+      "desc": "Master liderlerimizin gerçek zamanlı işlem istatistiklerini, aktif portföylerini ve ROI kayıtlarını şeffaf bir şekilde doğrulayın."
+    },
+    "tech": {
+      "badge": "Gelişmiş Kopyalama Teknolojisi",
+      "title1": "Sadece Kopyalamakla Kalmayın.",
+      "title2": "Stratejiyi Tamamen Yönetin.",
+      "desc": "Çoğu platform yalnızca kazananları kopyalamanıza izin verir. CarbonTrade, yeni nesil ters kopyalama (fading) parametrelerini sunarak, sürekli kaybeden hesapların tam tersi işlemlerini açarak kar elde etmenizi sağlar.",
+      "inverseTitle": "Ters Kopya İşlemler (Fading)",
+      "inverseDesc": "Sürekli kaybeden yatırımcılar mı tespit ettiniz? Karşıt pozisyonları otomatik olarak açmak için fading parametremizi kullanın. Onlar satın aldığında siz otomatik olarak satarsınız.",
+      "slippageTitle": "Güvenli Kayma (Slippage) Koruması",
+      "slippageDesc": "Fiyat teklifi özel güvenlik sınırınızdan fazla saptığında kopyalanan emir yürütmesini otomatik olarak reddedin. Kontrol her zaman sizde kalır."
+    },
+    "modal": {
+      "title": "Kopya Parametreleri Önizleme",
+      "desc": "Kopya fonlarını tahsis ettiğinizde, kayma pipleri, yatırım tutarları ve kopyalama yönleri üzerinde son derece hassas mikro kontrol elde edersiniz."
+    },
+    "labels": {
+      "risk": {
+        "low": "Düşük",
+        "medium": "Orta",
+        "high": "Yüksek"
+      },
+      "riskLabel": "Risk",
+      "weeklyPerformance": "Haftalık Performans",
+      "winRate": "Kazanma Oranı",
+      "copiers": "Kopyalayanlar",
+      "viewParams": "Ayna Parametrelerini Görüntüle",
+      "exampleInverse": "Ters Pozisyon Kopyalama Örneği",
+      "losingAction": "Kaybeden Trader Eylemi",
+      "buyBTC": "AL BTCUSD @ $67,500",
+      "result": "Sonuç",
+      "lossValue": "Zarar -$450.00",
+      "inverseReplica": "Sizin Ters Kopyanız",
+      "sellBTC": "SAT BTCUSD @ $67,500",
+      "profitValue": "Kar +$450.00",
+      "replicationNote": "* Tüm kopyalama akışları, Equinix NY4 fiber ECN hatlarımız üzerinden milisaniye milisaniye hesaplanır.",
+      "mirror": "Ayna",
+      "traditionalMirror": "Geleneksel Ayna:",
+      "yes": "Evet",
+      "inverseSupport": "Ters Ayna Desteği:",
+      "enabled": "Etkin",
+      "avgWinRate": "Ortalama Kazanma Oranı:",
+      "createAllocation": "Kopya Dağılımı Oluştur"
+    }
+  },
+  "learn": {
+    "hero": {
+      "badge": "CarbonAcademy Akademi",
+      "title1": "Öğrenin ve",
+      "title2": "İşlemlerde Uzmanlaşın",
+      "desc": "Finansal geleceğinizi güçlendirin. ECN sıfır spread yapısal avantajlarını, ters kopya işlemleri ve güvenli kayma kontrollerini keşfedin."
+    }
+  }
+}

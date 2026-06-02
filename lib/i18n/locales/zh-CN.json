@@ -1,0 +1,369 @@
+{
+  "common": {
+    "navbar": {
+      "trading": "交易",
+      "markets": "市场",
+      "copyExperts": "跟随专家",
+      "learn": "学习",
+      "logIn": "登录",
+      "signUp": "注册"
+    }
+  },
+  "landing": {
+    "hero": {
+      "title1": "创新",
+      "title2": "跟单交易",
+      "title3": "全民平台",
+      "activeUsers": "1,007,000+ 活跃用户",
+      "googleRating": "谷歌评分 4.5",
+      "description": "无限可能的交易平台。专家交易时，您也交易。他们盈利，您也盈利。几分钟内开户！",
+      "getStarted": "立即开始",
+      "placeholderTitle": "视觉占位符",
+      "placeholderDesc": "您的 GIF / 3D 资产将在此处显示，尺寸和发光框架已就绪。",
+      "copyActive": "跟单已激活"
+    },
+    "smartCopy": {
+      "title1": "跟单交易的",
+      "title2": "下一次进化",
+      "description": "我们打造了一个超越简单复制的平台。部署高级策略，反转市场，利用集体智慧。",
+      "features": {
+        "autoIntel": {
+          "title": "自动化智能",
+          "description": "通过自动跟单跟随顶级交易者。逐毫秒复制他们的成功，无需手动干预。"
+        },
+        "inverse": {
+          "title": "逆势而为",
+          "description": "识别持续亏损者？使用我们独特的反向交易功能，自动进行相反方向的交易。"
+        },
+        "community": {
+          "title": "社区协同",
+          "description": "加入超过 50,000 名活跃交易者的繁荣社区。用 12 种语言聊天、分享策略、共同执行交易。"
+        }
+      }
+    },
+    "marketTabs": {
+      "title1": "以最低成本",
+      "title2": "交易全球市场！",
+      "description": "快速便捷地访问 1000+ 种最具流动性的货币、指数、大宗商品、股票差价合约、ETF 等，点差低至 0.0 点。"
+    },
+    "infrastructure": {
+      "title1": "机构级",
+      "title2": "基础设施",
+      "description": "在我们的超低延迟高频执行引擎上自信交易。专为专业人士打造，人人可用。",
+      "executionSpeed": "平均执行速度",
+      "tightSpreads": "超窄点差",
+      "uptime": "服务器正常运行时间保证",
+      "tradableAssets": "可交易资产"
+    },
+    "leaderboard": {
+      "title1": "精英",
+      "title2": "排行榜",
+      "description": "超过 1000 位领袖可供选择。透明的业绩指标、实时盈亏报告和已验证的历史记录。",
+      "viewFull": "查看完整排行榜",
+      "copy": "跟单",
+      "gain": "收益",
+      "allTimeGain": "历史总收益",
+      "risk": "风险",
+      "thisWeek": "本周"
+    },
+    "appPreview": {
+      "title1": "一键",
+      "title2": "跟随高手。",
+      "description": "随时随地通过 AppTrader 访问全球市场。注册、连接，从口袋里开始跟随精英交易者。",
+      "download": "下载 AppTrader",
+      "portfolioValue": "投资组合价值"
+    },
+    "onboarding": {
+      "title1": "3 个简单步骤",
+      "title2": "开始交易",
+      "steps": {
+        "register": {
+          "title": "注册",
+          "description": "开立真实账户，几分钟内即可开始交易。"
+        },
+        "fund": {
+          "title": "入金",
+          "description": "通过多种安全入金方式为您的账户充值。"
+        },
+        "trade": {
+          "title": "交易",
+          "description": "即时访问所有资产类别的 1000+ 种交易工具。"
+        }
+      }
+    },
+    "security": {
+      "title1": "绝对掌控。",
+      "title2": "零妥协。",
+      "description": "自成立以来，我们始终将您的资金安全放在首位。您的资产受到机构级安全保护，请放心交易。",
+      "executionAccuracy": "执行精度",
+      "clientSatisfaction": "客户满意度",
+      "regulated": {
+        "title": "完全受监管实体",
+        "desc": "我们严格遵守 SLIBC 和 FSCA 规定的金融法规运营。"
+      },
+      "segregated": {
+        "title": "客户资金隔离",
+        "desc": "您的资金安全存放在隔离账户中。交易账户具有负余额保护功能。"
+      },
+      "award": {
+        "title": "屡获殊荣的平台",
+        "desc": "因无与伦比的可靠性、强大的验证机制和多层安全协议，被全球行业专家认可。"
+      }
+    },
+    "footer": {
+      "tagline": "最先进的人工智能驱动交易平台，适合初学者和专业人士。机构级执行，人人可及。",
+      "products": "产品",
+      "tradingPlatform": "交易平台",
+      "mobileApp": "移动应用",
+      "aiAssistant": "AI 助手",
+      "dataAnalytics": "数据分析",
+      "company": "公司",
+      "aboutUs": "关于我们",
+      "careers": "招聘",
+      "blog": "博客",
+      "press": "新闻",
+      "contact": "联系我们",
+      "subscribe": "订阅",
+      "subscribeDesc": "获取最新的交易资讯和平台新闻。",
+      "emailPlaceholder": "您的邮箱",
+      "allRightsReserved": "版权所有。",
+      "privacyPolicy": "隐私政策",
+      "termsOfService": "服务条款",
+      "amlPolicy": "反洗钱政策"
+    }
+  },
+  "trading": {
+    "hero": {
+      "badge": "机构级 ECN 桥接",
+      "title1": "机构级执行",
+      "title2": "服务每一位交易者",
+      "desc": "免去零售经纪商的溢价。将您的跟单交易和手动挂单直接路由到位于 Equinix NY4 的全球 Tier-1 流动性中心，点差低至 0.0 点。",
+      "cta1": "开立真实账户",
+      "cta2": "探索 ECN 定价"
+    },
+    "latency": {
+      "title": "NY4 Equinix 服务器执行延迟",
+      "carbonTitle": "CarbonTrade ECN 执行",
+      "carbonDesc": "0.05 毫秒 (极速)",
+      "carbonSub": "连接到 Equinix NY4 流动性池的光纤网桥。",
+      "legacyTitle": "传统零售经纪商平台",
+      "legacyDesc": "120.00 毫秒 (典型延迟)",
+      "legacySub": "易受服务器延迟、重新报价和做市商套利的影响。",
+      "noteTitle": "为什么速度至关重要：",
+      "noteDesc": "精英交易者的跟单需要亚毫秒级的执行，以匹配相同的成交率。通过将延迟降低到 0.05 毫秒，您的订单将以与被跟单专家相同的报价成交——完全避免滑点。"
+    },
+    "requotes": {
+      "badge": "无交易员平台",
+      "title1": "专为",
+      "title2": "零重复报价而设计",
+      "step1": {
+        "title": "直接订单路由",
+        "desc": "您的交易完全避免了交易员干预。您的跟单直接映射到一级银行，无需干涉即可提供标准市场价格。"
+      },
+      "step2": {
+        "title": "智能订单路由 (SOR)",
+        "desc": "CarbonTrade 动态扫描多个全球流动性池，以确保为每笔交易获得最低的成交价格。"
+      },
+      "step3": {
+        "title": "纯净基础设施托管",
+        "desc": "我们的 ECN 网桥物理托管在 Equinix NY4 内，实现与全球最大交易所网络的千兆光纤连接。"
+      }
+    },
+    "spreads": {
+      "title1": "真实点差 vs",
+      "title2": "ECN 优势",
+      "desc": "对比典型零售经纪商的平均点差与 CarbonTrade 的机构级零点差优势。",
+      "badge": "ECN 资产佣金矩阵",
+      "ecnTab": "CarbonTrade ECN",
+      "legacyTab": "传统零售",
+      "avgSpread": "平均点差",
+      "feePerLot": "执行费 / 手",
+      "disclaimer": "* ECN 点差会根据全球流动性深度而波动。直接市场准入结构可立即执行，无需交易员干预。",
+      "eurusd": {
+        "asset": "EUR/USD (外汇)",
+        "standard": "平均 1.6 点",
+        "ecn": "0.0 - 0.2 点",
+        "cost": "$16.00 / 手",
+        "ecnCost": "$2.00 / 手",
+        "note": "标准点差加价幅度高达 150%"
+      },
+      "btc": {
+        "asset": "Bitcoin / USD (加密货币)",
+        "standard": "$45.00 点差",
+        "ecn": "$0.10 - $1.00 点差",
+        "cost": "$45.00 / 单位",
+        "ecnCost": "$0.80 / 单位",
+        "note": "ECN 报价绕过中间商平台"
+      },
+      "gold": {
+        "asset": "黄金现货 / USD (大宗商品)",
+        "standard": "平均 2.5 点",
+        "ecn": "0.0 - 0.5 点",
+        "cost": "$25.00 / 手",
+        "ecnCost": "$4.00 / 手",
+        "note": "在高市场波动期间绝无溢价"
+      },
+      "us100": {
+        "asset": "US 100 指数 (纳斯达克)",
+        "standard": "2.0 点点差",
+        "ecn": "0.2 - 0.5 点点差",
+        "cost": "$20.00 / 手",
+        "ecnCost": "$3.50 / 手",
+        "note": "机构级直通式报价"
+      }
+    },
+    "chart": {
+      "title": "实时流动性源预览",
+      "desc": "切换资产以直接查看实时的 ECN 市场报价。由我们的 Equinix NY4 定价枢纽强力驱动。"
+    }
+  },
+  "markets": {
+    "hero": {
+      "badge": "1000+ 流动性资产工具",
+      "title1": "交易全球市场",
+      "title2": "绝对零溢价",
+      "desc": "解锁获取原始机构定价的权限。在外汇、加密货币、指数、大宗商品和股票等资产类别中无缝交易、对冲或跟单持仓。",
+      "cta": "开始探索"
+    },
+    "assets": {
+      "title": "支持的资产组合",
+      "desc": "覆盖五个全球市场的深度流动性池。通过亚毫秒级的 ECN 速度进行处理。"
+    },
+    "quoteFeeds": {
+      "title": "实时报价源",
+      "desc": "与我们的流动性集合交互。选择子类别以查看实时价格源."
+    },
+    "safety": {
+      "title": "安全且完全负责任的环境",
+      "desc": "在严格遵守安全规范的前提下交易和跟单资产。所有零售存款都隔离存放在由负余额保护所支持的独立银行金库中。"
+    },
+    "cards": {
+      "forex": {
+        "title": "货币对 (外汇)",
+        "desc": "交易主要、次要和交叉货币对。直接源自原始定价数据源。",
+        "leverage": "1:500 杠杆",
+        "spreads": "低至 0.0 点",
+        "instruments": "EUR/USD, GBP/USD, USD/JPY"
+      },
+      "crypto": {
+        "title": "加密货币",
+        "desc": "跟单专业加密交易员或购买主流数字资产。全天候流动性流入。",
+        "leverage": "1:50 杠杆",
+        "spreads": "原始 ECN 点差",
+        "instruments": "Bitcoin, Ethereum, Solana, Ripple"
+      },
+      "indices": {
+        "title": "全球指数",
+        "desc": "广泛参与核心经济部门。直接准入，佣金透明。",
+        "leverage": "1:100 杠杆",
+        "spreads": "低至 0.2 点",
+        "instruments": "S&P 500, Nasdaq 100, Dow Jones"
+      },
+      "stocks": {
+        "title": "股票 CFD",
+        "desc": "直接交易科技巨头、蓝筹股和国际成长型资产。",
+        "leverage": "1:20 杠杆",
+        "spreads": "超低点差溢价",
+        "instruments": "Tesla, Apple, Amazon, Meta, Netflix"
+      },
+      "commodities": {
+        "title": "大宗商品",
+        "desc": "在稳定的环境下利用黄金、白银、原油和布伦特现货对冲资本风险。",
+        "leverage": "1:100 杠杆",
+        "spreads": "零点差佣金",
+        "instruments": "Gold, Silver, Brent Oil, Crude Oil"
+      }
+    },
+    "labels": {
+      "pricing": "ECN 定价:",
+      "highlighted": "高亮显示:",
+      "crypto": "加密货币",
+      "forex": "外汇",
+      "commodities": "大宗商品",
+      "segregated": "隔离的客户资金",
+      "protection": "负余额保护",
+      "vaults": "一级审计银行金库"
+    }
+  },
+  "copyExperts": {
+    "hero": {
+      "badge": "已验证的表现追踪器",
+      "title1": "镜像顶级交易者",
+      "title2": "实现相同的回报",
+      "desc": "为什么要独自交易？自动跟随经过验证的精英交易者。一键部署分配参数、安全滑点控制或反向跟单配置。",
+      "cta": "加入主导师目录"
+    },
+    "how": {
+      "title": "跟单交易如何运作",
+      "desc": "为现代资本量身定制的无缝、零延迟执行管道。"
+    },
+    "timeline": {
+      "step1": {
+        "title": "选择精英专家",
+        "desc": "扫描我们经过验证的交易者索引。追踪胜率、平均最大回撤和历史收益曲线等指标。"
+      },
+      "step2": {
+        "title": "分配资金与安全控制",
+        "desc": "定义投资范围。配置滑点锁定，并选择传统的或是反向镜像复制的持仓。"
+      },
+      "step3": {
+        "title": "自动化镜像",
+        "desc": "我们的 ECN NY4 引擎在 0.05 毫秒内复制交易，确保您能瞬间获得完全一致的价格。"
+      }
+    },
+    "directory": {
+      "title": "精英表现者目录",
+      "desc": "验证我们主导师的实时交易统计数据、活跃投资组合和投资回报率 (ROI) 记录。"
+    },
+    "tech": {
+      "badge": "先进的复制技术",
+      "title1": "不只是复制",
+      "title2": "而是全面工程化策略",
+      "desc": "大多数平台只允许您跟随盈利的交易者。CarbonTrade 引入了新一代的反向对冲（fading）参数，使您能够通过与持续亏损的交易记录做对手交易来变现。",
+      "inverseTitle": "反向跟单交易 (对冲)",
+      "inverseDesc": "识别持续亏损者？使用我们的反向参数来自动执行相反方向的持仓。如果他们买入，您将自动卖出。",
+      "slippageTitle": "安全滑点保护",
+      "slippageDesc": "如果报价偏离超出您自定义的安全阈值，将自动拒绝执行复制价格。控制权始终掌握在您手中。"
+    },
+    "modal": {
+      "title": "跟单参数预览",
+      "desc": "当您部署跟单资金分配时，您将获得对滑点点数、投资金额和复制方向的微观颗粒度控制。"
+    },
+    "labels": {
+      "risk": {
+        "low": "低风险",
+        "medium": "中风险",
+        "high": "高风险"
+      },
+      "riskLabel": "风险",
+      "weeklyPerformance": "每周表现",
+      "winRate": "胜率",
+      "copiers": "跟单人数",
+      "viewParams": "查看镜像参数",
+      "exampleInverse": "反向仓位跟单示例",
+      "losingAction": "亏损交易员操作",
+      "buyBTC": "买入 BTCUSD @ $67,500",
+      "result": "结果",
+      "lossValue": "亏损 -$450.00",
+      "inverseReplica": "您的反向复制",
+      "sellBTC": "卖出 BTCUSD @ $67,500",
+      "profitValue": "获利 +$450.00",
+      "replicationNote": "* 所有复制流均通过我们的 Equinix NY4 光纤 ECN 管道逐毫秒计算完成。",
+      "mirror": "镜像跟单",
+      "traditionalMirror": "传统镜像:",
+      "yes": "是",
+      "inverseSupport": "反向镜像支持:",
+      "enabled": "已启用",
+      "avgWinRate": "平均胜率:",
+      "createAllocation": "创建跟单配置"
+    }
+  },
+  "learn": {
+    "hero": {
+      "badge": "CarbonAcademy 学院",
+      "title1": "学习与",
+      "title2": "掌握交易",
+      "desc": "赋能您的财务未来。探索极具优势的机构级 ECN 零点差、反向跟单镜像和安全滑点控制。"
+    }
+  }
+}

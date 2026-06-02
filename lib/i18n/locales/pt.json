@@ -1,0 +1,369 @@
+{
+  "common": {
+    "navbar": {
+      "trading": "Negociação",
+      "markets": "Mercados",
+      "copyExperts": "Copiar Especialistas",
+      "learn": "Aprender",
+      "logIn": "Entrar",
+      "signUp": "Cadastrar"
+    }
+  },
+  "landing": {
+    "hero": {
+      "title1": "Plataforma Inovadora de",
+      "title2": "Copy Trading",
+      "title3": "para Todos",
+      "activeUsers": "1.007.000+ Usuários Ativos",
+      "googleRating": "Avaliação Google 4.5",
+      "description": "Uma plataforma com possibilidades infinitas. Quando os especialistas operam, você opera. Se eles lucram, você lucra também. Abra sua conta em minutos!",
+      "getStarted": "Começar",
+      "placeholderTitle": "Espaço Visual",
+      "placeholderDesc": "Seu GIF / ativo 3D será inserido aqui. As dimensões e o quadro luminoso estão prontos.",
+      "copyActive": "Cópia Ativa"
+    },
+    "smartCopy": {
+      "title1": "A Próxima Evolução do",
+      "title2": "Copy Trading",
+      "description": "Projetamos uma plataforma que vai além da cópia simples. Implante estratégias avançadas, inverta o mercado e utilize a inteligência coletiva.",
+      "features": {
+        "autoIntel": {
+          "title": "Inteligência Automatizada",
+          "description": "Siga os melhores traders com cópia automática de posições. Espelhe o sucesso deles milissegundo a milissegundo sem intervenção manual."
+        },
+        "inverse": {
+          "title": "Ir Contra a Corrente",
+          "description": "Identificou perdedores constantes? Use nosso recurso exclusivo de trade inverso para assumir automaticamente o lado oposto."
+        },
+        "community": {
+          "title": "Sinergia Comunitária",
+          "description": "Junte-se a uma comunidade vibrante de mais de 50.000 traders ativos. Converse, compartilhe estratégias e execute negócios em 12 idiomas."
+        }
+      }
+    },
+    "marketTabs": {
+      "title1": "Opere nos Mercados Globais com os",
+      "title2": "Menores Custos!",
+      "description": "Acesse rápido e facilmente mais de 1000 das moedas, índices, commodities, CFDs de ações, ETFs e mais com spreads PRIME ECN a partir de 0,0 pips."
+    },
+    "infrastructure": {
+      "title1": "Infraestrutura de",
+      "title2": "Nível Institucional",
+      "description": "Opere com confiança no nosso motor de execução de alta frequência e baixíssima latência. Construído para profissionais, acessível a todos.",
+      "executionSpeed": "Velocidade Média de Execução",
+      "tightSpreads": "Spreads Ultra-Apertados",
+      "uptime": "Garantia de Disponibilidade do Servidor",
+      "tradableAssets": "Ativos Negociáveis"
+    },
+    "leaderboard": {
+      "title1": "Performers",
+      "title2": "de Elite",
+      "description": "Mais de 1000 líderes para escolher. Métricas de desempenho transparentes, relatórios PnL em tempo real e histórico verificado.",
+      "viewFull": "Ver Ranking Completo",
+      "copy": "Copiar",
+      "gain": "Ganho",
+      "allTimeGain": "Ganho total",
+      "risk": "Risco",
+      "thisWeek": "esta semana"
+    },
+    "appPreview": {
+      "title1": "Copie os Melhores com um",
+      "title2": "Toque.",
+      "description": "Acesse mercados globais em qualquer lugar com nosso AppTrader. Inscreva-se, conecte-se e comece a copiar traders de elite do seu bolso.",
+      "download": "Baixar AppTrader",
+      "portfolioValue": "Valor do Portfólio"
+    },
+    "onboarding": {
+      "title1": "Comece a Operar em",
+      "title2": "3 Passos Simples",
+      "steps": {
+        "register": {
+          "title": "REGISTRAR",
+          "description": "Abra uma conta real e comece a operar em apenas minutos."
+        },
+        "fund": {
+          "title": "DEPOSITAR",
+          "description": "Deposite em sua conta usando uma ampla gama de métodos de pagamento seguros."
+        },
+        "trade": {
+          "title": "OPERAR",
+          "description": "Acesse 1000+ instrumentos em todas as classes de ativos instantaneamente."
+        }
+      }
+    },
+    "security": {
+      "title1": "Controle Absoluto.",
+      "title2": "Zero Concessões.",
+      "description": "Desde a nossa fundação, priorizamos a segurança dos seus fundos. Opere com confiança sabendo que seus ativos estão protegidos por segurança de nível institucional.",
+      "executionAccuracy": "Precisão de Execução",
+      "clientSatisfaction": "Satisfação do Cliente",
+      "regulated": {
+        "title": "Entidade Totalmente Regulada",
+        "desc": "Operamos em estrita conformidade com as regulamentações financeiras do SLIBC e da FSCA."
+      },
+      "segregated": {
+        "title": "Fundos de Clientes Segregados",
+        "desc": "Seus fundos são mantidos em uma conta segregada. As contas de trading possuem proteção contra saldo negativo."
+      },
+      "award": {
+        "title": "Plataforma Premiada",
+        "desc": "Reconhecida globalmente por especialistas do setor pela confiabilidade, verificação robusta e protocolos de segurança multinível."
+      }
+    },
+    "footer": {
+      "tagline": "A plataforma de trading com IA mais avançada para iniciantes e profissionais. Execução de nível institucional ao alcance de todos.",
+      "products": "Produtos",
+      "tradingPlatform": "Plataforma de Trading",
+      "mobileApp": "Aplicativo Móvel",
+      "aiAssistant": "Assistente de IA",
+      "dataAnalytics": "Análise de Dados",
+      "company": "Empresa",
+      "aboutUs": "Sobre Nós",
+      "careers": "Carreiras",
+      "blog": "Blog",
+      "press": "Imprensa",
+      "contact": "Contato",
+      "subscribe": "Inscrever-se",
+      "subscribeDesc": "Fique atualizado com os últimos insights de trading e novidades da plataforma.",
+      "emailPlaceholder": "Seu e-mail",
+      "allRightsReserved": "Todos os direitos reservados.",
+      "privacyPolicy": "Política de Privacidade",
+      "termsOfService": "Termos de Serviço",
+      "amlPolicy": "Política AML"
+    }
+  },
+  "trading": {
+    "hero": {
+      "badge": "Ponte ECN de Nível Institucional",
+      "title1": "Execução Institucional",
+      "title2": "Para Todos os Traders",
+      "desc": "Evite spreads inflacionados de corretoras tradicionais. Encaminhe suas cópias e ordens manuais diretamente para centros de liquidez Tier-1 no Equinix NY4 com spreads de exatamente 0.0 pips.",
+      "cta1": "Abrir Conta Real",
+      "cta2": "Explorar Preços ECN"
+    },
+    "latency": {
+      "title": "Latência de Execução do Servidor NY4 Equinix",
+      "carbonTitle": "Execução ECN da CarbonTrade",
+      "carbonDesc": "0.05 ms (Ultra-Rápido)",
+      "carbonSub": "Ponte de fibra óptica conectando-se aos pools de liquidez do Equinix NY4.",
+      "legacyTitle": "Plataformas de Corretoras de Varejo Tradicionais",
+      "legacyDesc": "120.00 ms (Atraso Típico)",
+      "legacySub": "Propenso a atrasos no servidor, recotações e arbitragem de formadores de mercado.",
+      "noteTitle": "Por que a Velocidade Importa:",
+      "noteDesc": "As cópias de traders de elite exigem execução em menos de um milissegundo para garantir taxas de execução idênticas. Ao minimizar a latência para 0.05 ms, suas ordens são executadas exatamente com a mesma cotação do especialista copiado, evitando completamente o slippage."
+    },
+    "requotes": {
+      "badge": "Sem Mesa de Operações",
+      "title1": "Desenvolvido para",
+      "title2": "Zero Recotações",
+      "step1": {
+        "title": "Roteamento Direto de Ordens",
+        "desc": "Suas operações evitam completamente as mesas de intermediação. Suas cópias são mapeadas diretamente para os principais bancos, fornecendo preços padrão de mercado sem interferência."
+      },
+      "step2": {
+        "title": "Roteamento de Ordens Inteligente (SOR)",
+        "desc": "A CarbonTrade varre dinamicamente múltiplos pools de liquidez globais para garantir o menor preço de entrada possível para cada transação."
+      },
+      "step3": {
+        "title": "Hospedagem em Infraestrutura Limpa",
+        "desc": "Nossa ponte ECN está fisicamente hospedada no Equinix NY4, permitindo conectividade de fibra óptica com as maiores redes de câmbio do mundo."
+      }
+    },
+    "spreads": {
+      "title1": "Spreads Reais vs",
+      "title2": "Vantagem ECN",
+      "desc": "Compare os spreads médios de corretoras de varejo típicas lado a lado com os spreads institucionais de zero pips da CarbonTrade.",
+      "badge": "Matriz de Comissões de Ativos ECN",
+      "ecnTab": "CarbonTrade ECN",
+      "legacyTab": "Varejo Tradicional",
+      "avgSpread": "Spread médio",
+      "feePerLot": "Taxa de Execução / Lote",
+      "disclaimer": "* Os spreads ECN flutuam com base na profundidade da liquidez global. As estruturas de acesso direto ao mercado são executadas instantaneamente sem intervenção da mesa de operações.",
+      "eurusd": {
+        "asset": "EUR/USD (Forex)",
+        "standard": "Média de 1.6 Pips",
+        "ecn": "0.0 - 0.2 Pips",
+        "cost": "$16.00 / lote",
+        "ecnCost": "$2.00 / lote",
+        "note": "Spreads padrão têm acréscimo de 150%"
+      },
+      "btc": {
+        "asset": "Bitcoin / USD (Cripto)",
+        "standard": "$45.00 Spread",
+        "ecn": "$0.10 - $1.00 Spread",
+        "cost": "$45.00 / unidade",
+        "ecnCost": "$0.80 / unidade",
+        "note": "Alimentação ECN evita mesa intermediária"
+      },
+      "gold": {
+        "asset": "Ouro Spot / USD (Commodity)",
+        "standard": "Média de 2.5 Pips",
+        "ecn": "0.0 - 0.5 Pips",
+        "cost": "$25.00 / lote",
+        "ecnCost": "$4.00 / lote",
+        "note": "Sem acréscimos durante alta volatilidade"
+      },
+      "us100": {
+        "asset": "Índice US 100 (NASDAQ)",
+        "standard": "2.0 Pontos de Spread",
+        "ecn": "0.2 - 0.5 Pontos",
+        "cost": "$20.00 / lote",
+        "ecnCost": "$3.50 / lote",
+        "note": "Feeds diretos institucionais"
+      }
+    },
+    "chart": {
+      "title": "Visualização de Preços em Tempo Real",
+      "desc": "Selecione um ativo para visualizar cotações em tempo real integradas à nossa rede ECN no Equinix NY4."
+    }
+  },
+  "markets": {
+    "hero": {
+      "badge": "Mais de 1000 Ativos Líquidos",
+      "title1": "Negocie Mercados Globais",
+      "title2": "Com Absolutamente Zero Margens",
+      "desc": "Desbloqueie acesso a preços institucionais puros. Opere, proteja ou copie posições perfeitamente em Forex, Cripto, Índices, Commodities e Ações.",
+      "cta": "Começar a Explorar"
+    },
+    "assets": {
+      "title": "Portfólios de Ativos Suportados",
+      "desc": "Pools de liquidez profunda cobrindo cinco mercados globais. Executados com velocidade ECN sub-milissegundo."
+    },
+    "quoteFeeds": {
+      "title": "Feeds de Cotações em Tempo Real",
+      "desc": "Interaja com os nossos agregados de liquidez. Selecione subcategorias para visualizar os feeds de preços em tempo real."
+    },
+    "safety": {
+      "title": "Ambiente Seguro e Totalmente Responsável",
+      "desc": "Negocie e copie ativos em estrita conformidade com as normas de segurança. Todos os depósitos de varejo são isolados em cofres bancários segregados e protegidos contra saldo negativo."
+    },
+    "cards": {
+      "forex": {
+        "title": "Moedas (Forex)",
+        "desc": "Negocie pares maiores, menores e exóticos. Sourced direto de feeds de preços brutos.",
+        "leverage": "Alavancagem de 1:500",
+        "spreads": "A partir de 0.0 Pips",
+        "instruments": "EUR/USD, GBP/USD, USD/JPY"
+      },
+      "crypto": {
+        "title": "Criptomoedas",
+        "desc": "Copie traders de cripto profissionais ou compre ativos digitais importantes. Fluxo de liquidez 24 horas por dia.",
+        "leverage": "Alavancagem de 1:50",
+        "spreads": "Spreads ECN puros",
+        "instruments": "Bitcoin, Ethereum, Solana, Ripple"
+      },
+      "indices": {
+        "title": "Índices Globais",
+        "desc": "Obtenha ampla exposição aos principais setores econômicos. Acesso direto com comissões transparentes.",
+        "leverage": "Alavancagem de 1:100",
+        "spreads": "A partir de 0.2 Pontos",
+        "instruments": "S&P 500, Nasdaq 100, Dow Jones"
+      },
+      "stocks": {
+        "title": "CFDs de Ações",
+        "desc": "Negocie diretamente líderes de tecnologia, blue-chips e ativos de crescimento internacional.",
+        "leverage": "Alavancagem de 1:20",
+        "spreads": "Markup de spread ultra-baixo",
+        "instruments": "Tesla, Apple, Amazon, Meta, Netflix"
+      },
+      "commodities": {
+        "title": "Commodities",
+        "desc": "Proteja seu capital usando ouro, prata, petróleo bruto e Brent Spot sob condições estáveis.",
+        "leverage": "Alavancagem de 1:100",
+        "spreads": "Zero comissão sobre spread",
+        "instruments": "Gold, Silver, Brent Oil, Crude Oil"
+      }
+    },
+    "labels": {
+      "pricing": "Preços ECN:",
+      "highlighted": "Destaques:",
+      "crypto": "Cripto",
+      "forex": "Forex",
+      "commodities": "Commodities",
+      "segregated": "Fundos de Clientes Segregados",
+      "protection": "Proteção de Saldo Negativo",
+      "vaults": "Cofres Bancários Auditados Tier-1"
+    }
+  },
+  "copyExperts": {
+    "hero": {
+      "badge": "Rastreadores de Desempenho Verificados",
+      "title1": "Espelhe Traders de Elite.",
+      "title2": "Alcance Retornos Idênticos.",
+      "desc": "Por que operar sozinho? Siga profissionais de alta performance de forma automática. Ajuste margens de segurança, limite slippage ou inverta posições com um toque.",
+      "cta": "Acessar Diretório Master"
+    },
+    "how": {
+      "title": "Como Funciona o Copy Trading",
+      "desc": "Um pipeline perfeito de latência zero projetado para capital moderno."
+    },
+    "timeline": {
+      "step1": {
+        "title": "Selecione Especialistas de Elite",
+        "desc": "Analise o nosso índice de traders verificados. Acompanhe métricas como taxas de vitória, drawdowns médios e curvas de ganho histórico."
+      },
+      "step2": {
+        "title": "Aloque Capital e Segurança",
+        "desc": "Defina limites de investimento. Configure bloqueios de slippage e escolha posições de cópias tradicionais ou inversas."
+      },
+      "step3": {
+        "title": "Replicação Automatizada",
+        "desc": "Nosso mecanismo ECN NY4 replica as operações em 0.05 ms, garantindo que você obtenha preços idênticos instantaneamente."
+      }
+    },
+    "directory": {
+      "title": "Diretório de Profissionais de Elite",
+      "desc": "Verifique estatísticas de negociação em tempo real, portfólios ativos e registros de ROI dos nossos líderes master."
+    },
+    "tech": {
+      "badge": "Tecnologia de Replicação Avançada",
+      "title1": "Não Apenas Replicando.",
+      "title2": "Engenharia Completa de Estratégia.",
+      "desc": "A maioria das plataformas permite apenas copiar os vencedores. A CarbonTrade apresenta parâmetros de fading de última geração, permitindo que você monetize o lado exatamente oposto de históricos consistentes de perdas.",
+      "inverseTitle": "Mirror Trading Inverso (Fading)",
+      "inverseDesc": "Identificou perdedores consistentes? Use nossos parâmetros de fading para executar automaticamente posições opostas. Se eles compram, você vende automaticamente.",
+      "slippageTitle": "Proteções Contra Slippage",
+      "slippageDesc": "Rejeite a execução de preços copiados se a cotação desviar além do seu limite de segurança personalizado. Você mantém o controle."
+    },
+    "modal": {
+      "title": "Visualização de parâmetros de cópia",
+      "desc": "Quando você define alocações de cópias, obtém controle micro-granular sobre pips de slippage, valores de investimento e direções de replicação."
+    },
+    "labels": {
+      "risk": {
+        "low": "Baixo",
+        "medium": "Médio",
+        "high": "Alto"
+      },
+      "riskLabel": "Risco",
+      "weeklyPerformance": "Desempenho Semanal",
+      "winRate": "Taxa de Vitória",
+      "copiers": "Copiadores",
+      "viewParams": "Ver Parâmetros do Espelho",
+      "exampleInverse": "Exemplo de Espelhamento de Posição Inversa",
+      "losingAction": "Ação do Trader Perdedor",
+      "buyBTC": "COMPRA BTCUSD @ $67,500",
+      "result": "Resultado",
+      "lossValue": "Perda -$450.00",
+      "inverseReplica": "Sua Réplica Inversa",
+      "sellBTC": "VENDA BTCUSD @ $67,500",
+      "profitValue": "Lucro +$450.00",
+      "replicationNote": "* Todos os fluxos de replicação são calculados milissegundo a milissegundo através de nossos canais de fibra ECN Equinix NY4.",
+      "mirror": "Espelho",
+      "traditionalMirror": "Espelho Tradicional:",
+      "yes": "Sim",
+      "inverseSupport": "Suporte a Espelho Inverso:",
+      "enabled": "Ativado",
+      "avgWinRate": "Taxa de Vitória Média:",
+      "createAllocation": "Criar Alocação de Cópia"
+    }
+  },
+  "learn": {
+    "hero": {
+      "badge": "CarbonAcademy Academy",
+      "title1": "Aprenda e",
+      "title2": "Domine o Trading",
+      "desc": "Capacite suas decisões financeiras. Explore as vantagens estruturais dos spreads zero ECN, cópias inversas de posições e controle de slippage."
+    }
+  }
+}

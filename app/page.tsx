@@ -1,19 +1,35 @@
-import { Button } from "@/components/ui/button"
+import { Navbar } from "@/components/landing/navbar";
+import { Hero } from "@/components/landing/hero";
+import { TickerTape } from "@/components/landing/ticker-tape";
+import { MarketTabs } from "@/components/landing/market-tabs";
+import { SmartCopy } from "@/components/landing/smart-copy";
+import { Infrastructure } from "@/components/landing/infrastructure";
+import { Leaderboard } from "@/components/landing/leaderboard";
+import { Security } from "@/components/landing/security";
+import { AppPreview } from "@/components/landing/app-preview";
+import { OnboardingSteps } from "@/components/landing/onboarding-steps";
+import { Footer } from "@/components/landing/footer";
 
-export default function Page() {
+export default function Home() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
+    <main translate="no" className="min-h-screen bg-background text-foreground selection:bg-primary/30 selection:text-primary">
+      {/* 
+        This is the new Neon Eco-Fintech CarbonTrade Landing Page.
+        Each section is modularized in components/landing.
+      */}
+      <Navbar />
+      <div className="pt-24">
+        <Hero />
+        <TickerTape />
       </div>
-    </div>
-  )
+      <MarketTabs />
+      <SmartCopy />
+      <Infrastructure />
+      <Leaderboard />
+      <AppPreview />
+      <OnboardingSteps />
+      <Security />
+      <Footer />
+    </main>
+  );
 }
