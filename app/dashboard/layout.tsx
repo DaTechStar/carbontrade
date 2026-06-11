@@ -5,6 +5,7 @@ import { Bell, Menu } from "lucide-react"
 import { AnimatePresence, motion } from "framer-motion"
 import { ChevronDown, Settings, LogOut, User } from "lucide-react"
 import { useSession, signOut } from "next-auth/react"
+import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
@@ -68,12 +69,13 @@ function ProfileDropdown() {
         onClick={() => setOpen((v) => !v)}
         className="flex items-center gap-1.5 rounded-xl p-1 transition-colors hover:bg-accent"
       >
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-primary to-secondary text-xs font-bold text-primary-foreground">
+        <div className="relative flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-primary to-secondary text-xs font-bold text-primary-foreground">
           {session?.user?.image ? (
-            <img
+            <Image
               src={session.user.image}
               alt={name}
-              className="h-full w-full object-cover"
+              fill
+              className="object-cover"
             />
           ) : (
             initials
@@ -99,12 +101,13 @@ function ProfileDropdown() {
             {/* User info */}
             <div className="border-b border-border/30 px-4 py-3">
               <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-primary to-secondary text-xs font-bold text-primary-foreground">
+                <div className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-primary to-secondary text-xs font-bold text-primary-foreground">
                   {session?.user?.image ? (
-                    <img
+                    <Image
                       src={session.user.image}
                       alt={name}
-                      className="h-full w-full object-cover"
+                      fill
+                      className="object-cover"
                     />
                   ) : (
                     initials

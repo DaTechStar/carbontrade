@@ -60,6 +60,20 @@ const registerSchema = z
 type RegisterValues = z.infer<typeof registerSchema>
 
 export default function RegisterPage() {
+  return (
+    <React.Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-background">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      }
+    >
+      <RegisterContent />
+    </React.Suspense>
+  )
+}
+
+function RegisterContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const referredBy = searchParams.get("ref")

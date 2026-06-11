@@ -11,3 +11,7 @@ export function formatCurrency(amount: number) {
     currency: "USD",
   }).format(amount || 0)
 }
+
+export function formatPercent(value: number): string {
+  return `${value >= 0 ? "+" : ""}${value.toFixed(2)}%`
+}

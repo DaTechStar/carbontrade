@@ -15,7 +15,7 @@ import {
 } from "lucide-react"
 import { toast } from "sonner"
 
-import { formatCurrency } from "@/lib/mock-data"
+import { formatCurrency } from "@/lib/utils"
 import { cn } from "@/lib/utils"
 import { Card } from "@/components/ui/card"
 import { TraderCard } from "@/components/dashboard/trader-card"

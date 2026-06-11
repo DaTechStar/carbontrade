@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -278,11 +279,11 @@ export function DepositForm() {
             />
             {fileBase64 && (
               <div className="relative mt-4 flex h-48 items-center justify-center overflow-hidden rounded-xl border border-border/50 bg-black/10 p-2">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={fileBase64}
                   alt="Payment Proof Preview"
-                  className="h-full w-full rounded-lg object-contain"
+                  fill
+                  className="rounded-lg object-contain p-2"
                 />
               </div>
             )}

@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { useState } from "react"
 import { formatCurrency } from "@/lib/utils"
 import { processTransaction } from "../transactions-actions"
@@ -86,18 +87,18 @@ export default function DepositsClient({
                   {dep.proofImageUrl || dep.proofImage ? (
                     <div className="flex items-center gap-3">
                       <div
-                        className="flex h-8 w-12 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded border border-border bg-muted transition-opacity hover:opacity-80"
+                        className="relative flex h-8 w-12 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded border border-border bg-muted transition-opacity hover:opacity-80"
                         onClick={() =>
                           setPreviewImage(
                             dep.proofImageUrl || dep.proofImage || null
                           )
                         }
                       >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={dep.proofImageUrl || dep.proofImage}
+                        <Image
+                          src={dep.proofImageUrl || dep.proofImage || ""}
                           alt="Proof"
-                          className="h-full w-full object-cover"
+                          fill
+                          className="object-cover"
                         />
                       </div>
                       <button
@@ -231,11 +232,12 @@ export default function DepositsClient({
                 <X className="h-4 w-4" />
               </button>
             </div>
-            <div className="flex min-h-[300px] justify-center overflow-auto bg-black/20 p-4">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+            <div className="relative flex min-h-[300px] w-full justify-center overflow-auto bg-black/20 p-4">
+              <Image
                 src={previewImage}
                 alt="Payment Proof Full"
+                width={800}
+                height={800}
                 className="h-auto max-w-full rounded-lg object-contain shadow-lg"
               />
             </div>

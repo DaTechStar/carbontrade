@@ -1,9 +1,11 @@
 "use client"
 
+import Image from "next/image"
 import { motion } from "framer-motion"
 import { ShieldCheck, Star, BarChart2, BrainCircuit, Zap } from "lucide-react"
 
-import { type Trader, formatCurrency } from "@/lib/mock-data"
+import { formatCurrency } from "@/lib/utils"
+import { type Trader } from "@/types"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -89,16 +91,16 @@ export function TraderCard({
           <div className="flex items-center gap-3">
             {/* Avatar */}
             <div
-              className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl text-sm font-black text-white shadow-md"
+              className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl text-sm font-black text-white shadow-md"
               style={{ background: trader.avatarColor || "#22c55e" }}
             >
               {trader.avatar?.startsWith("http") ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <Image
                   src={trader.avatar}
                   alt={trader.name}
+                  fill
                   draggable={false}
-                  className="pointer-events-none h-full w-full object-cover select-none"
+                  className="pointer-events-none object-cover select-none"
                 />
               ) : (
                 trader.avatar || trader.name?.substring(0, 2).toUpperCase()
