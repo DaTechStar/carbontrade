@@ -365,5 +365,38 @@
       "title2": "Domine el Trading",
       "desc": "Potencie su futuro financiero. Explore los beneficios estructurales de los spreads cero de ECN, el copiado inverso y los controles de deslizamiento seguro."
     }
+  },
+  "auth": {
+    "register": {
+      "title": "Crear una Cuenta",
+      "subtitle": "Únase a la próxima generación de comercio ecológico.",
+      "username": "Nombre de usuario",
+      "email": "Correo electrónico",
+      "country": "País de residencia",
+      "countryPlaceholder": "Seleccione un país...",
+      "searchCountry": "Buscar país...",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "acceptTerms": "Acepto los Términos de Servicio y la Política de Privacidad.",
+      "submit": "Crear Cuenta",
+      "submitting": "Creando cuenta...",
+      "alreadyHaveAccount": "¿Ya tiene una cuenta?",
+      "loginLink": "Iniciar sesión"
+    },
+    "login": {
+      "title": "Bienvenido de nuevo",
+      "subtitle": "Inicie sesión para acceder a su panel de operaciones.",
+      "identifier": "Correo o nombre de usuario",
+      "password": "Contraseña",
+      "rememberMe": "Recordarme por 30 días",
+      "forgotPassword": "¿Olvidó su contraseña?",
+      "submit": "Iniciar Sesión",
+      "submitting": "Iniciando sesión...",
+      "noAccount": "¿No tiene una cuenta?",
+      "registerLink": "Regístrese"
+    },
+    "heroText": "Únete a Interactive {{name}} hoy y comienza a ganar con operadores expertos en Acciones, ETFs, Opciones, Renta Fija y Futuros",
+    "allRightsReserved": "Todos los derechos reservados.",
+    "highlyRegulated": "Altamente Regulado y Seguro"
   }
 }

@@ -1,39 +1,44 @@
-"use client";
+"use client"
 
-import { MarketChart } from "@/components/shared/market-chart";
-import { motion } from "framer-motion";
-import { useLanguage } from "@/lib/i18n/context";
+import { MarketChart } from "@/components/shared/market-chart"
+import { motion } from "framer-motion"
+import { useLanguage } from "@/lib/i18n/context"
 
 export function MarketTabs() {
-  const { t } = useLanguage();
+  const { t } = useLanguage()
 
   return (
-    <section className="py-24 bg-background relative border-t border-border/10 overflow-hidden">
-      <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-secondary/5 rounded-full blur-[120px] pointer-events-none" />
+    <section className="relative overflow-hidden border-t border-border/10 bg-background py-24">
+      <div className="pointer-events-none absolute top-1/4 right-1/4 h-[600px] w-[600px] rounded-full bg-secondary/5 blur-[120px]" />
 
-      <div className="container mx-auto px-4 relative z-10">
-        <motion.div 
+      <div className="relative z-10 container mx-auto px-4">
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          className="mx-auto mb-16 max-w-3xl text-center"
         >
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            {t("landing.marketTabs.title1")} <span className="text-gradient">{t("landing.marketTabs.title2")}</span>
+          <h2 className="mb-4 text-3xl font-bold md:text-5xl">
+            {t("landing.marketTabs.title1")}{" "}
+            <span className="text-gradient">
+              {t("landing.marketTabs.title2")}
+            </span>
           </h2>
-          <p className="text-lg text-muted-foreground">{t("landing.marketTabs.description")}</p>
+          <p className="text-lg text-muted-foreground">
+            {t("landing.marketTabs.description")}
+          </p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="w-full max-w-5xl mx-auto h-[600px] rounded-2xl overflow-hidden glass-card border border-border/20 shadow-2xl relative"
+          className="glass-card relative mx-auto h-[600px] w-full max-w-5xl overflow-hidden rounded-2xl border border-border/20 shadow-2xl"
         >
-          <div className="absolute inset-0 bg-[#131722] -z-10" />
-          <MarketChart 
+          <div className="absolute inset-0 -z-10 bg-chart-bg" />
+          <MarketChart
             type="overview"
             theme="dark"
             height="100%"
@@ -49,9 +54,9 @@ export function MarketTabs() {
                   { s: "NASDAQ:NFLX", d: "Netflix" },
                   { s: "NASDAQ:AMZN", d: "Amazon" },
                   { s: "NASDAQ:TSLA", d: "Tesla" },
-                  { s: "NASDAQ:AAPL", d: "Apple" }
+                  { s: "NASDAQ:AAPL", d: "Apple" },
                 ],
-                originalTitle: "Share CFDs"
+                originalTitle: "Share CFDs",
               },
               {
                 title: "Crypto",
@@ -60,9 +65,9 @@ export function MarketTabs() {
                   { s: "BINANCE:ETHUSD", d: "Ethereum" },
                   { s: "BINANCE:SOLUSD", d: "Solana" },
                   { s: "BINANCE:XRPUSD", d: "Ripple" },
-                  { s: "BINANCE:BNBUSD", d: "Binance Coin" }
+                  { s: "BINANCE:BNBUSD", d: "Binance Coin" },
                 ],
-                originalTitle: "Crypto"
+                originalTitle: "Crypto",
               },
               {
                 title: "Forex",
@@ -71,9 +76,9 @@ export function MarketTabs() {
                   { s: "FX:GBPUSD", d: "GBP/USD" },
                   { s: "FX:USDJPY", d: "USD/JPY" },
                   { s: "FX:USDCHF", d: "USD/CHF" },
-                  { s: "FX:AUDUSD", d: "AUD/USD" }
+                  { s: "FX:AUDUSD", d: "AUD/USD" },
                 ],
-                originalTitle: "Forex"
+                originalTitle: "Forex",
               },
               {
                 title: "Indices",
@@ -82,9 +87,9 @@ export function MarketTabs() {
                   { s: "FOREXCOM:NSXUSD", d: "US 100" },
                   { s: "FOREXCOM:DJI", d: "Dow Jones" },
                   { s: "INDEX:NKY", d: "Nikkei 225" },
-                  { s: "INDEX:DEU40", d: "DAX Index" }
+                  { s: "INDEX:DEU40", d: "DAX Index" },
                 ],
-                originalTitle: "Indices"
+                originalTitle: "Indices",
               },
               {
                 title: "Commodities",
@@ -93,15 +98,14 @@ export function MarketTabs() {
                   { s: "OANDA:XAGUSD", d: "Silver" },
                   { s: "TVC:USOIL", d: "Crude Oil" },
                   { s: "TVC:UKOIL", d: "Brent Oil" },
-                  { s: "OANDA:XCUUSD", d: "Copper" }
+                  { s: "OANDA:XCUUSD", d: "Copper" },
                 ],
-                originalTitle: "Commodities"
-              }
+                originalTitle: "Commodities",
+              },
             ]}
           />
         </motion.div>
-
       </div>
     </section>
-  );
+  )
 }

@@ -2,9 +2,11 @@ import { Geist, Geist_Mono, Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/lib/i18n/context"
-import { cn } from "@/lib/utils";
+import { NextAuthProvider } from "@/components/providers/next-auth-provider"
+import { cn } from "@/lib/utils"
+import { Toaster } from "sonner"
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'})
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
@@ -21,15 +23,25 @@ export default function RootLayout({
       lang="en"
       translate="no"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", inter.variable)}
+      className={cn(
+        "antialiased",
+        fontMono.variable,
+        "font-sans",
+        inter.variable
+      )}
     >
       <head>
         <meta name="google" content="notranslate" />
       </head>
       <body suppressHydrationWarning>
-        <LanguageProvider>
-          <ThemeProvider>{children}</ThemeProvider>
-        </LanguageProvider>
+        <NextAuthProvider>
+          <LanguageProvider>
+            <ThemeProvider>
+              {children}
+              <Toaster position="top-right" richColors />
+            </ThemeProvider>
+          </LanguageProvider>
+        </NextAuthProvider>
       </body>
     </html>
   )

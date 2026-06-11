@@ -365,5 +365,38 @@
       "title2": "Domine o Trading",
       "desc": "Capacite suas decisões financeiras. Explore as vantagens estruturais dos spreads zero ECN, cópias inversas de posições e controle de slippage."
     }
+  },
+  "auth": {
+    "register": {
+      "title": "Criar uma Conta",
+      "subtitle": "Junte-se à próxima geração de negociação ecologicamente consciente.",
+      "username": "Nome de usuário",
+      "email": "Endereço de e-mail",
+      "country": "País de residência",
+      "countryPlaceholder": "Selecione um país...",
+      "searchCountry": "Pesquisar país...",
+      "password": "Senha",
+      "confirmPassword": "Confirmar senha",
+      "acceptTerms": "Concordo com os Termos de Serviço e a Política de Privacidade.",
+      "submit": "Criar Conta",
+      "submitting": "Criando conta...",
+      "alreadyHaveAccount": "Já tem uma conta?",
+      "loginLink": "Entrar"
+    },
+    "login": {
+      "title": "Bem-vindo de volta",
+      "subtitle": "Faça login para acessar seu painel de negociação.",
+      "identifier": "E-mail ou nome de usuário",
+      "password": "Senha",
+      "rememberMe": "Lembrar de mim por 30 dias",
+      "forgotPassword": "Esqueceu a senha?",
+      "submit": "Entrar",
+      "submitting": "Entrando...",
+      "noAccount": "Não tem uma conta?",
+      "registerLink": "Inscrever-se"
+    },
+    "heroText": "Junte-se à Interactive {{name}} hoje e comece a ganhar com traders especialistas em Ações, ETFs, Opções, Renda Fixa e Futuros",
+    "allRightsReserved": "Todos os direitos reservados.",
+    "highlyRegulated": "Altamente Regulamentado e Seguro"
   }
 }

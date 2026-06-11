@@ -365,5 +365,38 @@
       "title2": "Maîtriser le Trading",
       "desc": "Renforcez votre avenir financier. Explorez les avantages structurels des spreads ECN à zéro, la copie inversée et les contrôles du glissement sécurisés."
     }
+  },
+  "auth": {
+    "register": {
+      "title": "Créer un Compte",
+      "subtitle": "Rejoignez la prochaine génération de trading éco-responsable.",
+      "username": "Nom d'utilisateur",
+      "email": "Adresse e-mail",
+      "country": "Pays de résidence",
+      "countryPlaceholder": "Sélectionnez un pays...",
+      "searchCountry": "Rechercher un pays...",
+      "password": "Mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "acceptTerms": "J'accepte les conditions d'utilisation et la politique de confidentialité.",
+      "submit": "Créer le compte",
+      "submitting": "Création en cours...",
+      "alreadyHaveAccount": "Vous avez déjà un compte ?",
+      "loginLink": "Se connecter"
+    },
+    "login": {
+      "title": "Bon retour",
+      "subtitle": "Connectez-vous pour accéder à votre tableau de bord de trading.",
+      "identifier": "E-mail ou nom d'utilisateur",
+      "password": "Mot de passe",
+      "rememberMe": "Se souvenir de moi pendant 30 jours",
+      "forgotPassword": "Mot de passe oublié ?",
+      "submit": "Se connecter",
+      "submitting": "Connexion en cours...",
+      "noAccount": "Vous n'avez pas de compte ?",
+      "registerLink": "S'inscrire"
+    },
+    "heroText": "Rejoignez Interactive {{name}} aujourd'hui et commencez à gagner avec des traders experts en actions, ETF, options, revenus fixes et contrats à terme",
+    "allRightsReserved": "Tous droits réservés.",
+    "highlyRegulated": "Hautement Réglementé et Sécurisé"
   }
 }

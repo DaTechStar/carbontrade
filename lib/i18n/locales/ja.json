@@ -365,5 +365,38 @@
       "title2": "トレードのマスター",
       "desc": "財務上の未来を強化。画期的な機関投資家向けECNゼロスプレッドのメリット、逆取引ミラーリング、安全スリッページ制御を探索します。"
     }
+  },
+  "auth": {
+    "register": {
+      "title": "アカウント作成",
+      "subtitle": "次世代の環境配慮型取引に参加しましょう。",
+      "username": "ユーザー名",
+      "email": "メールアドレス",
+      "country": "居住国",
+      "countryPlaceholder": "国を選択...",
+      "searchCountry": "国を検索...",
+      "password": "パスワード",
+      "confirmPassword": "パスワードの確認",
+      "acceptTerms": "利用規約とプライバシーポリシーに同意します。",
+      "submit": "アカウントを作成",
+      "submitting": "アカウントを作成中...",
+      "alreadyHaveAccount": "すでにアカウントをお持ちですか？",
+      "loginLink": "ログイン"
+    },
+    "login": {
+      "title": "おかえりなさい",
+      "subtitle": "取引ダッシュボードにアクセスするにはログインしてください。",
+      "identifier": "メールまたはユーザー名",
+      "password": "パスワード",
+      "rememberMe": "30日間ログインを保持",
+      "forgotPassword": "パスワードをお忘れですか？",
+      "submit": "ログイン",
+      "submitting": "ログイン中...",
+      "noAccount": "アカウントをお持ちではありませんか？",
+      "registerLink": "登録"
+    },
+    "heroText": "今すぐインタラクティブな {{name}} に参加して、株式、ETF、オプション、債券、先物の専門トレーダーと一緒に稼ぎ始めましょう",
+    "allRightsReserved": "無断転載を禁じます。",
+    "highlyRegulated": "高度に規制され安全"
   }
 }

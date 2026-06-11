@@ -365,5 +365,38 @@
       "title2": "실전 거래 마스터하기",
       "desc": "당신의 금융 미래를 혁신하세요. 구조적 강점을 가진 ECN 제로 스프레드 혜택, 역방향 거래 미러링, 안전 슬리피지 제어 기술을 쉽게 학습해보세요."
     }
+  },
+  "auth": {
+    "register": {
+      "title": "계정 만들기",
+      "subtitle": "차세대 친환경 트레이딩에 참여하세요.",
+      "username": "사용자 이름",
+      "email": "이메일 주소",
+      "country": "거주 국가",
+      "countryPlaceholder": "국가 선택...",
+      "searchCountry": "국가 검색...",
+      "password": "비밀번호",
+      "confirmPassword": "비밀번호 확인",
+      "acceptTerms": "서비스 약관 및 개인정보 보호정책에 동의합니다.",
+      "submit": "계정 생성",
+      "submitting": "계정 생성 중...",
+      "alreadyHaveAccount": "이미 계정이 있으신가요?",
+      "loginLink": "로그인"
+    },
+    "login": {
+      "title": "다시 오신 것을 환영합니다",
+      "subtitle": "트레이딩 대시보드에 액세스하려면 로그인하세요.",
+      "identifier": "이메일 또는 사용자 이름",
+      "password": "비밀번호",
+      "rememberMe": "30일 동안 로그인 유지",
+      "forgotPassword": "비밀번호를 잊으셨나요?",
+      "submit": "로그인",
+      "submitting": "로그인 중...",
+      "noAccount": "계정이 없으신가요?",
+      "registerLink": "가입하기"
+    },
+    "heroText": "지금 대화형 {{name}}에 가입하고 주식, ETF, 옵션, 채권 및 선물 분야의 전문 트레이더와 함께 수익 창출을 시작하세요",
+    "allRightsReserved": "모든 권리 보유.",
+    "highlyRegulated": "고도의 규제 및 안전"
   }
 }

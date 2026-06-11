@@ -365,5 +365,38 @@
       "title2": "Handel Meistern",
       "desc": "Stärken Sie Ihre finanzielle Zukunft. Erkunden Sie die strukturellen Vorteile von ECN-Null-Spreads, inverser Positionsspiegelung und Slippage-Schutz."
     }
+  },
+  "auth": {
+    "register": {
+      "title": "Konto erstellen",
+      "subtitle": "Treten Sie der nächsten Generation des umweltbewussten Tradings bei.",
+      "username": "Benutzername",
+      "email": "E-Mail-Adresse",
+      "country": "Wohnsitzland",
+      "countryPlaceholder": "Land auswählen...",
+      "searchCountry": "Land suchen...",
+      "password": "Passwort",
+      "confirmPassword": "Passwort bestätigen",
+      "acceptTerms": "Ich stimme den Nutzungsbedingungen und der Datenschutzrichtlinie zu.",
+      "submit": "Konto erstellen",
+      "submitting": "Konto wird erstellt...",
+      "alreadyHaveAccount": "Haben Sie bereits ein Konto?",
+      "loginLink": "Anmelden"
+    },
+    "login": {
+      "title": "Willkommen zurück",
+      "subtitle": "Melden Sie sich an, um auf Ihr Trading-Dashboard zuzugreifen.",
+      "identifier": "E-Mail oder Benutzername",
+      "password": "Passwort",
+      "rememberMe": "30 Tage lang angemeldet bleiben",
+      "forgotPassword": "Passwort vergessen?",
+      "submit": "Anmelden",
+      "submitting": "Anmeldung läuft...",
+      "noAccount": "Noch kein Konto?",
+      "registerLink": "Registrieren"
+    },
+    "heroText": "Treten Sie Interactive {{name}} noch heute bei und beginnen Sie mit Experten-Tradern in Aktien, ETFs, Optionen, festverzinslichen Wertpapieren und Futures zu verdienen",
+    "allRightsReserved": "Alle Rechte vorbehalten.",
+    "highlyRegulated": "Stark Reguliert & Sicher"
   }
 }

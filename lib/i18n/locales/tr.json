@@ -365,5 +365,38 @@
       "title2": "İşlemlerde Uzmanlaşın",
       "desc": "Finansal geleceğinizi güçlendirin. ECN sıfır spread yapısal avantajlarını, ters kopya işlemleri ve güvenli kayma kontrollerini keşfedin."
     }
+  },
+  "auth": {
+    "register": {
+      "title": "Hesap Oluştur",
+      "subtitle": "Çevre dostu ticaretin yeni nesline katılın.",
+      "username": "Kullanıcı Adı",
+      "email": "E-posta Adresi",
+      "country": "İkamet Edilen Ülke",
+      "countryPlaceholder": "Bir ülke seçin...",
+      "searchCountry": "Ülke ara...",
+      "password": "Şifre",
+      "confirmPassword": "Şifreyi Onayla",
+      "acceptTerms": "Hizmet Şartlarını ve Gizlilik Politikasını kabul ediyorum.",
+      "submit": "Hesap Oluştur",
+      "submitting": "Hesap oluşturuluyor...",
+      "alreadyHaveAccount": "Zaten bir hesabınız var mı?",
+      "loginLink": "Giriş yap"
+    },
+    "login": {
+      "title": "Tekrar Hoş Geldiniz",
+      "subtitle": "Ticaret panelinize erişmek için giriş yapın.",
+      "identifier": "E-posta veya Kullanıcı Adı",
+      "password": "Şifre",
+      "rememberMe": "Beni 30 gün hatırla",
+      "forgotPassword": "Şifrenizi mi unuttunuz?",
+      "submit": "Giriş Yap",
+      "submitting": "Giriş yapılıyor...",
+      "noAccount": "Hesabınız yok mu?",
+      "registerLink": "Kayıt ol"
+    },
+    "heroText": "Bugün İnteraktif {{name}}'e katılın ve Hisse Senetleri, ETF'ler, Opsiyonlar, Sabit Getirili Menkul Kıymetler ve Vadeli İşlemlerde uzman yatırımcılarla kazanmaya başlayın",
+    "allRightsReserved": "Tüm hakları saklıdır.",
+    "highlyRegulated": "Sıkı Düzenlemeye Tabi ve Güvenli"
   }
 }

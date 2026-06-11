@@ -1,91 +1,97 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { siteConfig } from "@/config/site";
-import { Star, Users } from "lucide-react";
-import { motion } from "framer-motion";
-import { useLanguage } from "@/lib/i18n/context";
+import { Button } from "@/components/ui/button"
+import { siteConfig } from "@/config/site"
+import { Star, Users } from "lucide-react"
+import { motion } from "framer-motion"
+import { useLanguage } from "@/lib/i18n/context"
 
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { DotLottieReact } from "@lottiefiles/dotlottie-react"
+import Link from "next/link"
 
 export function Hero() {
-  const { t } = useLanguage();
+  const { t } = useLanguage()
 
   return (
-    <section className="relative overflow-hidden pb-20 lg:pb-32 min-h-[90vh] flex items-center">
+    <section className="relative flex min-h-[90vh] items-center overflow-hidden pb-20 lg:pb-32">
       {/* Background Glow Effects */}
-      <div className="absolute top-1/4 left-0 w-[500px] h-[500px] opacity-20 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-radial from-primary to-transparent blur-3xl rounded-full" />
+      <div className="pointer-events-none absolute top-1/4 left-0 h-[500px] w-[500px] opacity-20">
+        <div className="bg-gradient-radial absolute inset-0 rounded-full from-primary to-transparent blur-3xl" />
       </div>
-      <div className="absolute bottom-0 right-0 w-[800px] h-[600px] opacity-10 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-radial from-secondary to-transparent blur-[100px] rounded-full" />
+      <div className="pointer-events-none absolute right-0 bottom-0 h-[600px] w-[800px] opacity-10">
+        <div className="bg-gradient-radial absolute inset-0 rounded-full from-secondary to-transparent blur-[100px]" />
       </div>
 
-      <div className="container relative z-10 mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-          
+      <div className="relative z-10 container mx-auto px-4">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8">
           {/* Left Column: Content */}
-          <div className="text-left max-w-2xl">
-            <motion.h1 
+          <div className="max-w-2xl text-left">
+            <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="text-5xl md:text-7xl lg:text-[5.5rem] font-black tracking-tighter mb-6 leading-[1.1]"
+              className="mb-6 text-5xl leading-[1.1] font-black tracking-tighter md:text-7xl lg:text-[5.5rem]"
             >
               <span>{t("landing.hero.title1")}</span>{" "}
               <span className="text-gradient">{t("landing.hero.title2")}</span>{" "}
               <span>{t("landing.hero.title3")}</span>
             </motion.h1>
-            
-            <motion.div 
+
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-              className="flex flex-wrap items-center gap-6 mb-8 text-sm md:text-base font-medium"
+              className="mb-8 flex flex-wrap items-center gap-6 text-sm font-medium md:text-base"
             >
               <div className="flex items-center gap-2 text-primary">
-                <Users className="w-5 h-5" />
+                <Users className="h-5 w-5" />
                 <span>{t("landing.hero.activeUsers")}</span>
               </div>
               <div className="flex items-center gap-2 text-yellow-500">
-                <Star className="w-5 h-5 fill-yellow-500" />
-                <span className="text-foreground">{t("landing.hero.googleRating")}</span>
+                <Star className="h-5 w-5 fill-yellow-500" />
+                <span className="text-foreground">
+                  {t("landing.hero.googleRating")}
+                </span>
               </div>
             </motion.div>
 
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-              className="text-xl text-muted-foreground mb-10 leading-relaxed max-w-xl"
+              className="mb-10 max-w-xl text-xl leading-relaxed text-muted-foreground"
             >
               {t("landing.hero.description")}
             </motion.p>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-              className="flex flex-col sm:flex-row items-center gap-4"
+              className="flex flex-col items-center gap-4 sm:flex-row"
             >
-              <Button size="lg" className="w-full sm:w-auto text-lg h-14 px-10 border-glow bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl transition-all hover:scale-105 active:scale-95">
-                {t("landing.hero.getStarted")}
+              <Button
+                size="lg"
+                asChild
+                className="border-glow h-14 w-full rounded-xl bg-primary px-10 text-lg font-semibold text-primary-foreground transition-all hover:scale-105 hover:bg-primary/90 active:scale-95 sm:w-auto"
+              >
+                <Link href="/register">{t("landing.hero.getStarted")}</Link>
               </Button>
             </motion.div>
           </div>
 
           {/* Right Column: Dynamic Lottie Animation Visual */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="relative w-full h-[500px] lg:h-[650px] rounded-[2rem] glass-panel border border-border/50 overflow-hidden group flex items-center justify-center"
+            className="glass-panel group relative flex h-[500px] w-full items-center justify-center overflow-hidden rounded-[2rem] border border-border/50 lg:h-[650px]"
           >
             {/* Ambient inner glow */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-secondary/10 pointer-events-none" />
-            
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-secondary/10" />
+
             {/* Real Lottie Animation replacing placeholder */}
-            <div className="w-[85%] h-[85%] flex items-center justify-center relative z-10">
+            <div className="relative z-10 flex h-[85%] w-[85%] items-center justify-center">
               <DotLottieReact
                 src="https://lottie.host/2b3d092b-b64c-4340-b4e9-88f68c5c77d2/3RGS2lbPDz.lottie"
                 loop
@@ -94,26 +100,32 @@ export function Hero() {
             </div>
 
             {/* Decorative floating UI elements */}
-            <motion.div 
+            <motion.div
               animate={{ y: [0, -15, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -left-6 top-20 glass-card p-4 rounded-xl flex items-center gap-3 z-20"
+              className="glass-card absolute top-20 -left-6 z-20 flex items-center gap-3 rounded-xl p-4"
             >
-              <div className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_#22c55e]" />
-              <div className="text-sm font-semibold">{t("landing.hero.copyActive")}</div>
+              <div className="h-3 w-3 rounded-full bg-profit shadow-[0_0_10px_var(--profit)]" />
+              <div className="text-sm font-semibold">
+                {t("landing.hero.copyActive")}
+              </div>
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
               animate={{ y: [0, 20, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute -right-4 bottom-32 glass-card p-4 rounded-xl flex items-center gap-3 z-20"
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1,
+              }}
+              className="glass-card absolute -right-4 bottom-32 z-20 flex items-center gap-3 rounded-xl p-4"
             >
               <div className="text-lg font-bold text-primary">+124.50%</div>
             </motion.div>
           </motion.div>
-
         </div>
       </div>
     </section>
-  );
+  )
 }

@@ -365,5 +365,38 @@
       "title2": "Master Trading",
       "desc": "Empower your financial future. Explore structural ECN zero-spread benefits, inverse trade mirroring, and safe slippage controls."
     }
+  },
+  "auth": {
+    "register": {
+      "title": "Create an Account",
+      "subtitle": "Join the next generation of eco-conscious trading.",
+      "username": "Username",
+      "email": "Email Address",
+      "country": "Country of Residence",
+      "countryPlaceholder": "Select a country...",
+      "searchCountry": "Search country...",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "acceptTerms": "I agree to the Terms of Service and Privacy Policy.",
+      "submit": "Create Account",
+      "submitting": "Creating account...",
+      "alreadyHaveAccount": "Already have an account?",
+      "loginLink": "Log in"
+    },
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to access your trading dashboard.",
+      "identifier": "Email or Username",
+      "password": "Password",
+      "rememberMe": "Remember me for 30 days",
+      "forgotPassword": "Forgot password?",
+      "submit": "Sign In",
+      "submitting": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "registerLink": "Sign up"
+    },
+    "heroText": "Join Interactive {{name}} today and start earning with expert traders in Stocks, ETFs, Options, Fixed Income & Futures",
+    "allRightsReserved": "All rights reserved.",
+    "highlyRegulated": "Highly Regulated & Secure"
   }
 }

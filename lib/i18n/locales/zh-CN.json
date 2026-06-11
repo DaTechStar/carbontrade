@@ -365,5 +365,38 @@
       "title2": "掌握交易",
       "desc": "赋能您的财务未来。探索极具优势的机构级 ECN 零点差、反向跟单镜像和安全滑点控制。"
     }
+  },
+  "auth": {
+    "register": {
+      "title": "创建账户",
+      "subtitle": "加入新一代生态意识交易。",
+      "username": "用户名",
+      "email": "电子邮件地址",
+      "country": "居住国家",
+      "countryPlaceholder": "选择一个国家...",
+      "searchCountry": "搜索国家...",
+      "password": "密码",
+      "confirmPassword": "确认密码",
+      "acceptTerms": "我同意服务条款和隐私政策。",
+      "submit": "创建账户",
+      "submitting": "创建账户中...",
+      "alreadyHaveAccount": "已有账户？",
+      "loginLink": "登录"
+    },
+    "login": {
+      "title": "欢迎回来",
+      "subtitle": "登录以访问您的交易仪表板。",
+      "identifier": "电子邮件或用户名",
+      "password": "密码",
+      "rememberMe": "记住我 30 天",
+      "forgotPassword": "忘记密码？",
+      "submit": "登录",
+      "submitting": "登录中...",
+      "noAccount": "没有账户？",
+      "registerLink": "注册"
+    },
+    "heroText": "立即加入交互式 {{name}}，与股票、ETF、期权、固定收益和期货领域的专家交易员一起开始赚钱",
+    "allRightsReserved": "版权所有。",
+    "highlyRegulated": "高度监管与安全"
   }
 }

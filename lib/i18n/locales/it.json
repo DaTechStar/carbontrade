@@ -365,5 +365,38 @@
       "title2": "Domina il Trading",
       "desc": "Potenzia il tuo futuro finanziario. Esplora i vantaggi strutturali degli spread zero ECN, il mirroring delle operazioni inverse e i controlli di slippage sicuri."
     }
+  },
+  "auth": {
+    "register": {
+      "title": "Crea un Account",
+      "subtitle": "Unisciti alla nuova generazione di trading ecosostenibile.",
+      "username": "Nome utente",
+      "email": "Indirizzo Email",
+      "country": "Paese di residenza",
+      "countryPlaceholder": "Seleziona un paese...",
+      "searchCountry": "Cerca paese...",
+      "password": "Password",
+      "confirmPassword": "Conferma Password",
+      "acceptTerms": "Accetto i Termini di Servizio e l'Informativa sulla Privacy.",
+      "submit": "Crea Account",
+      "submitting": "Creazione account...",
+      "alreadyHaveAccount": "Hai già un account?",
+      "loginLink": "Accedi"
+    },
+    "login": {
+      "title": "Bentornato",
+      "subtitle": "Accedi per visualizzare la tua dashboard di trading.",
+      "identifier": "Email o Nome utente",
+      "password": "Password",
+      "rememberMe": "Ricordami per 30 giorni",
+      "forgotPassword": "Password dimenticata?",
+      "submit": "Accedi",
+      "submitting": "Accesso in corso...",
+      "noAccount": "Non hai un account?",
+      "registerLink": "Iscriviti"
+    },
+    "heroText": "Unisciti a Interactive {{name}} oggi e inizia a guadagnare con trader esperti in Azioni, ETF, Opzioni, Reddito Fisso e Futures",
+    "allRightsReserved": "Tutti i diritti riservati.",
+    "highlyRegulated": "Altamente Regolamentato e Sicuro"
   }
 }
