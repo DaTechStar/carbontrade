@@ -13,9 +13,11 @@ import {
   ArrowDownToLine,
   ArrowUpFromLine,
   History,
+  Settings,
   LogOut,
   ChevronLeft,
   ChevronRight,
+  ShieldCheck,
 } from "lucide-react"
 import {
   AlertDialog,
@@ -43,9 +45,11 @@ interface AdminSidebarProps {
 const navItems = [
   { name: "Overview", href: "/admin", icon: LayoutDashboard },
   { name: "Users", href: "/admin/users", icon: Users },
+  { name: "KYC Reviews", href: "/admin/kyc", icon: ShieldCheck },
   { name: "Deposits", href: "/admin/deposits", icon: ArrowDownToLine },
   { name: "Withdrawals", href: "/admin/withdrawals", icon: ArrowUpFromLine },
   { name: "History", href: "/admin/history", icon: History },
+  { name: "Settings", href: "/admin/settings", icon: Settings },
 ]
 
 export function AdminSidebar({
@@ -75,7 +79,7 @@ export function AdminSidebar({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setMobileOpen(false)}
-            className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-30 bg-background/80 backdrop-blur-sm lg:hidden"
           />
         )}
       </AnimatePresence>

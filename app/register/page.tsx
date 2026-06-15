@@ -51,6 +51,7 @@ const registerSchema = z
     acceptTerms: z.boolean().refine((val) => val === true, {
       message: "You must accept the terms and conditions",
     }),
+    referralId: z.string().optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -94,6 +95,7 @@ function RegisterContent() {
       password: "",
       confirmPassword: "",
       country: "",
+      referralId: referredBy || "",
       acceptTerms: false,
     },
   })
@@ -145,7 +147,7 @@ function RegisterContent() {
           email: values.email,
           password: values.password,
           country: values.country,
-          referredBy: referredBy || undefined,
+          referredBy: values.referralId || undefined,
         }),
       })
 
@@ -344,6 +346,27 @@ function RegisterContent() {
                         onValueChange={field.onChange}
                         disabled={loadingCountries || errorCountries}
                         className="rounded-lg border-border bg-muted/40 text-foreground"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Referral ID Optional Field */}
+              <FormField
+                control={form.control}
+                name="referralId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-foreground/80">
+                      Referral ID (Optional)
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter referral username if you have one"
+                        className="h-11 rounded-lg border-border bg-muted/40 px-3.5 text-foreground focus-visible:border-primary focus-visible:ring-primary/20"
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />

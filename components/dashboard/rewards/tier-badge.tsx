@@ -38,7 +38,7 @@ export function TierBadge({
       />
       {active && (
         <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full border-2 border-background bg-profit">
-          <Check className="h-2.5 w-2.5 text-white" />
+          <Check className="h-2.5 w-2.5 text-primary-foreground" />
         </span>
       )}
     </div>

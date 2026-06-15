@@ -2,6 +2,11 @@ import { NextResponse } from "next/server"
 import { auth } from "@/auth"
 import connectToDatabase from "@/lib/db"
 import { User, Trader, CopyPosition } from "@/lib/models"
+import { Resend } from "resend"
+import { render } from "@react-email/render"
+import TradeExecutedEmail from "@/emails/trade-executed"
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
   try {
@@ -79,6 +84,40 @@ export async function POST(req: Request) {
         currentProfit: 0,
         status: "active",
       })
+    }
+
+    // --- Email Notification Logic ---
+    const sendTradeAlerts =
+      (user as any).notificationPreferences?.tradeExecution ?? true
+
+    if (sendTradeAlerts && process.env.RESEND_API_KEY) {
+      try {
+        const emailHtml = await render(
+          TradeExecutedEmail({
+            name: user.name || "User",
+            traderName: trader.name,
+            asset: "USD",
+            action: "Opened",
+            amount: `$${amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+          })
+        )
+
+        const fromEmail =
+          process.env.RESEND_FROM_EMAIL ||
+          "CarbonTrade <noreply@carbontrade.com>"
+
+        // We don't await this to avoid blocking the HTTP response
+        resend.emails
+          .send({
+            from: fromEmail,
+            to: user.email,
+            subject: `Trade Opened: Copied ${trader.name}`,
+            html: emailHtml,
+          })
+          .catch((err) => console.error("Resend non-fatal error:", err))
+      } catch (emailErr) {
+        console.error("Failed to render/send trade email:", emailErr)
+      }
     }
 
     return NextResponse.json(

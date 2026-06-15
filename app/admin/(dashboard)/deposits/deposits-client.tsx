@@ -25,11 +25,14 @@ export default function DepositsClient({
 }: {
   initialDeposits: Transaction[]
 }) {
-  const [loadingId, setLoadingId] = useState<string | null>(null)
+  const [loadingState, setLoadingState] = useState<{
+    id: string
+    action: "approve" | "reject"
+  } | null>(null)
   const [previewImage, setPreviewImage] = useState<string | null>(null)
 
   async function handleProcess(id: string, action: "approve" | "reject") {
-    setLoadingId(id)
+    setLoadingState({ id, action })
     try {
       await processTransaction(id, action)
       toast.success(
@@ -38,13 +41,13 @@ export default function DepositsClient({
     } catch (e) {
       toast.error(`Failed to ${action} deposit`)
     } finally {
-      setLoadingId(null)
+      setLoadingState(null)
     }
   }
 
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-card">
-      <div className="overflow-x-auto">
+      <div className="hidden overflow-x-auto md:block">
         <table className="w-full text-left text-sm">
           <thead className="border-b border-border bg-muted/50 text-xs text-muted-foreground uppercase">
             <tr>
@@ -98,6 +101,7 @@ export default function DepositsClient({
                           src={dep.proofImageUrl || dep.proofImage || ""}
                           alt="Proof"
                           fill
+                          sizes="48px"
                           className="object-cover"
                         />
                       </div>
@@ -126,10 +130,11 @@ export default function DepositsClient({
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <button
-                          disabled={loadingId !== null}
+                          disabled={loadingState !== null}
                           className="inline-flex items-center justify-center rounded-lg border border-profit/20 bg-profit-bg px-3 py-1.5 text-xs font-bold text-profit transition-colors hover:bg-profit/20 disabled:opacity-50"
                         >
-                          {loadingId === dep.id ? (
+                          {loadingState?.id === dep.id &&
+                          loadingState.action === "approve" ? (
                             <Loader2 className="h-3.5 w-3.5 animate-spin" />
                           ) : (
                             "Approve"
@@ -152,7 +157,7 @@ export default function DepositsClient({
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction
                             onClick={() => handleProcess(dep.id, "approve")}
-                            className="border-none bg-profit text-white hover:opacity-90"
+                            className="border-none bg-profit text-primary-foreground hover:opacity-90"
                           >
                             Yes, Approve
                           </AlertDialogAction>
@@ -163,10 +168,11 @@ export default function DepositsClient({
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <button
-                          disabled={loadingId !== null}
+                          disabled={loadingState !== null}
                           className="inline-flex items-center justify-center rounded-lg border border-loss/20 bg-loss-bg px-3 py-1.5 text-xs font-bold text-loss transition-colors hover:bg-loss/20 disabled:opacity-50"
                         >
-                          {loadingId === dep.id ? (
+                          {loadingState?.id === dep.id &&
+                          loadingState.action === "reject" ? (
                             <Loader2 className="h-3.5 w-3.5 animate-spin" />
                           ) : (
                             "Decline"
@@ -185,7 +191,7 @@ export default function DepositsClient({
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction
                             onClick={() => handleProcess(dep.id, "reject")}
-                            className="border-none bg-loss text-white hover:opacity-90"
+                            className="border-none bg-loss text-primary-foreground hover:opacity-90"
                           >
                             Yes, Decline
                           </AlertDialogAction>
@@ -210,10 +216,165 @@ export default function DepositsClient({
         </table>
       </div>
 
+      {/* Mobile View */}
+      <div className="flex flex-col gap-4 p-4 md:hidden">
+        {initialDeposits.length === 0 ? (
+          <div className="py-8">
+            <EmptyState
+              title="No pending deposits"
+              description="There are currently no pending deposits to approve."
+            />
+          </div>
+        ) : (
+          initialDeposits.map((dep) => (
+            <div
+              key={`mobile-${dep.id}`}
+              className="flex flex-col gap-3 rounded-xl border border-border bg-muted/20 p-4"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex flex-col">
+                  {dep.user ? (
+                    <>
+                      <span className="font-bold text-foreground">
+                        {dep.user.name}
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        @{dep.user.username}
+                      </span>
+                    </>
+                  ) : (
+                    <span className="text-muted-foreground italic">
+                      Deleted User
+                    </span>
+                  )}
+                </div>
+                <span className="rounded-lg border border-warning/30 bg-warning/10 px-2.5 py-1 text-[10px] font-semibold tracking-wider text-warning uppercase">
+                  Deposit
+                </span>
+              </div>
+
+              <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
+                <div>
+                  <p className="text-xs text-muted-foreground">Amount</p>
+                  <p className="font-mono font-bold text-profit">
+                    {formatCurrency(dep.amount)}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">Date</p>
+                  <p className="mt-0.5 text-xs text-foreground/80">
+                    {new Date(dep.createdAt).toLocaleString()}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">Method</p>
+                  <span className="mt-1 inline-block rounded-lg border border-border bg-muted px-2 py-0.5 text-[10px] font-semibold tracking-wider text-foreground/80 uppercase">
+                    {dep.asset || dep.paymentMethod || "Crypto"}
+                  </span>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">Proof</p>
+                  {dep.proofImageUrl || dep.proofImage ? (
+                    <button
+                      onClick={() =>
+                        setPreviewImage(
+                          dep.proofImageUrl || dep.proofImage || null
+                        )
+                      }
+                      className="mt-1 text-xs font-semibold text-primary hover:underline"
+                    >
+                      View Image
+                    </button>
+                  ) : (
+                    <span className="mt-1 block text-xs text-muted-foreground italic">
+                      No image
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div className="mt-2 flex justify-end gap-2 border-t border-border/50 pt-3">
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <button
+                      disabled={loadingState !== null}
+                      className="inline-flex items-center justify-center rounded-lg border border-profit/20 bg-profit-bg px-3 py-1.5 text-xs font-bold text-profit transition-colors hover:bg-profit/20 disabled:opacity-50"
+                    >
+                      {loadingState?.id === dep.id &&
+                      loadingState.action === "approve" ? (
+                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      ) : (
+                        "Approve"
+                      )}
+                    </button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Approve Deposit?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This will approve the deposit of{" "}
+                        <strong className="text-foreground">
+                          {formatCurrency(dep.amount)}
+                        </strong>{" "}
+                        for {dep.user?.name}. Their account balance will be
+                        credited immediately.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => handleProcess(dep.id, "approve")}
+                        className="border-none bg-profit text-primary-foreground hover:opacity-90"
+                      >
+                        Yes, Approve
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <button
+                      disabled={loadingState !== null}
+                      className="inline-flex items-center justify-center rounded-lg border border-loss/20 bg-loss-bg px-3 py-1.5 text-xs font-bold text-loss transition-colors hover:bg-loss/20 disabled:opacity-50"
+                    >
+                      {loadingState?.id === dep.id &&
+                      loadingState.action === "reject" ? (
+                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      ) : (
+                        "Decline"
+                      )}
+                    </button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Decline Deposit?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This will reject the deposit. The user will not receive
+                        the funds.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => handleProcess(dep.id, "reject")}
+                        className="border-none bg-loss text-primary-foreground hover:opacity-90"
+                      >
+                        Yes, Decline
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
       {/* Image Modal */}
       {previewImage && (
         <div
-          className="fixed inset-0 z-[100] flex animate-in items-center justify-center bg-black/80 p-4 backdrop-blur-sm duration-200 fade-in"
+          className="fixed inset-0 z-[100] flex animate-in items-center justify-center bg-background/80 p-4 backdrop-blur-sm duration-200 fade-in"
           onClick={() => setPreviewImage(null)}
         >
           <div
@@ -232,7 +393,7 @@ export default function DepositsClient({
                 <X className="h-4 w-4" />
               </button>
             </div>
-            <div className="relative flex min-h-[300px] w-full justify-center overflow-auto bg-black/20 p-4">
+            <div className="relative flex min-h-[300px] w-full justify-center overflow-auto bg-background/80 p-4">
               <Image
                 src={previewImage}
                 alt="Payment Proof Full"

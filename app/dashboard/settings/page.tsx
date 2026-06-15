@@ -1,6 +1,6 @@
 import { auth } from "@/auth"
 import connectToDatabase from "@/lib/db"
-import { User } from "@/lib/models"
+import { User, DeviceSession } from "@/lib/models"
 import SettingsClient from "./settings-client"
 import { redirect } from "next/navigation"
 
@@ -31,7 +31,32 @@ export default async function SettingsPage() {
     phoneNumber: (user as any).phoneNumber || "",
     dateOfBirth: (user as any).dateOfBirth || "",
     bio: (user as any).bio || "",
+    notificationPreferences: (user as any).notificationPreferences || null,
+    kycStatus: (user as any).kycStatus || "unverified",
+    kycDocumentUrlFront: (user as any).kycDocumentUrlFront || null,
+    kycDocumentUrlBack: (user as any).kycDocumentUrlBack || null,
   }
 
-  return <SettingsClient initialUser={serializedUser} />
+  const deviceSessions = await DeviceSession.find({
+    userId: session.user.id,
+    isActive: true,
+  })
+    .sort({ lastActiveAt: -1 })
+    .lean()
+
+  const serializedSessions = deviceSessions.map((s) => ({
+    id: s._id.toString(),
+    userAgent: s.userAgent,
+    ipAddress: s.ipAddress,
+    location: s.location || "Unknown Location",
+    lastActiveAt: s.lastActiveAt ? s.lastActiveAt.toISOString() : "",
+    current: s._id.toString() === (session.user as any).sessionId,
+  }))
+
+  return (
+    <SettingsClient
+      initialUser={serializedUser}
+      initialSessions={serializedSessions}
+    />
+  )
 }

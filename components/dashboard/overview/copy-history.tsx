@@ -48,61 +48,118 @@ export function CopyHistory({
           description="Start by copying a trader."
         />
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[460px] text-xs">
-            <thead>
-              <tr className="border-b border-border/30">
-                {["Trader", "Invested", "PnL", "Status", "Date"].map((h) => (
-                  <th
-                    key={h}
-                    className="px-1 pb-2 text-left text-[9px] font-bold tracking-wider text-muted-foreground uppercase first:pl-0"
-                  >
-                    {h}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((t) => (
-                <tr
-                  key={t.id}
-                  className="border-b border-border/20 transition-colors hover:bg-accent/30"
-                >
-                  <td className="px-1 py-2.5 font-semibold first:pl-0">
-                    {(t.trader as any)?.name || "Unknown"}
-                  </td>
-                  <td className="px-1 py-2.5 font-mono text-muted-foreground">
-                    {formatCurrency(t.investedAmount)}
-                  </td>
-                  <td
-                    className={cn(
-                      "px-1 py-2.5 font-bold",
-                      t.currentProfit >= 0 ? "text-profit" : "text-loss"
-                    )}
-                  >
-                    {t.currentProfit >= 0 ? "+" : ""}
-                    {formatCurrency(t.currentProfit)}
-                  </td>
-                  <td className="px-1 py-2.5">
-                    <Badge
-                      variant={t.status === "active" ? "success" : "default"}
-                      dot
-                      size="sm"
+        <>
+          <div className="hidden overflow-x-auto md:block">
+            <table className="w-full min-w-[460px] text-xs">
+              <thead>
+                <tr className="border-b border-border/30">
+                  {["Trader", "Invested", "PnL", "Status", "Date"].map((h) => (
+                    <th
+                      key={h}
+                      className="px-1 pb-2 text-left text-[9px] font-bold tracking-wider text-muted-foreground uppercase first:pl-0"
                     >
-                      {t.status}
-                    </Badge>
-                  </td>
-                  <td className="px-1 py-2.5 text-muted-foreground">
-                    {new Date(t.createdAt).toLocaleDateString("en", {
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </td>
+                      {h}
+                    </th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {rows.map((t) => (
+                  <tr
+                    key={t.id}
+                    className="border-b border-border/20 transition-colors hover:bg-accent/30"
+                  >
+                    <td className="px-1 py-2.5 font-semibold first:pl-0">
+                      {(t.trader as any)?.name || "Unknown"}
+                    </td>
+                    <td className="px-1 py-2.5 font-mono text-muted-foreground">
+                      {formatCurrency(t.investedAmount)}
+                    </td>
+                    <td
+                      className={cn(
+                        "px-1 py-2.5 font-bold",
+                        t.currentProfit >= 0 ? "text-profit" : "text-loss"
+                      )}
+                    >
+                      {t.currentProfit >= 0 ? "+" : ""}
+                      {formatCurrency(t.currentProfit)}
+                    </td>
+                    <td className="px-1 py-2.5">
+                      <Badge
+                        variant={t.status === "active" ? "success" : "default"}
+                        dot
+                        size="sm"
+                      >
+                        {t.status}
+                      </Badge>
+                    </td>
+                    <td className="px-1 py-2.5 text-muted-foreground">
+                      {new Date(t.createdAt).toLocaleDateString("en", {
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile View */}
+          <div className="mt-2 flex flex-col gap-3 md:hidden">
+            {rows.map((t) => (
+              <div
+                key={`mobile-${t.id}`}
+                className="flex flex-col gap-2 rounded-xl border border-border/50 bg-muted/20 p-3"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-semibold">
+                    {(t.trader as any)?.name || "Unknown"}
+                  </span>
+                  <Badge
+                    variant={t.status === "active" ? "success" : "default"}
+                    dot
+                    size="sm"
+                  >
+                    {t.status}
+                  </Badge>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div>
+                    <p className="text-[10px] text-muted-foreground">
+                      Invested
+                    </p>
+                    <p className="font-mono text-foreground/80">
+                      {formatCurrency(t.investedAmount)}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-muted-foreground">PnL</p>
+                    <p
+                      className={cn(
+                        "font-bold",
+                        t.currentProfit >= 0 ? "text-profit" : "text-loss"
+                      )}
+                    >
+                      {t.currentProfit >= 0 ? "+" : ""}
+                      {formatCurrency(t.currentProfit)}
+                    </p>
+                  </div>
+                  <div className="col-span-2">
+                    <p className="text-[10px] text-muted-foreground">Date</p>
+                    <p className="text-muted-foreground">
+                      {new Date(t.createdAt).toLocaleDateString("en", {
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </Card>
   )

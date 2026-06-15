@@ -21,7 +21,7 @@ export default function HistoryClient({
 
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-card">
-      <div className="overflow-x-auto">
+      <div className="hidden overflow-x-auto md:block">
         <table className="w-full text-left text-sm">
           <thead className="border-b border-border bg-muted/50 text-xs text-muted-foreground uppercase">
             <tr>
@@ -161,10 +161,125 @@ export default function HistoryClient({
         </table>
       </div>
 
+      {/* Mobile View */}
+      <div className="flex flex-col gap-4 p-4 md:hidden">
+        {initialData.length === 0 ? (
+          <div className="py-8">
+            <EmptyState
+              title="No resolved transactions"
+              description="Approved and rejected transactions will appear here."
+            />
+          </div>
+        ) : (
+          initialData.map((tx) => (
+            <div
+              key={`mobile-${tx.id}`}
+              className="flex flex-col gap-3 rounded-xl border border-border bg-muted/20 p-4"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex flex-col">
+                  {tx.user ? (
+                    <>
+                      <span className="font-bold text-foreground">
+                        {tx.user.name}
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        @{tx.user.username}
+                      </span>
+                    </>
+                  ) : (
+                    <span className="text-muted-foreground italic">
+                      Deleted User
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-col items-end gap-1">
+                  {tx.type === "deposit" ? (
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-profit/20 bg-profit-bg px-2.5 py-1 text-[10px] font-bold text-profit">
+                      <ArrowDownToLine className="h-3 w-3" />
+                      Deposit
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-warning/20 bg-warning-bg px-2.5 py-1 text-[10px] font-bold text-warning">
+                      <ArrowUpFromLine className="h-3 w-3" />
+                      Withdrawal
+                    </span>
+                  )}
+                  {tx.status === "completed" ? (
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-profit/20 bg-profit-bg px-2.5 py-1 text-[10px] font-bold text-profit">
+                      <span className="h-1.5 w-1.5 rounded-full bg-profit" />
+                      Approved
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-loss/20 bg-loss-bg px-2.5 py-1 text-[10px] font-bold text-loss">
+                      <span className="h-1.5 w-1.5 rounded-full bg-loss" />
+                      Rejected
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
+                <div>
+                  <p className="text-xs text-muted-foreground">Amount</p>
+                  <p className="font-mono font-bold text-foreground">
+                    {formatCurrency(tx.amount)}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">Date</p>
+                  <p className="mt-0.5 text-xs text-foreground/80">
+                    {new Date(tx.createdAt).toLocaleString()}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">
+                    Method / Asset
+                  </p>
+                  <span className="mt-1 inline-block rounded-md border border-border bg-muted px-2 py-0.5 text-[9px] font-semibold tracking-wider text-foreground/80 uppercase">
+                    {tx.asset || tx.paymentMethod || "Crypto"}
+                  </span>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">
+                    Details / Proof
+                  </p>
+                  {tx.type === "deposit" ? (
+                    tx.proofImageUrl || tx.proofImage ? (
+                      <button
+                        onClick={() =>
+                          setPreviewImage(
+                            tx.proofImageUrl || tx.proofImage || null
+                          )
+                        }
+                        className="mt-1 text-xs font-semibold text-primary hover:underline"
+                      >
+                        View Proof
+                      </button>
+                    ) : (
+                      <span className="mt-1 block text-xs text-muted-foreground italic">
+                        No image
+                      </span>
+                    )
+                  ) : (
+                    <div
+                      className="mt-1 max-w-[120px] truncate rounded-lg border border-border bg-muted px-2 py-1 font-mono text-[10px] text-foreground/80"
+                      title={tx.paymentMethod || "N/A"}
+                    >
+                      {tx.paymentMethod || "N/A"}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
       {/* Image Modal */}
       {previewImage && (
         <div
-          className="fixed inset-0 z-[100] flex animate-in items-center justify-center bg-black/80 p-4 backdrop-blur-sm duration-200 fade-in"
+          className="fixed inset-0 z-[100] flex animate-in items-center justify-center bg-background/80 p-4 backdrop-blur-sm duration-200 fade-in"
           onClick={() => setPreviewImage(null)}
         >
           <div
@@ -183,7 +298,7 @@ export default function HistoryClient({
                 <X className="h-4 w-4" />
               </button>
             </div>
-            <div className="relative flex min-h-[300px] w-full justify-center overflow-auto bg-black/20 p-4">
+            <div className="relative flex min-h-[300px] w-full justify-center overflow-auto bg-background/80 p-4">
               <Image
                 src={previewImage}
                 alt="Payment Proof Full"

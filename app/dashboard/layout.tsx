@@ -75,6 +75,7 @@ function ProfileDropdown() {
               src={session.user.image}
               alt={name}
               fill
+              sizes="32px"
               className="object-cover"
             />
           ) : (

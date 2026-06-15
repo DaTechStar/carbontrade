@@ -4,7 +4,10 @@ import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { ArrowUpRight, ShieldCheck } from "lucide-react"
+import { ArrowUpRight, ShieldCheck, Loader2, AlertCircle } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
+import Link from "next/link"
 
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -35,11 +38,20 @@ const METHODS = [
   { value: "USDT_ERC20", label: "USDT (ERC20)" },
 ]
 
-export function WithdrawForm() {
+export function WithdrawForm({
+  kycStatus = "unverified",
+}: {
+  kycStatus?: string
+}) {
+  const router = useRouter()
   const [rates, setRates] = useState<{ BTC: number; ETH: number }>({
     BTC: 65000,
     ETH: 3500,
   })
+
+  const [isRequestingOtp, setIsRequestingOtp] = useState(false)
+  const [otpCooldown, setOtpCooldown] = useState(0)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     async function fetchRates() {
@@ -65,6 +77,13 @@ export function WithdrawForm() {
     return () => clearInterval(interval)
   }, [])
 
+  useEffect(() => {
+    if (otpCooldown > 0) {
+      const timer = setTimeout(() => setOtpCooldown(otpCooldown - 1), 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [otpCooldown])
+
   const form = useForm<z.infer<typeof withdrawSchema>>({
     resolver: zodResolver(withdrawSchema),
     defaultValues: {
@@ -76,13 +95,69 @@ export function WithdrawForm() {
     },
   })
 
-  const onSubmit = () => {
-    alert("Withdrawal requested!")
-    form.reset()
-  }
-
   const amountValue = form.watch("amount")
   const methodValue = form.watch("method")
+
+  const handleRequestOtp = async () => {
+    const amount = Number(form.getValues("amount"))
+    const method = form.getValues("method")
+
+    if (!amount || amount < 10) {
+      toast.error(
+        "Please enter a valid amount (minimum 10 USD) before requesting OTP."
+      )
+      return
+    }
+
+    setIsRequestingOtp(true)
+    try {
+      const res = await fetch("/api/withdraw/otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount, method }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to request OTP")
+      }
+
+      toast.success("OTP sent to your email address!")
+      setOtpCooldown(60)
+    } catch (error: any) {
+      toast.error(error.message)
+    } finally {
+      setIsRequestingOtp(false)
+    }
+  }
+
+  const onSubmit = async (values: z.infer<typeof withdrawSchema>) => {
+    setIsSubmitting(true)
+    try {
+      const res = await fetch("/api/withdraw/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to submit withdrawal")
+      }
+
+      toast.success("Withdrawal requested successfully!")
+      form.reset()
+      router.push("/dashboard/transactions")
+      router.refresh()
+    } catch (error: any) {
+      toast.error(error.message)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   const parsedAmount = Number(amountValue) || 0
 
   const cryptoAmount = parsedAmount
@@ -112,6 +187,27 @@ export function WithdrawForm() {
           </p>
         </div>
       </div>
+
+      {kycStatus !== "verified" && (
+        <div className="mb-6 flex gap-3 rounded-lg border border-loss/50 bg-loss/10 p-4 text-loss">
+          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+          <div className="flex flex-col gap-1">
+            <h5 className="leading-none font-bold tracking-tight">
+              KYC Verification Required
+            </h5>
+            <div className="text-sm opacity-90">
+              You must complete identity verification before you can withdraw
+              funds.{" "}
+              <Link
+                href="/dashboard/settings"
+                className="font-bold underline hover:opacity-80"
+              >
+                Complete KYC now
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
@@ -220,9 +316,17 @@ export function WithdrawForm() {
                   <Button
                     type="button"
                     variant="default"
+                    onClick={handleRequestOtp}
+                    disabled={isRequestingOtp || otpCooldown > 0}
                     className="h-11 shrink-0 px-4 font-bold"
                   >
-                    Request OTP
+                    {isRequestingOtp ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : otpCooldown > 0 ? (
+                      `Resend in ${otpCooldown}s`
+                    ) : (
+                      "Request OTP"
+                    )}
                   </Button>
                 </div>
                 <FormMessage />
@@ -243,12 +347,18 @@ export function WithdrawForm() {
 
           <Button
             type="submit"
-            className="group/btn relative mt-4 h-12 w-full overflow-hidden border-none bg-gradient-to-r from-primary to-secondary text-base font-bold text-primary-foreground shadow-lg transition-all hover:opacity-90"
+            disabled={isSubmitting || kycStatus !== "verified"}
+            className="group/btn relative mt-4 h-12 w-full overflow-hidden border-none bg-gradient-to-r from-primary to-secondary text-base font-bold text-primary-foreground shadow-lg transition-all hover:opacity-90 disabled:opacity-50"
           >
             <span className="relative z-10 flex items-center gap-2">
-              <ShieldCheck className="h-4 w-4" /> Review & Withdraw
+              {isSubmitting ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <ShieldCheck className="h-4 w-4" />
+              )}
+              {isSubmitting ? "Processing..." : "Review & Withdraw"}
             </span>
-            <div className="absolute inset-0 translate-y-full bg-white/20 transition-transform duration-300 ease-out group-hover/btn:translate-y-0" />
+            <div className="absolute inset-0 translate-y-full bg-background/20 transition-transform duration-300 ease-out group-hover/btn:translate-y-0" />
           </Button>
         </form>
       </Form>

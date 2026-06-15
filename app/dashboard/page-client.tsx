@@ -37,6 +37,7 @@ interface DashboardClientProps {
   copyPositions: CopyPosition[]
   recentTransactions: Transaction[]
   topTraders: Trader[]
+  kycStatus?: string
 }
 
 const fu = (delay = 0) => ({
@@ -50,13 +51,14 @@ export default function DashboardPage({
   copyPositions: initialPositions,
   recentTransactions: initialTx,
   topTraders: initialTraders,
+  kycStatus = "unverified",
 }: DashboardClientProps) {
   const { data: session } = useSession()
   const displayName =
     (session?.user as any)?.username || session?.user?.name || "User"
   const [banners, setBanners] = useState({
     balance: initialStats.equity === 0,
-    kyc: true,
+    kyc: kycStatus !== "verified",
   })
   const { handleCopy } = useCopyTrader()
 

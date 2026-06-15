@@ -72,7 +72,7 @@ export default function MarketsPage() {
       </section>
 
       {/* Dynamic Asset Classes Cards (Forex, Crypto, Indices, Stocks, Commodities) */}
-      <section className="relative border-t border-border/10 bg-black/20 py-20">
+      <section className="relative border-t border-border/10 bg-background/80 py-20">
         <div className="container mx-auto px-4">
           <div className="mx-auto mb-16 max-w-2xl text-center">
             <h2 className="mb-4 text-3xl font-bold md:text-5xl">
@@ -117,7 +117,7 @@ export default function MarketsPage() {
                 spreads: t("markets.cards.stocks.spreads"),
                 instruments: t("markets.cards.stocks.instruments"),
                 icon: Briefcase,
-                color: "text-white",
+                color: "text-primary-foreground",
               },
               {
                 title: t("markets.cards.commodities.title"),
@@ -143,7 +143,7 @@ export default function MarketsPage() {
                   <div>
                     <div className="mb-6 flex items-start justify-between">
                       <div
-                        className={`flex items-center justify-center rounded-2xl border border-white/5 bg-white/5 p-3 ${item.color}`}
+                        className={`flex items-center justify-center rounded-2xl border border-white/5 bg-background/5 p-3 ${item.color}`}
                       >
                         <Icon className="h-6 w-6" />
                       </div>
@@ -261,7 +261,7 @@ export default function MarketsPage() {
             ].map((text, idx) => (
               <div
                 key={idx}
-                className="flex items-center gap-3 rounded-2xl border border-white/5 bg-white/5 p-4"
+                className="flex items-center gap-3 rounded-2xl border border-white/5 bg-background/5 p-4"
               >
                 <CheckCircle2 className="h-5 w-5 shrink-0 text-primary" />
                 <span className="text-xs font-bold text-foreground">

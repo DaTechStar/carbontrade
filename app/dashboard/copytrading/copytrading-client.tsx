@@ -53,7 +53,7 @@ function HistoryTable({ trades }: { trades: HistoryItem[] }) {
           </h2>
         </div>
 
-        <div className="overflow-x-auto">
+        <div className="hidden overflow-x-auto md:block">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border/20">
@@ -122,6 +122,69 @@ function HistoryTable({ trades }: { trades: HistoryItem[] }) {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile View */}
+        <div className="flex flex-col gap-4 p-4 md:hidden">
+          {trades.length === 0 ? (
+            <div className="py-8 text-center text-sm text-muted-foreground">
+              <div className="flex flex-col items-center gap-2">
+                <BarChart2 className="h-8 w-8 opacity-20" />
+                <span>No copies yet.</span>
+              </div>
+            </div>
+          ) : (
+            trades.map((trade) => (
+              <div
+                key={`mobile-${trade._id}`}
+                className="flex flex-col gap-3 rounded-xl border border-border bg-muted/20 p-4"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-foreground">
+                    {trade.traderName ||
+                      (trade as any).trader?.name ||
+                      "Unknown"}
+                  </span>
+                  {trade.status === "active" ? (
+                    <span className="rounded-full border border-profit/20 bg-profit/10 px-2.5 py-1 text-[10px] font-bold text-profit">
+                      Active
+                    </span>
+                  ) : (
+                    <span className="rounded-full border border-border/30 bg-muted/30 px-2.5 py-1 text-[10px] font-bold text-muted-foreground capitalize">
+                      {trade.status}
+                    </span>
+                  )}
+                </div>
+
+                <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
+                  <div>
+                    <p className="text-xs text-muted-foreground">Invested</p>
+                    <p className="font-mono font-bold text-foreground">
+                      {formatCurrency(trade.investedAmount)}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">P&L</p>
+                    <p
+                      className={cn(
+                        "mt-0.5 font-mono font-bold",
+                        trade.currentProfit >= 0 ? "text-profit" : "text-loss"
+                      )}
+                    >
+                      {trade.currentProfit >= 0 ? "+" : ""}
+                      {formatCurrency(trade.currentProfit)}
+                    </p>
+                  </div>
+                  <div className="col-span-2">
+                    <p className="text-xs text-muted-foreground">Date</p>
+                    <p className="mt-0.5 text-xs text-foreground/80">
+                      {new Date(trade.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </Card>
     </motion.div>

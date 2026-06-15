@@ -320,7 +320,7 @@ export default function RewardsClient({
                   href="/dashboard/payments?tab=deposit"
                   className={cn(
                     "flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-black transition-all",
-                    "bg-gradient-to-r text-white shadow-md hover:opacity-90 active:scale-95",
+                    "bg-gradient-to-r text-primary-foreground shadow-md hover:opacity-90 active:scale-95",
                     nextTier.gradient
                   )}
                 >

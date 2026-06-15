@@ -91,7 +91,7 @@ export function TraderCard({
           <div className="flex items-center gap-3">
             {/* Avatar */}
             <div
-              className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl text-sm font-black text-white shadow-md"
+              className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl text-sm font-black text-primary-foreground shadow-md"
               style={{ background: trader.avatarColor || "#22c55e" }}
             >
               {trader.avatar?.startsWith("http") ? (

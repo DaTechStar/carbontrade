@@ -73,7 +73,7 @@ export default function TradingPage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="h-13 w-full rounded-2xl border-white/10 px-8 text-base font-bold hover:bg-white/5 sm:w-auto"
+                className="h-13 w-full rounded-2xl border-white/10 px-8 text-base font-bold hover:bg-background/5 sm:w-auto"
               >
                 {t("trading.hero.cta2")}
               </Button>
@@ -83,7 +83,7 @@ export default function TradingPage() {
       </section>
 
       {/* Latency Comparison Visual Showcase */}
-      <section className="relative border-t border-border/10 bg-black/20 py-20">
+      <section className="relative border-t border-border/10 bg-background/80 py-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
             {/* Visual speed timelines */}
@@ -105,7 +105,7 @@ export default function TradingPage() {
                 {/* CarbonTrade Metric */}
                 <div>
                   <div className="mb-2 flex items-center justify-between">
-                    <span className="flex items-center gap-1.5 text-sm font-bold text-white">
+                    <span className="flex items-center gap-1.5 text-sm font-bold text-primary-foreground">
                       <Sparkles className="h-4 w-4 animate-pulse text-primary" />
                       {t("trading.latency.carbonTitle")}
                     </span>
@@ -152,7 +152,7 @@ export default function TradingPage() {
                 </div>
               </div>
 
-              <div className="mt-8 rounded-2xl border border-white/5 bg-white/5 p-4 text-xs leading-relaxed text-muted-foreground">
+              <div className="mt-8 rounded-2xl border border-white/5 bg-background/5 p-4 text-xs leading-relaxed text-muted-foreground">
                 <strong>{t("trading.latency.noteTitle")}</strong>{" "}
                 {t("trading.latency.noteDesc")}
               </div>
@@ -196,7 +196,7 @@ export default function TradingPage() {
                       {idx + 1}
                     </div>
                     <div>
-                      <h4 className="mb-1 text-base font-bold text-white">
+                      <h4 className="mb-1 text-base font-bold text-primary-foreground">
                         {item.title}
                       </h4>
                       <p className="text-sm leading-relaxed text-muted-foreground">
@@ -231,7 +231,7 @@ export default function TradingPage() {
               <span className="pl-4 text-xs font-black tracking-widest text-muted-foreground uppercase">
                 {t("trading.spreads.badge")}
               </span>
-              <div className="flex gap-2 rounded-xl border border-white/10 bg-white/5 p-1">
+              <div className="flex gap-2 rounded-xl border border-white/10 bg-background/5 p-1">
                 <button
                   onClick={() => setActiveSpreadTab("ecn")}
                   className={`rounded-lg px-4 py-1.5 text-xs font-bold transition-all ${
@@ -293,9 +293,11 @@ export default function TradingPage() {
               ].map((item, idx) => (
                 <div
                   key={idx}
-                  className="grid grid-cols-1 items-center gap-4 p-6 transition-colors hover:bg-white/5 md:grid-cols-4"
+                  className="grid grid-cols-1 items-center gap-4 p-6 transition-colors hover:bg-background/5 md:grid-cols-4"
                 >
-                  <div className="font-bold text-white">{item.asset}</div>
+                  <div className="font-bold text-primary-foreground">
+                    {item.asset}
+                  </div>
 
                   <div>
                     <span className="mb-0.5 block text-xs tracking-widest text-zinc-500 uppercase">

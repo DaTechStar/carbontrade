@@ -28,15 +28,16 @@ const depositSchema = z.object({
   amount: z.coerce.number().min(50, "Minimum deposit is 50"),
 })
 
-const METHODS = [
-  { value: "USDC", label: "USDC" },
-  { value: "ETH", label: "ETHEREUM (ETH)" },
-  { value: "BTC", label: "BITCOIN (BTC)" },
-  { value: "USDT_TRC20", label: "USDT (TRC20)" },
-  { value: "USDT_ERC20", label: "USDT (ERC20)" },
-]
-
-export function DepositForm() {
+export function DepositForm({
+  paymentMethods = [],
+}: {
+  paymentMethods?: {
+    id: string
+    label: string
+    value: string
+    walletAddress: string
+  }[]
+}) {
   const router = useRouter()
   const [step, setStep] = useState<1 | 2>(1)
   const [copied, setCopied] = useState(false)
@@ -83,9 +84,12 @@ export function DepositForm() {
     setStep(2)
   }
 
-  const walletAddress = "0x26E70Bcac871E41612Ea0bB3905731C37"
   const amountValue = form.watch("amount")
   const methodValue = form.watch("method")
+
+  const selectedMethod =
+    paymentMethods.find((m) => m.value === methodValue) || paymentMethods[0]
+  const walletAddress = selectedMethod?.walletAddress || ""
   const parsedAmount = Number(amountValue) || 0
 
   const cryptoAmount = parsedAmount
@@ -139,7 +143,10 @@ export function DepositForm() {
                         <Select
                           value={field.value}
                           onValueChange={field.onChange}
-                          options={METHODS}
+                          options={paymentMethods.map((m) => ({
+                            value: m.value,
+                            label: m.label,
+                          }))}
                           className="h-11 bg-input/20"
                         />
                       </FormControl>
@@ -196,7 +203,7 @@ export function DepositForm() {
                 className="group/btn relative mt-4 h-12 w-full overflow-hidden border-none bg-gradient-to-r from-primary to-secondary text-base font-bold text-primary-foreground shadow-lg transition-all hover:opacity-90"
               >
                 <span className="relative z-10">Proceed to Deposit</span>
-                <div className="absolute inset-0 translate-y-full bg-white/20 transition-transform duration-300 ease-out group-hover/btn:translate-y-0" />
+                <div className="absolute inset-0 translate-y-full bg-background/20 transition-transform duration-300 ease-out group-hover/btn:translate-y-0" />
               </Button>
             </form>
           </Form>
@@ -222,7 +229,7 @@ export function DepositForm() {
             <p className="text-xl font-bold tracking-tight text-primary">
               {cryptoAmount}{" "}
               <span className="text-sm uppercase">
-                {METHODS.find((m) => m.value === methodValue)?.label}
+                {selectedMethod?.label || methodValue}
               </span>
             </p>
           </div>
@@ -248,7 +255,7 @@ export function DepositForm() {
             </div>
           </div>
 
-          <div className="mx-auto flex h-[180px] w-[180px] justify-center rounded-2xl border border-border/50 bg-white p-3">
+          <div className="mx-auto flex h-[180px] w-[180px] justify-center rounded-2xl border border-border/50 bg-background p-3">
             <QRCode
               value={walletAddress}
               size={150}
@@ -278,7 +285,7 @@ export function DepositForm() {
               }}
             />
             {fileBase64 && (
-              <div className="relative mt-4 flex h-48 items-center justify-center overflow-hidden rounded-xl border border-border/50 bg-black/10 p-2">
+              <div className="relative mt-4 flex h-48 items-center justify-center overflow-hidden rounded-xl border border-border/50 bg-background/80 p-2">
                 <Image
                   src={fileBase64}
                   alt="Payment Proof Preview"
@@ -291,7 +298,7 @@ export function DepositForm() {
 
           <div className="flex flex-col gap-3 pt-4">
             <Button
-              className="h-12 w-full bg-profit text-base font-bold text-white shadow-lg transition-all hover:bg-profit/90"
+              className="h-12 w-full bg-profit text-base font-bold text-primary-foreground shadow-lg transition-all hover:bg-profit/90"
               disabled={isSubmitting || !fileBase64}
               onClick={async () => {
                 setIsSubmitting(true)

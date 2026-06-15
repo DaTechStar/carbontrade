@@ -122,7 +122,7 @@ export default function LearnPage() {
             placeholder="Search tutorials, glossaries, guides..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="h-14 w-full rounded-2xl border border-white/10 bg-white/5 pr-4 pl-12 text-sm transition-colors focus:border-primary focus:outline-none"
+            className="h-14 w-full rounded-2xl border border-white/10 bg-background/5 pr-4 pl-12 text-sm transition-colors focus:border-primary focus:outline-none"
           />
         </div>
 
@@ -177,7 +177,7 @@ export default function LearnPage() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedGuide(null)}
-              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+              className="absolute inset-0 bg-background/80 backdrop-blur-md"
             />
 
             {/* Modal Box */}
@@ -190,20 +190,20 @@ export default function LearnPage() {
                   <span className="mb-1 block text-[10px] font-black tracking-widest text-primary uppercase">
                     {selectedGuide.category} • {selectedGuide.level}
                   </span>
-                  <h3 className="text-2xl font-black text-white">
+                  <h3 className="text-2xl font-black text-primary-foreground">
                     {selectedGuide.title}
                   </h3>
                 </div>
                 <button
                   onClick={() => setSelectedGuide(null)}
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 text-zinc-400 hover:text-white"
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-background/5 text-zinc-400 hover:text-primary-foreground"
                 >
                   <ChevronRight className="h-4 w-4 rotate-180" />
                 </button>
               </div>
 
               <div className="space-y-4 text-sm leading-relaxed text-zinc-300">
-                <p className="rounded-xl border border-white/5 bg-white/5 p-4 font-semibold text-zinc-400">
+                <p className="rounded-xl border border-white/5 bg-background/5 p-4 font-semibold text-zinc-400">
                   {selectedGuide.summary}
                 </p>
 

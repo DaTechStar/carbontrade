@@ -52,9 +52,14 @@ export default function AdminLoginPage() {
       })
 
       if (res?.error) {
-        const cleanError = res.error.replace("CredentialsSignin: ", "")
-        toast.error(cleanError)
-        setErrorMsg(cleanError)
+        const displayError =
+          res.error === "CredentialsSignin" ||
+          res.error.includes("CredentialsSignin")
+            ? "Invalid email or password. Please try again."
+            : res.error
+
+        toast.error(displayError)
+        setErrorMsg(displayError)
       } else {
         toast.success("Admin access granted.")
         router.push("/admin")

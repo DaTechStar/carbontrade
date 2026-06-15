@@ -53,7 +53,7 @@ export default function UsersClient({
 
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-card">
-      <div className="overflow-x-auto">
+      <div className="hidden overflow-x-auto md:block">
         <table className="w-full text-left text-sm">
           <thead className="border-b border-border bg-muted/50 text-xs text-muted-foreground uppercase">
             <tr>
@@ -149,6 +149,91 @@ export default function UsersClient({
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile View */}
+      <div className="flex flex-col gap-4 p-4 md:hidden">
+        {initialUsers.length === 0 ? (
+          <div className="py-8">
+            <EmptyState
+              title="No users found"
+              description="There are currently no registered users."
+            />
+          </div>
+        ) : (
+          initialUsers.map((user) => (
+            <div
+              key={`mobile-${user.id}`}
+              className="flex flex-col gap-3 rounded-xl border border-border bg-muted/20 p-4"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex flex-col">
+                  <span className="font-bold text-foreground">{user.name}</span>
+                  <span className="text-xs text-muted-foreground">
+                    @{user.username}
+                  </span>
+                </div>
+                {user.isActive ? (
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-profit/20 bg-profit-bg px-2.5 py-1 text-[10px] font-bold text-profit">
+                    <span className="h-1.5 w-1.5 rounded-full bg-profit" />
+                    Active
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-loss/20 bg-loss-bg px-2.5 py-1 text-[10px] font-bold text-loss">
+                    <span className="h-1.5 w-1.5 rounded-full bg-loss" />
+                    Banned
+                  </span>
+                )}
+              </div>
+
+              <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
+                <div>
+                  <p className="text-xs text-muted-foreground">Balance</p>
+                  <p className="font-mono font-bold text-foreground">
+                    {formatCurrency(user.balance)}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">Location</p>
+                  <p className="mt-0.5 flex items-center gap-1 text-xs text-foreground/80">
+                    {flags[user.country] && <span>{flags[user.country]}</span>}
+                    {user.country}
+                  </p>
+                </div>
+                <div className="col-span-2">
+                  <p className="text-xs text-muted-foreground">Contact</p>
+                  <p className="mt-0.5 text-xs text-foreground/80">
+                    {user.email}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {user.phoneNumber}
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-2 flex justify-end gap-2 border-t border-border/50 pt-3">
+                <button
+                  onClick={() => handleToggle(user.id, user.isActive)}
+                  disabled={loadingId === user.id}
+                  className={`inline-flex w-full items-center justify-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold transition-colors disabled:opacity-50 ${
+                    user.isActive
+                      ? "border border-loss/20 bg-loss-bg text-loss hover:bg-loss/20"
+                      : "border border-profit/20 bg-profit-bg text-profit hover:bg-profit/20"
+                  }`}
+                >
+                  {loadingId === user.id ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  ) : user.isActive ? (
+                    <Ban className="h-3.5 w-3.5" />
+                  ) : (
+                    <CheckCircle2 className="h-3.5 w-3.5" />
+                  )}
+                  {user.isActive ? "Ban User" : "Activate"}
+                </button>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   )

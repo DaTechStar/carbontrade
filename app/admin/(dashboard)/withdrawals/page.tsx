@@ -20,6 +20,7 @@ export default async function AdminWithdrawalsPage() {
     description: w.description || `Withdrawal via ${w.paymentMethod}`,
     amount: w.amount,
     currency: w.currency,
+    asset: w.asset,
     paymentMethod: w.paymentMethod, // Assuming payment details like wallet address are stored here
     createdAt: w.createdAt.toISOString(),
     user: w.userId

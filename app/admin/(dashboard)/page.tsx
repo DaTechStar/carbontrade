@@ -7,6 +7,7 @@ import {
   ArrowDownToLine,
 } from "lucide-react"
 import { siteConfig } from "@/config/site"
+import { RecentActivityTabs } from "@/components/admin/recent-activity-tabs"
 
 export default async function AdminOverviewPage() {
   await connectToDatabase()
@@ -27,6 +28,37 @@ export default async function AdminOverviewPage() {
     type: "withdrawal",
     status: "pending",
   })
+
+  // Fetch recent 5 for each
+  const recentDepositsData = await Transaction.find({
+    type: "deposit",
+    status: "pending",
+  })
+    .sort({ createdAt: -1 })
+    .limit(5)
+    .populate("userId", "name email")
+    .lean()
+
+  const recentWithdrawalsData = await Transaction.find({
+    type: "withdrawal",
+    status: "pending",
+  })
+    .sort({ createdAt: -1 })
+    .limit(5)
+    .populate("userId", "name email")
+    .lean()
+
+  const serializeTx = (t: any) => ({
+    id: t._id.toString(),
+    amount: t.amount,
+    paymentMethod: t.asset || t.paymentMethod || "Crypto",
+    proofImage: t.proofImageUrl || t.proofImage || null,
+    createdAt: t.createdAt.toISOString(),
+    user: t.userId ? { name: t.userId.name, email: t.userId.email } : undefined,
+  })
+
+  const recentDeposits = recentDepositsData.map(serializeTx)
+  const recentWithdrawals = recentWithdrawalsData.map(serializeTx)
 
   const stats = [
     {
@@ -93,24 +125,10 @@ export default async function AdminOverviewPage() {
         ))}
       </div>
 
-      {/* Quick Action links or latest activity could go here */}
-      <div className="mt-4 rounded-2xl border border-border bg-card p-6">
-        <h2 className="mb-4 text-lg font-bold text-foreground">Quick Links</h2>
-        <div className="flex flex-wrap gap-4">
-          <a
-            href="/admin/deposits"
-            className="rounded-lg border border-border bg-muted px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted/80"
-          >
-            Review Deposits ({pendingDeposits})
-          </a>
-          <a
-            href="/admin/withdrawals"
-            className="rounded-lg border border-border bg-muted px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted/80"
-          >
-            Review Withdrawals ({pendingWithdrawals})
-          </a>
-        </div>
-      </div>
+      <RecentActivityTabs
+        deposits={recentDeposits}
+        withdrawals={recentWithdrawals}
+      />
     </div>
   )
 }

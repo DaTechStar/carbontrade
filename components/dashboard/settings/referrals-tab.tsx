@@ -111,7 +111,7 @@ export function ReferralsTab() {
         <p className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
           Your Referrals
         </p>
-        <div className="overflow-x-auto">
+        <div className="hidden overflow-x-auto md:block">
           <table className="w-full min-w-[480px] text-sm">
             <thead>
               <tr className="border-b border-border/30">
@@ -187,6 +187,62 @@ export function ReferralsTab() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile View */}
+        <div className="mt-2 flex flex-col gap-3 md:hidden">
+          {isLoading && (
+            <div className="py-8 text-center text-xs text-muted-foreground">
+              <Loader2 className="mx-auto h-4 w-4 animate-spin" />
+            </div>
+          )}
+          {!isLoading && data?.referrals?.length === 0 && (
+            <div className="py-8 text-center text-xs text-muted-foreground">
+              No referrals yet. Share your link to start earning!
+            </div>
+          )}
+          {data?.referrals?.map((r: any) => (
+            <div
+              key={`mobile-${r.id}`}
+              className="flex flex-col gap-2 rounded-xl border border-border/50 bg-muted/20 p-3"
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-semibold">{r.name}</span>
+                <span
+                  className={cn(
+                    "rounded-full border px-2 py-0.5 text-[10px] font-bold",
+                    r.status === "active"
+                      ? "border-profit/20 bg-profit/10 text-profit"
+                      : "border-warning/20 bg-warning/10 text-warning"
+                  )}
+                >
+                  {r.status}
+                </span>
+              </div>
+              <div className="mt-1 grid grid-cols-2 gap-2 text-xs">
+                <div>
+                  <p className="text-[10px] text-muted-foreground">Level</p>
+                  <span className="rounded-full border border-border/30 bg-muted/30 px-2 py-0.5 text-[10px] font-bold text-muted-foreground">
+                    Level {r.level}
+                  </span>
+                </div>
+                <div>
+                  <p className="text-[10px] text-muted-foreground">Parent</p>
+                  <p className="mt-0.5 text-muted-foreground">{username}</p>
+                </div>
+                <div className="col-span-2 mt-1">
+                  <p className="text-[10px] text-muted-foreground">Date</p>
+                  <p className="mt-0.5 text-muted-foreground">
+                    {new Date(r.date).toLocaleDateString("en", {
+                      month: "short",
+                      day: "numeric",
+                      year: "2-digit",
+                    })}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </Card>
     </div>

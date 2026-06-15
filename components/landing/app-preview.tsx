@@ -133,13 +133,13 @@ export function AppPreview() {
 
                 {/* ── STATUS BAR ── */}
                 <div className="relative z-20 flex items-center justify-between px-6 pt-3 pb-1">
-                  <span className="text-[11px] font-semibold tracking-wide text-white">
+                  <span className="text-[11px] font-semibold tracking-wide text-primary-foreground">
                     9:41
                   </span>
                   <div className="flex items-center gap-1.5">
-                    <Signal className="h-3 w-3 text-white" />
-                    <Wifi className="h-3 w-3 text-white" />
-                    <Battery className="h-3.5 w-3.5 text-white" />
+                    <Signal className="h-3 w-3 text-primary-foreground" />
+                    <Wifi className="h-3 w-3 text-primary-foreground" />
+                    <Battery className="h-3.5 w-3.5 text-primary-foreground" />
                   </div>
                 </div>
 
@@ -204,7 +204,7 @@ export function AppPreview() {
                         repeatDelay: 2,
                         ease: "easeOut",
                       }}
-                      className="text-2xl font-black tracking-tight text-white"
+                      className="text-2xl font-black tracking-tight text-primary-foreground"
                     >
                       $12,450.00
                     </motion.p>
@@ -224,9 +224,9 @@ export function AppPreview() {
                     ].map((s, i) => (
                       <div
                         key={i}
-                        className="rounded-xl border border-white/5 bg-white/5 px-3 py-2 text-center"
+                        className="rounded-xl border border-white/5 bg-background/5 px-3 py-2 text-center"
                       >
-                        <p className="text-sm font-bold text-white">
+                        <p className="text-sm font-bold text-primary-foreground">
                           {s.value}
                         </p>
                         <p className="text-[9px] tracking-wider text-muted-foreground uppercase">
@@ -253,7 +253,7 @@ export function AppPreview() {
                         {/* Asset label row */}
                         <div className="flex items-center justify-between px-3 pt-2.5 pb-1">
                           <div className="flex items-center gap-1.5">
-                            <span className="text-[11px] font-bold text-white">
+                            <span className="text-[11px] font-bold text-primary-foreground">
                               {asset.label}
                             </span>
                             <span className="rounded-full bg-muted px-1.5 py-0.5 text-[8px] text-muted-foreground/60">
@@ -289,7 +289,7 @@ export function AppPreview() {
                 </div>
 
                 {/* ── HOME INDICATOR ── */}
-                <div className="absolute bottom-2 left-1/2 z-20 h-1 w-28 -translate-x-1/2 rounded-full bg-white/30" />
+                <div className="absolute bottom-2 left-1/2 z-20 h-1 w-28 -translate-x-1/2 rounded-full bg-background/30" />
               </div>
             </div>
           </motion.div>

@@ -16,10 +16,20 @@ export interface IUser extends Document {
   role: "USER" | "ADMIN"
   tierLevel: number
   country: string
+  kycStatus: "unverified" | "pending" | "verified" | "rejected"
+  kycDocumentUrlFront?: string
+  kycDocumentUrlBack?: string
   balances: {
     available: number
     invested: number
     totalProfit: number
+  }
+  notificationPreferences: {
+    tradeExecution: boolean
+    dailyPnL: boolean
+    transactionUpdates: boolean
+    tierUpdates: boolean
+    marketing: boolean
   }
   createdAt: Date
   updatedAt: Date
@@ -40,10 +50,24 @@ const UserSchema: Schema = new Schema(
     role: { type: String, enum: ["USER", "ADMIN"], default: "USER" },
     tierLevel: { type: Number, default: 1 },
     country: { type: String, default: "United States" },
+    kycStatus: {
+      type: String,
+      enum: ["unverified", "pending", "verified", "rejected"],
+      default: "unverified",
+    },
+    kycDocumentUrlFront: { type: String },
+    kycDocumentUrlBack: { type: String },
     balances: {
       available: { type: Number, default: 0 },
       invested: { type: Number, default: 0 },
       totalProfit: { type: Number, default: 0 },
+    },
+    notificationPreferences: {
+      tradeExecution: { type: Boolean, default: true },
+      dailyPnL: { type: Boolean, default: true },
+      transactionUpdates: { type: Boolean, default: true },
+      tierUpdates: { type: Boolean, default: true },
+      marketing: { type: Boolean, default: false },
     },
   },
   { timestamps: true }
@@ -116,6 +140,7 @@ export interface ITransaction extends Document {
   proofImageUrl?: string
   description: string
   asset?: string
+  paymentMethod?: string
   createdAt: Date
 }
 
@@ -143,6 +168,7 @@ const TransactionSchema: Schema = new Schema(
     proofImageUrl: { type: String },
     description: { type: String, required: true },
     asset: { type: String },
+    paymentMethod: { type: String },
   },
   { timestamps: true }
 )
@@ -170,6 +196,26 @@ const CopyPositionSchema: Schema = new Schema(
   { timestamps: true }
 )
 
+// ─── Otp Model ─────────────────────────────────────────────────────────────────
+
+export interface IOtp extends Document {
+  userId: mongoose.Types.ObjectId
+  code: string
+  purpose: "withdrawal" | "login"
+  expiresAt: Date
+  createdAt: Date
+}
+
+const OtpSchema: Schema = new Schema(
+  {
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    code: { type: String, required: true },
+    purpose: { type: String, required: true },
+    expiresAt: { type: Date, required: true },
+  },
+  { timestamps: true }
+)
+
 // ─── Exports ──────────────────────────────────────────────────────────────────
 
 export const User: Model<IUser> =
@@ -182,6 +228,8 @@ export const Transaction: Model<ITransaction> =
 export const CopyPosition: Model<ICopyPosition> =
   mongoose.models.CopyPosition ||
   mongoose.model<ICopyPosition>("CopyPosition", CopyPositionSchema)
+export const Otp: Model<IOtp> =
+  mongoose.models.Otp || mongoose.model<IOtp>("Otp", OtpSchema)
 
 // ─── AdminUser Model ─────────────────────────────────────────────────────────
 
@@ -211,3 +259,65 @@ const AdminUserSchema = new Schema<IAdminUser>(
 export const AdminUser =
   mongoose.models.AdminUser ||
   mongoose.model<IAdminUser>("AdminUser", AdminUserSchema)
+
+// ─── PlatformSettings Model ─────────────────────────────────────────────────
+
+export interface IPaymentMethod {
+  id: string
+  label: string
+  value: string
+  walletAddress: string
+  isActive: boolean
+}
+
+export interface IPlatformSettings extends Document {
+  paymentMethods: IPaymentMethod[]
+  updatedAt: Date
+}
+
+const PlatformSettingsSchema = new Schema<IPlatformSettings>(
+  {
+    paymentMethods: [
+      {
+        id: { type: String, required: true },
+        label: { type: String, required: true },
+        value: { type: String, required: true },
+        walletAddress: { type: String, required: true },
+        isActive: { type: Boolean, default: true },
+      },
+    ],
+  },
+  { timestamps: true }
+)
+
+export const PlatformSettings =
+  mongoose.models.PlatformSettings ||
+  mongoose.model<IPlatformSettings>("PlatformSettings", PlatformSettingsSchema)
+
+// ─── DeviceSession Model ───────────────────────────────────────────────────
+
+export interface IDeviceSession extends Document {
+  userId: mongoose.Types.ObjectId
+  userAgent: string
+  ipAddress: string
+  location?: string
+  isActive: boolean
+  lastActiveAt: Date
+  createdAt: Date
+}
+
+const DeviceSessionSchema = new Schema<IDeviceSession>(
+  {
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    userAgent: { type: String, required: true },
+    ipAddress: { type: String, required: true },
+    location: { type: String },
+    isActive: { type: Boolean, default: true },
+    lastActiveAt: { type: Date, default: Date.now },
+  },
+  { timestamps: true }
+)
+
+export const DeviceSession =
+  mongoose.models.DeviceSession ||
+  mongoose.model<IDeviceSession>("DeviceSession", DeviceSessionSchema)

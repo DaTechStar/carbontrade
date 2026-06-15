@@ -2,31 +2,40 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { User, Link2, Lock, ShieldCheck } from "lucide-react"
+import { User, Link2, Lock, ShieldCheck, FileCheck } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { ProfileTab } from "@/components/dashboard/settings/profile-tab"
 import { ReferralsTab } from "@/components/dashboard/settings/referrals-tab"
 import { PasswordTab } from "@/components/dashboard/settings/password-tab"
 import { SecurityTab } from "@/components/dashboard/settings/security-tab"
+import { KycTab } from "@/components/dashboard/settings/kyc-tab"
 
-type Tab = "profile" | "referrals" | "password" | "security"
+type Tab = "profile" | "referrals" | "password" | "security" | "kyc"
 
 const TABS: { id: Tab; label: string; icon: React.ElementType }[] = [
   { id: "profile", label: "Profile", icon: User },
   { id: "referrals", label: "Referrals", icon: Link2 },
   { id: "password", label: "Password", icon: Lock },
   { id: "security", label: "Security", icon: ShieldCheck },
+  { id: "kyc", label: "Identity (KYC)", icon: FileCheck },
 ]
 
-export default function SettingsClient({ initialUser }: { initialUser: any }) {
+export default function SettingsClient({
+  initialUser,
+  initialSessions = [],
+}: {
+  initialUser: any
+  initialSessions?: any[]
+}) {
   const [tab, setTab] = useState<Tab>("profile")
 
   const content: Record<Tab, React.ReactNode> = {
     profile: <ProfileTab user={initialUser} />,
     referrals: <ReferralsTab />,
     password: <PasswordTab />,
-    security: <SecurityTab />,
+    security: <SecurityTab sessions={initialSessions} />,
+    kyc: <KycTab user={initialUser} />,
   }
 
   return (

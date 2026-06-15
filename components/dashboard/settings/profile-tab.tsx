@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useTransition, useOptimistic } from "react"
 import { useSession } from "next-auth/react"
 import { toast } from "sonner"
 import {
@@ -17,6 +17,63 @@ import {
 import { cn } from "@/lib/utils"
 import { Card } from "@/components/ui/card"
 import { Field, Input } from "@/components/dashboard/settings/shared"
+import { toggleNotificationPreference } from "@/app/actions/user"
+
+function NotificationToggle({
+  label,
+  sub,
+  prefKey,
+  initialOn,
+}: {
+  label: string
+  sub: string
+  prefKey: string
+  initialOn: boolean
+}) {
+  const [isPending, startTransition] = useTransition()
+  const [optimisticOn, setOptimisticOn] = useOptimistic(
+    initialOn,
+    (state: boolean, newState: boolean) => newState
+  )
+
+  return (
+    <div className="flex items-center justify-between gap-4 border-b border-border/20 py-1.5 last:border-0">
+      <div>
+        <p className="text-sm font-medium">{label}</p>
+        <p className="mt-0.5 text-xs text-muted-foreground">{sub}</p>
+      </div>
+      <button
+        onClick={() => {
+          startTransition(async () => {
+            setOptimisticOn(!optimisticOn)
+            const res = await toggleNotificationPreference(
+              prefKey,
+              !optimisticOn
+            )
+            if (res?.error) {
+              toast.error(res.error)
+            } else {
+              toast.success("Preference updated")
+            }
+          })
+        }}
+        disabled={isPending}
+        className={cn(
+          "relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors duration-200",
+          optimisticOn ? "bg-primary" : "border border-border/40 bg-muted/50",
+          isPending && "opacity-70"
+        )}
+      >
+        <span
+          className={cn(
+            "absolute top-1 h-4 w-4 rounded-full bg-background shadow-sm transition-transform duration-200",
+            optimisticOn ? "translate-x-6" : "translate-x-1"
+          )}
+        />
+      </button>
+    </div>
+  )
+}
 
 export function ProfileTab({ user }: { user: any }) {
   const { update } = useSession()
@@ -162,6 +219,7 @@ export function ProfileTab({ user }: { user: any }) {
                 src={imagePreview}
                 alt="Profile Avatar"
                 fill
+                sizes="80px"
                 className="object-cover"
               />
             </div>
@@ -342,47 +400,6 @@ export function ProfileTab({ user }: { user: any }) {
         </div>
       </Card>
 
-      {/* KYC */}
-      <Card className="flex flex-col gap-4 border-warning/20 bg-warning/5">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-warning/10">
-            <AlertTriangle className="h-4 w-4 text-warning" />
-          </div>
-          <div className="flex-1">
-            <p className="text-sm font-bold">Identity Verification (KYC)</p>
-            <p className="mt-0.5 text-xs text-muted-foreground">
-              Required to enable withdrawals and higher deposit limits
-            </p>
-          </div>
-          <button className="flex shrink-0 items-center gap-1.5 text-xs font-bold text-warning hover:opacity-80">
-            Verify Now <ChevronRight className="h-3.5 w-3.5" />
-          </button>
-        </div>
-        <div className="grid grid-cols-3 gap-3">
-          {["ID Document", "Proof of Address", "Selfie"].map((step, i) => (
-            <div
-              key={step}
-              className={cn(
-                "rounded-xl border p-3 text-center",
-                i === 0
-                  ? "border-warning/30 bg-warning/10"
-                  : "border-border/20 bg-muted/10"
-              )}
-            >
-              <p className="text-xs font-semibold text-foreground">{step}</p>
-              <p
-                className={cn(
-                  "mt-0.5 text-[10px]",
-                  i === 0 ? "font-bold text-warning" : "text-muted-foreground"
-                )}
-              >
-                {i === 0 ? "Pending" : "Not Started"}
-              </p>
-            </div>
-          ))}
-        </div>
-      </Card>
-
       {/* Notifications */}
       <Card className="flex flex-col gap-4">
         <div className="flex items-center gap-2">
@@ -395,51 +412,41 @@ export function ProfileTab({ user }: { user: any }) {
           {
             label: "Trade opened / closed",
             sub: "Get notified when a copied trade executes",
-            on: true,
+            prefKey: "tradeExecution",
+            on: user.notificationPreferences?.tradeExecution ?? true,
           },
           {
             label: "Profit & Loss alerts",
             sub: "Daily P&L summary to your email",
-            on: true,
+            prefKey: "dailyPnL",
+            on: user.notificationPreferences?.dailyPnL ?? true,
           },
           {
             label: "Deposit & Withdrawal updates",
             sub: "Status changes on your transactions",
-            on: true,
+            prefKey: "transactionUpdates",
+            on: user.notificationPreferences?.transactionUpdates ?? true,
           },
           {
             label: "Rank & Reward updates",
             sub: "When you unlock a new tier or bonus",
-            on: false,
+            prefKey: "tierUpdates",
+            on: user.notificationPreferences?.tierUpdates ?? true,
           },
           {
             label: "Marketing emails",
             sub: "Platform news and promotions",
-            on: false,
+            prefKey: "marketing",
+            on: user.notificationPreferences?.marketing ?? false,
           },
-        ].map(({ label, sub, on }) => (
-          <div
-            key={label}
-            className="flex items-center justify-between gap-4 border-b border-border/20 py-1.5 last:border-0"
-          >
-            <div>
-              <p className="text-sm font-medium">{label}</p>
-              <p className="mt-0.5 text-xs text-muted-foreground">{sub}</p>
-            </div>
-            <button
-              className={cn(
-                "relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors duration-200",
-                on ? "bg-primary" : "border border-border/40 bg-muted/50"
-              )}
-            >
-              <span
-                className={cn(
-                  "absolute top-1 h-4 w-4 rounded-full bg-white shadow-sm transition-transform duration-200",
-                  on ? "translate-x-6" : "translate-x-1"
-                )}
-              />
-            </button>
-          </div>
+        ].map(({ label, sub, prefKey, on }) => (
+          <NotificationToggle
+            key={prefKey}
+            label={label}
+            sub={sub}
+            prefKey={prefKey}
+            initialOn={on}
+          />
         ))}
       </Card>
     </div>

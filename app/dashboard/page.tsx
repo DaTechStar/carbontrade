@@ -105,6 +105,7 @@ export default async function DashboardPage() {
       copyPositions={serializedPositions}
       recentTransactions={serializedTransactions}
       topTraders={serializedTraders}
+      kycStatus={(userDoc as any).kycStatus || "unverified"}
     />
   )
 }

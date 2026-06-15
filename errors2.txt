@@ -1,5 +1,0 @@
-app/dashboard/page.tsx(93,7): error TS2322: Type '{ id: any; userId: string | undefined; traderId: any; investedAmount: any; currentProfit: any; status: any; createdAt: any; trader: { id: any; name: any; avatar: any; role: any; metrics: any; status: any; copiers: any; } | null; }[]' is not assignable to type 'CopyPosition[]'.
-  Type '{ id: any; userId: string | undefined; traderId: any; investedAmount: any; currentProfit: any; status: any; createdAt: any; trader: { id: any; name: any; avatar: any; role: any; metrics: any; status: any; copiers: any; } | null; }' is not assignable to type 'CopyPosition'.
-    Types of property 'userId' are incompatible.
-      Type 'string | undefined' is not assignable to type 'string'.
-        Type 'undefined' is not assignable to type 'string'.
