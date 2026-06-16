@@ -71,8 +71,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           await connectToDatabase()
 
+          const identifier = credentials.email as string
+
           const user = await User.findOne({
-            email: (credentials.email as string).toLowerCase(),
+            $or: [
+              { email: identifier.toLowerCase() },
+              { username: new RegExp(`^${identifier}$`, "i") },
+            ],
           })
 
           if (!user || !user.passwordHash) {

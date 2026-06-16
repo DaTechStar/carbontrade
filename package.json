@@ -10,7 +10,8 @@
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit",
-    "prepare": "husky"
+    "prepare": "husky",
+    "seed": "npx tsx --env-file=.env.local scripts/seedTraders.ts"
   },
   "lint-staged": {
     "*.{ts,tsx}": [

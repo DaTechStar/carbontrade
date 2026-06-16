@@ -36,7 +36,7 @@ export async function processTransaction(
 
     // Update user balance
     if (transaction.type === "deposit") {
-      user.balances.invested += transaction.amount // or available, depending on preference
+      user.balances.available += transaction.amount
     } else if (transaction.type === "withdrawal") {
       // Assuming withdrawal amount was already deducted from available balance when requested,
       // or we deduct it here. If deducted at request, do nothing here.
