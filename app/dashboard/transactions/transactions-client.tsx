@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
+import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import {
   Search,
@@ -8,12 +9,15 @@ import {
   ArrowDownLeft,
   ArrowUpRight,
   TrendingUp,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react"
 
 import { formatCurrency } from "@/lib/utils"
 import { Transaction } from "@/types"
 import { cn } from "@/lib/utils"
 import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/lib/i18n/context"
 import { EmptyState } from "@/components/shared/empty-state"
 import { SummaryStat } from "@/components/dashboard/transactions/summary-stat"
@@ -26,7 +30,17 @@ interface TransactionsClientProps {
     totalPages: number
     currentPage: number
     totalRecords: number
-    summary: any
+    summary: {
+      totalDeposited: number
+      totalWithdrawn: number
+      totalProfits: number
+      totalFees: number
+    }
+    filters: {
+      q: string
+      type: string
+      status: string
+    }
   }
 }
 
@@ -40,38 +54,44 @@ export default function TransactionsClient({
   initialData,
 }: TransactionsClientProps) {
   const { t } = useLanguage()
-  const initialTransactions = initialData.data
-  const [q, setQ] = useState("")
-  const [typeFilter, setTypeFilter] = useState<Transaction["type"] | "all">(
-    "all"
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
+  const {
+    data: transactions,
+    totalPages,
+    currentPage,
+    summary,
+    filters,
+  } = initialData
+
+  const [q, setQ] = useState(filters.q)
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString())
+      if (value && value !== "all") {
+        params.set(name, value)
+      } else {
+        params.delete(name)
+      }
+      // Always reset to page 1 on filter change
+      if (name !== "page") params.set("page", "1")
+      return params.toString()
+    },
+    [searchParams]
   )
-  const [statusFilter, setStatusFilter] = useState<
-    Transaction["status"] | "all"
-  >("all")
 
-  // Filter
-  const filtered = initialTransactions.filter((tx) => {
-    if (typeFilter !== "all" && tx.type !== typeFilter) return false
-    if (statusFilter !== "all" && tx.status !== statusFilter) return false
-    if (q) {
-      return (
-        tx.description.toLowerCase().includes(q.toLowerCase()) ||
-        tx.id.toLowerCase().includes(q.toLowerCase())
-      )
-    }
-    return true
-  })
-
-  // Summary logic
-  const totalIn = initialTransactions
-    .filter((t) => t.amount > 0 && t.status === "completed")
-    .reduce((sum, t) => sum + t.amount, 0)
-  const totalOut = initialTransactions
-    .filter((t) => t.amount < 0 && t.status === "completed")
-    .reduce((sum, t) => sum + Math.abs(t.amount), 0)
-  const totalProfit = initialTransactions
-    .filter((t) => t.type === "trade_profit" && t.status === "completed")
-    .reduce((sum, t) => sum + t.amount, 0)
+  // Debounced search logic
+  useEffect(() => {
+    // Only push if local state differs from URL params
+    if (q === filters.q) return
+    const handler = setTimeout(() => {
+      router.push(pathname + "?" + createQueryString("q", q))
+    }, 300)
+    return () => clearTimeout(handler)
+  }, [q, pathname, router, createQueryString, filters.q])
 
   return (
     <div className="flex w-full flex-col gap-6 pb-12">
@@ -107,7 +127,7 @@ export default function TransactionsClient({
         <SummaryStat
           delay={0.1}
           label={t("dashboard.transactions.totalInflow")}
-          value={formatCurrency(totalIn)}
+          value={formatCurrency(summary.totalDeposited)}
           icon={ArrowDownLeft}
           iconBg="bg-profit/15 text-profit"
           sub={t("dashboard.transactions.completedDeposits")}
@@ -115,7 +135,7 @@ export default function TransactionsClient({
         <SummaryStat
           delay={0.15}
           label={t("dashboard.transactions.totalOutflow")}
-          value={formatCurrency(totalOut)}
+          value={formatCurrency(summary.totalWithdrawn)}
           icon={ArrowUpRight}
           iconBg="bg-loss/15 text-loss"
           sub={t("dashboard.transactions.completedWithdrawals")}
@@ -123,7 +143,7 @@ export default function TransactionsClient({
         <SummaryStat
           delay={0.2}
           label={t("dashboard.transactions.tradingProfit")}
-          value={formatCurrency(totalProfit)}
+          value={formatCurrency(summary.totalProfits)}
           icon={TrendingUp}
           iconBg="bg-primary/15 text-primary"
           sub={t("dashboard.transactions.fromCopiedTrades")}
@@ -146,8 +166,12 @@ export default function TransactionsClient({
             </div>
             <div className="flex flex-wrap items-center gap-2">
               <select
-                value={typeFilter}
-                onChange={(e) => setTypeFilter(e.target.value as any)}
+                value={filters.type}
+                onChange={(e) =>
+                  router.push(
+                    pathname + "?" + createQueryString("type", e.target.value)
+                  )
+                }
                 className="rounded-xl border border-border/30 bg-muted/20 px-3 py-2 text-xs font-semibold text-foreground focus:outline-none"
               >
                 {ALL_TYPES.map((t_opt) => (
@@ -163,8 +187,12 @@ export default function TransactionsClient({
                 ))}
               </select>
               <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value as any)}
+                value={filters.status}
+                onChange={(e) =>
+                  router.push(
+                    pathname + "?" + createQueryString("status", e.target.value)
+                  )
+                }
                 className="rounded-xl border border-border/30 bg-muted/20 px-3 py-2 text-xs font-semibold text-foreground focus:outline-none"
               >
                 {ALL_STATUSES.map((s) => (
@@ -180,12 +208,14 @@ export default function TransactionsClient({
           </div>
 
           {/* List */}
-          {filtered.length === 0 ? (
+          {transactions.length === 0 ? (
             <div className="p-8">
               <EmptyState
                 title={t("dashboard.transactions.noTransactionsTitle")}
                 description={
-                  q || typeFilter !== "all" || statusFilter !== "all"
+                  filters.q ||
+                  filters.type !== "all" ||
+                  filters.status !== "all"
                     ? t("dashboard.transactions.noTransactionsFiltered")
                     : t("dashboard.transactions.noTransactionsDesc")
                 }
@@ -194,10 +224,60 @@ export default function TransactionsClient({
           ) : (
             <div className="flex flex-col">
               <AnimatePresence mode="popLayout">
-                {filtered.map((tx, i) => (
+                {transactions.map((tx, i) => (
                   <TxRow key={tx.id} tx={tx} i={i} />
                 ))}
               </AnimatePresence>
+            </div>
+          )}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between border-t border-border/30 bg-muted/10 p-4">
+              <div className="text-sm text-muted-foreground">
+                Page{" "}
+                <span className="font-semibold text-foreground">
+                  {currentPage}
+                </span>{" "}
+                of{" "}
+                <span className="font-semibold text-foreground">
+                  {totalPages}
+                </span>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={currentPage <= 1}
+                  onClick={() =>
+                    router.push(
+                      pathname +
+                        "?" +
+                        createQueryString("page", (currentPage - 1).toString())
+                    )
+                  }
+                  className="rounded-xl"
+                >
+                  <ChevronLeft className="mr-1 h-4 w-4" />
+                  Prev
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={currentPage >= totalPages}
+                  onClick={() =>
+                    router.push(
+                      pathname +
+                        "?" +
+                        createQueryString("page", (currentPage + 1).toString())
+                    )
+                  }
+                  className="rounded-xl"
+                >
+                  Next
+                  <ChevronRight className="ml-1 h-4 w-4" />
+                </Button>
+              </div>
             </div>
           )}
         </Card>
