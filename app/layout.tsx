@@ -5,6 +5,7 @@ import { LanguageProvider } from "@/lib/i18n/context"
 import { NextAuthProvider } from "@/components/providers/next-auth-provider"
 import { cn } from "@/lib/utils"
 import { Toaster } from "sonner"
+import { TawkChat } from "@/components/tawk-chat"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -39,6 +40,7 @@ export default function RootLayout({
             <ThemeProvider>
               {children}
               <Toaster position="top-right" richColors />
+              <TawkChat />
             </ThemeProvider>
           </LanguageProvider>
         </NextAuthProvider>
