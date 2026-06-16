@@ -7,6 +7,7 @@ import { TrendingUp } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Card } from "@/components/ui/card"
 import { Skeleton } from "@/components/shared/skeleton"
+import { useLanguage } from "@/lib/i18n/context"
 
 // Load TradingView widgets client-side only
 const MarketChart = dynamic(
@@ -34,13 +35,16 @@ const CHART_ASSETS = [
 ]
 
 export function LiveChart() {
+  const { t } = useLanguage()
   const [active, setActive] = useState(0)
   return (
     <Card padding="none" className="flex flex-col overflow-hidden">
       <div className="flex flex-wrap items-center gap-2 border-b border-border/30 px-4 pt-4 pb-3">
         <div className="mr-auto flex items-center gap-2">
           <TrendingUp className="h-4 w-4 text-primary" />
-          <span className="text-sm font-bold">Live Market</span>
+          <span suppressHydrationWarning className="text-sm font-bold">
+            {t("dashboard.overview.liveMarket")}
+          </span>
         </div>
         <div className="flex flex-wrap gap-1">
           {CHART_ASSETS.map((a, i) => (

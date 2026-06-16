@@ -1,53 +1,83 @@
+"use client"
+
 import Link from "next/link"
 import { ArrowDownLeft, ArrowUpRight, Copy, RefreshCcw } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { formatCurrency } from "@/lib/utils"
 import { Card } from "@/components/ui/card"
+import { useLanguage } from "@/lib/i18n/context"
 import { DashboardStats } from "@/types"
 
 export function RightPanel({ userStats }: { userStats: DashboardStats }) {
+  const { t } = useLanguage()
+
   const actions = [
     {
-      label: "Deposit",
+      labelKey: "dashboard.overview.depositAction",
       icon: ArrowDownLeft,
       color: "text-profit",
       bg: "bg-profit-bg border-profit/20 hover:bg-profit/20",
       href: "/dashboard/payments?tab=deposit",
     },
     {
-      label: "Withdraw",
+      labelKey: "dashboard.overview.withdrawAction",
       icon: ArrowUpRight,
       color: "text-loss",
       bg: "bg-loss-bg border-loss/20 hover:bg-loss/20",
       href: "/dashboard/payments?tab=withdraw",
     },
     {
-      label: "Copy",
+      labelKey: "dashboard.overview.copyAction",
       icon: Copy,
       color: "text-primary",
       bg: "bg-primary/10 border-primary/20 hover:bg-primary/20",
       href: "/dashboard/copytrading",
     },
     {
-      label: "Refresh",
+      labelKey: "dashboard.overview.refreshAction",
       icon: RefreshCcw,
       color: "text-secondary",
       bg: "bg-secondary/10 border-secondary/20 hover:bg-secondary/20",
     },
   ]
+
+  const accountStats = [
+    {
+      labelKey: "dashboard.overview.equity",
+      value: formatCurrency(userStats.equity),
+    },
+    {
+      labelKey: "dashboard.overview.marginUsed",
+      value: `${userStats.equity > 0 ? Math.round((userStats.invested / userStats.equity) * 100) : 0}%`,
+    },
+    {
+      labelKey: "dashboard.overview.freeMargin",
+      value: formatCurrency(userStats.freeMargin),
+    },
+    { labelKey: "dashboard.overview.profitFactor", value: "1.00" },
+    {
+      labelKey: "dashboard.overview.openPositions",
+      value: String(userStats.openPositions),
+    },
+  ]
+
   return (
     <div className="flex h-full flex-col gap-4">
       <Card className="flex flex-col gap-4">
-        <p className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">
-          Quick Actions
+        <p
+          suppressHydrationWarning
+          className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase"
+        >
+          {t("dashboard.overview.quickActions")}
         </p>
         <div className="grid grid-cols-2 gap-2">
-          {actions.map(({ label, icon: Icon, color, bg, href }) => {
+          {actions.map(({ labelKey, icon: Icon, color, bg, href }) => {
+            const label = t(labelKey)
             const content = (
               <>
                 <Icon className="h-4 w-4" />
-                {label}
+                <span suppressHydrationWarning>{label}</span>
               </>
             )
             const className = cn(
@@ -56,11 +86,11 @@ export function RightPanel({ userStats }: { userStats: DashboardStats }) {
               color
             )
             return href ? (
-              <Link key={label} href={href} className={className}>
+              <Link key={labelKey} href={href} className={className}>
                 {content}
               </Link>
             ) : (
-              <button key={label} className={className}>
+              <button key={labelKey} className={className}>
                 {content}
               </button>
             )
@@ -69,30 +99,31 @@ export function RightPanel({ userStats }: { userStats: DashboardStats }) {
       </Card>
 
       <Card className="flex flex-1 flex-col gap-3">
-        <p className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">
-          Account Overview
+        <p
+          suppressHydrationWarning
+          className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase"
+        >
+          {t("dashboard.overview.accountOverview")}
         </p>
-        {[
-          { label: "Equity", value: formatCurrency(userStats.equity) },
-          {
-            label: "Margin Used",
-            value: `${userStats.equity > 0 ? Math.round((userStats.invested / userStats.equity) * 100) : 0}%`,
-          },
-          { label: "Free Margin", value: formatCurrency(userStats.freeMargin) },
-          { label: "Profit Factor", value: "1.00" },
-          { label: "Open Positions", value: String(userStats.openPositions) },
-        ].map(({ label, value }) => (
+        {accountStats.map(({ labelKey, value }) => (
           <div
-            key={label}
+            key={labelKey}
             className="flex items-center justify-between border-b border-border/20 py-1.5 last:border-0"
           >
-            <span className="text-xs text-muted-foreground">{label}</span>
+            <span
+              suppressHydrationWarning
+              className="text-xs text-muted-foreground"
+            >
+              {t(labelKey)}
+            </span>
             <span className="text-xs font-bold">{value}</span>
           </div>
         ))}
         <div className="mt-1">
           <div className="mb-1 flex justify-between text-[10px] text-muted-foreground">
-            <span>Margin</span>
+            <span suppressHydrationWarning>
+              {t("dashboard.overview.margin")}
+            </span>
             <span>
               {userStats.equity > 0
                 ? Math.round((userStats.invested / userStats.equity) * 100)

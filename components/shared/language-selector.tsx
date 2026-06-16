@@ -38,10 +38,16 @@ export function LanguageSelector({
             triggerClassName || "h-8 rounded-lg px-2.5"
           )}
         >
-          <span className="-mt-[2px] text-sm leading-none">
+          <span
+            suppressHydrationWarning
+            className="-mt-[2px] text-sm leading-none"
+          >
             {selectedLang.flag}
           </span>
-          <span className="font-sans text-[11px] font-bold">
+          <span
+            suppressHydrationWarning
+            className="font-sans text-[11px] font-bold"
+          >
             {selectedLang.code}
           </span>
           {showName && (

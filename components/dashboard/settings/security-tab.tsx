@@ -8,24 +8,27 @@ import { UAParser } from "ua-parser-js"
 import { cn } from "@/lib/utils"
 import { Card } from "@/components/ui/card"
 import { revokeSession, revokeAllOtherSessions } from "@/app/actions/session"
+import { useLanguage } from "@/lib/i18n/context"
 
-function formatTimeAgo(dateString: string) {
+function formatTimeAgo(dateString: string, t: any) {
   const date = new Date(dateString)
   const now = new Date()
   const seconds = Math.floor((now.getTime() - date.getTime()) / 1000)
 
-  if (seconds < 60) return "Just now"
+  if (seconds < 60) return t("dashboard.settings.tabs.secJustNow")
   const minutes = Math.floor(seconds / 60)
-  if (minutes < 60) return `${minutes} min ago`
+  if (minutes < 60)
+    return `${minutes} ${t("dashboard.settings.tabs.secMinAgo")}`
   const hours = Math.floor(minutes / 60)
-  if (hours < 24) return `${hours} hr ago`
+  if (hours < 24) return `${hours} ${t("dashboard.settings.tabs.secHrAgo")}`
   const days = Math.floor(hours / 24)
-  if (days < 30) return `${days} days ago`
+  if (days < 30) return `${days} ${t("dashboard.settings.tabs.secDaysAgo")}`
   return date.toLocaleDateString()
 }
 
 export function SecurityTab({ sessions = [] }: { sessions?: any[] }) {
   const [isPending, startTransition] = useTransition()
+  const { t } = useLanguage()
 
   const handleRevoke = (sessionId: string) => {
     startTransition(async () => {
@@ -33,7 +36,7 @@ export function SecurityTab({ sessions = [] }: { sessions?: any[] }) {
       if (res?.error) {
         toast.error(res.error)
       } else {
-        toast.success("Session revoked successfully")
+        toast.success(t("dashboard.settings.tabs.secRevokeSuccess"))
       }
     })
   }
@@ -47,7 +50,7 @@ export function SecurityTab({ sessions = [] }: { sessions?: any[] }) {
       if (res?.error) {
         toast.error(res.error)
       } else {
-        toast.success("All other sessions revoked")
+        toast.success(t("dashboard.settings.tabs.secRevokeAllSuccess"))
       }
     })
   }
@@ -59,8 +62,11 @@ export function SecurityTab({ sessions = [] }: { sessions?: any[] }) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Globe className="h-4 w-4 text-secondary" />
-            <p className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
-              Active Sessions
+            <p
+              suppressHydrationWarning
+              className="text-xs font-bold tracking-widest text-muted-foreground uppercase"
+            >
+              {t("dashboard.settings.tabs.secActiveSessions")}
             </p>
           </div>
           {sessions.length > 1 && (
@@ -69,14 +75,21 @@ export function SecurityTab({ sessions = [] }: { sessions?: any[] }) {
               disabled={isPending}
               className="text-xs font-bold text-loss transition-opacity hover:opacity-80 disabled:opacity-50"
             >
-              {isPending ? "Revoking..." : "Revoke All"}
+              <span suppressHydrationWarning>
+                {isPending
+                  ? t("dashboard.settings.tabs.secRevoking")
+                  : t("dashboard.settings.tabs.secRevokeAll")}
+              </span>
             </button>
           )}
         </div>
 
         {sessions.length === 0 ? (
-          <p className="py-4 text-center text-sm text-muted-foreground">
-            No active sessions found.
+          <p
+            suppressHydrationWarning
+            className="py-4 text-center text-sm text-muted-foreground"
+          >
+            {t("dashboard.settings.tabs.secNoSessions")}
           </p>
         ) : (
           sessions.map(
@@ -84,7 +97,7 @@ export function SecurityTab({ sessions = [] }: { sessions?: any[] }) {
               const parser = new UAParser(userAgent)
               const browser = parser.getBrowser()
               const os = parser.getOS()
-              const deviceName = `${browser.name || "Unknown Browser"} on ${os.name || "Unknown OS"}`
+              const deviceName = `${browser.name || t("dashboard.settings.tabs.secUnknownBrowser")} on ${os.name || t("dashboard.settings.tabs.secUnknownOs")}`
 
               return (
                 <div
@@ -101,8 +114,12 @@ export function SecurityTab({ sessions = [] }: { sessions?: any[] }) {
                   />
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-semibold">{deviceName}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {location} ({ipAddress}) · {formatTimeAgo(lastActiveAt)}
+                    <p
+                      suppressHydrationWarning
+                      className="text-xs text-muted-foreground"
+                    >
+                      {location} ({ipAddress}) ·{" "}
+                      {formatTimeAgo(lastActiveAt, t)}
                     </p>
                   </div>
                   {!current && (
@@ -115,8 +132,11 @@ export function SecurityTab({ sessions = [] }: { sessions?: any[] }) {
                     </button>
                   )}
                   {current && (
-                    <span className="shrink-0 text-[10px] font-bold text-profit">
-                      This device
+                    <span
+                      suppressHydrationWarning
+                      className="shrink-0 text-[10px] font-bold text-profit"
+                    >
+                      {t("dashboard.settings.tabs.secThisDevice")}
                     </span>
                   )}
                 </div>

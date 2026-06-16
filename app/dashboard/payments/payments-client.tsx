@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { DepositForm } from "@/components/dashboard/deposit-form"
 import { WithdrawForm } from "@/components/dashboard/withdraw-form"
 import { CreditCard, ArrowDownLeft, ArrowUpRight } from "lucide-react"
+import { useLanguage } from "@/lib/i18n/context"
 
 export function PaymentsClient({
   paymentMethods,
@@ -16,6 +17,7 @@ export function PaymentsClient({
 }) {
   const searchParams = useSearchParams()
   const router = useRouter()
+  const { t } = useLanguage()
   const tab = searchParams.get("tab") === "withdraw" ? "withdraw" : "deposit"
 
   const handleTabChange = (val: string) => {
@@ -61,12 +63,17 @@ export function PaymentsClient({
           <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
           <CreditCard className="relative z-10 h-7 w-7 text-primary" />
         </div>
-        <h1 className="mb-2 text-3xl font-black tracking-tight text-foreground sm:text-4xl">
-          Secure Payments
+        <h1
+          suppressHydrationWarning
+          className="mb-2 text-3xl font-black tracking-tight text-foreground sm:text-4xl"
+        >
+          {t("dashboard.payments.title")}
         </h1>
-        <p className="max-w-[320px] text-sm text-muted-foreground sm:text-base">
-          Fund your account instantly or request a fast withdrawal to your
-          wallet.
+        <p
+          suppressHydrationWarning
+          className="max-w-[320px] text-sm text-muted-foreground sm:text-base"
+        >
+          {t("dashboard.payments.subtitle")}
         </p>
       </motion.div>
 
@@ -85,13 +92,19 @@ export function PaymentsClient({
               value="deposit"
               className="flex h-full items-center justify-center gap-2 rounded-xl text-sm font-bold transition-all data-[state=active]:bg-background data-[state=active]:shadow-md"
             >
-              <ArrowDownLeft className="h-4 w-4 text-profit" /> Deposit
+              <ArrowDownLeft className="h-4 w-4 text-profit" />{" "}
+              <span suppressHydrationWarning>
+                {t("dashboard.payments.deposit")}
+              </span>
             </TabsTrigger>
             <TabsTrigger
               value="withdraw"
               className="flex h-full items-center justify-center gap-2 rounded-xl text-sm font-bold transition-all data-[state=active]:bg-background data-[state=active]:shadow-md"
             >
-              <ArrowUpRight className="h-4 w-4 text-loss" /> Withdraw
+              <ArrowUpRight className="h-4 w-4 text-loss" />{" "}
+              <span suppressHydrationWarning>
+                {t("dashboard.payments.withdraw")}
+              </span>
             </TabsTrigger>
           </TabsList>
 

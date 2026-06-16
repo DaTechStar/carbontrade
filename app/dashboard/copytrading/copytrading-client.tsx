@@ -23,6 +23,7 @@ import useSWR from "swr"
 import { Trader } from "@/types"
 import { useCopyTrader } from "@/hooks/use-copy-trader"
 import { SharedPagination } from "@/components/shared/shared-pagination"
+import { useLanguage } from "@/lib/i18n/context"
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
@@ -39,6 +40,8 @@ export type HistoryItem = {
 // ─── History Table ────────────────────────────────────────────────────────────
 
 function HistoryTable({ trades }: { trades: HistoryItem[] }) {
+  const { t } = useLanguage()
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -48,8 +51,11 @@ function HistoryTable({ trades }: { trades: HistoryItem[] }) {
       <Card className="glass-card overflow-hidden border-border/40">
         <div className="flex items-center gap-2 border-b border-border/30 p-5">
           <Clock className="h-4 w-4 text-primary" />
-          <h2 className="text-sm font-bold tracking-wider uppercase">
-            Your Copies
+          <h2
+            suppressHydrationWarning
+            className="text-sm font-bold tracking-wider uppercase"
+          >
+            {t("dashboard.copytrading.yourCopies")}
           </h2>
         </div>
 
@@ -57,9 +63,16 @@ function HistoryTable({ trades }: { trades: HistoryItem[] }) {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border/20">
-                {["Trader", "Invested", "Date", "P&L", "Status"].map((h) => (
+                {[
+                  t("dashboard.copyHistory.colTrader"),
+                  t("dashboard.copyHistory.colInvested"),
+                  t("dashboard.copyHistory.colDate"),
+                  t("dashboard.copyHistory.colPnl"),
+                  t("dashboard.copyHistory.colStatus"),
+                ].map((h) => (
                   <th
                     key={h}
+                    suppressHydrationWarning
                     className="px-5 py-3 text-left text-[10px] font-bold tracking-wider text-muted-foreground uppercase"
                   >
                     {h}
@@ -76,7 +89,9 @@ function HistoryTable({ trades }: { trades: HistoryItem[] }) {
                   >
                     <div className="flex flex-col items-center gap-2">
                       <BarChart2 className="h-8 w-8 opacity-20" />
-                      <span>No copies yet.</span>
+                      <span suppressHydrationWarning>
+                        {t("dashboard.copytrading.noCopiesYet")}
+                      </span>
                     </div>
                   </td>
                 </tr>
@@ -86,10 +101,13 @@ function HistoryTable({ trades }: { trades: HistoryItem[] }) {
                     key={trade._id}
                     className="border-b border-border/10 transition-colors hover:bg-muted/10"
                   >
-                    <td className="px-5 py-3 font-semibold">
+                    <td
+                      suppressHydrationWarning
+                      className="px-5 py-3 font-semibold"
+                    >
                       {trade.traderName ||
                         (trade as any).trader?.name ||
-                        "Unknown"}
+                        t("dashboard.copyHistory.unknown")}
                     </td>
                     <td className="px-5 py-3 font-mono text-xs text-muted-foreground">
                       {formatCurrency(trade.investedAmount)}
@@ -108,12 +126,19 @@ function HistoryTable({ trades }: { trades: HistoryItem[] }) {
                     </td>
                     <td className="px-5 py-3">
                       {trade.status === "active" ? (
-                        <span className="rounded-full border border-profit/20 bg-profit/10 px-2.5 py-1 text-[10px] font-bold text-profit">
-                          Active
+                        <span
+                          suppressHydrationWarning
+                          className="rounded-full border border-profit/20 bg-profit/10 px-2.5 py-1 text-[10px] font-bold text-profit"
+                        >
+                          {t("dashboard.copytrading.active")}
                         </span>
                       ) : (
-                        <span className="rounded-full border border-border/30 bg-muted/30 px-2.5 py-1 text-[10px] font-bold text-muted-foreground capitalize">
-                          {trade.status}
+                        <span
+                          suppressHydrationWarning
+                          className="rounded-full border border-border/30 bg-muted/30 px-2.5 py-1 text-[10px] font-bold text-muted-foreground capitalize"
+                        >
+                          {t(`dashboard.copyHistory.${trade.status}`) ||
+                            trade.status}
                         </span>
                       )}
                     </td>
@@ -130,7 +155,9 @@ function HistoryTable({ trades }: { trades: HistoryItem[] }) {
             <div className="py-8 text-center text-sm text-muted-foreground">
               <div className="flex flex-col items-center gap-2">
                 <BarChart2 className="h-8 w-8 opacity-20" />
-                <span>No copies yet.</span>
+                <span suppressHydrationWarning>
+                  {t("dashboard.copytrading.noCopiesYet")}
+                </span>
               </div>
             </div>
           ) : (
@@ -140,31 +167,51 @@ function HistoryTable({ trades }: { trades: HistoryItem[] }) {
                 className="flex flex-col gap-3 rounded-xl border border-border bg-muted/20 p-4"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-foreground">
+                  <span
+                    suppressHydrationWarning
+                    className="font-bold text-foreground"
+                  >
                     {trade.traderName ||
                       (trade as any).trader?.name ||
-                      "Unknown"}
+                      t("dashboard.copyHistory.unknown")}
                   </span>
                   {trade.status === "active" ? (
-                    <span className="rounded-full border border-profit/20 bg-profit/10 px-2.5 py-1 text-[10px] font-bold text-profit">
-                      Active
+                    <span
+                      suppressHydrationWarning
+                      className="rounded-full border border-profit/20 bg-profit/10 px-2.5 py-1 text-[10px] font-bold text-profit"
+                    >
+                      {t("dashboard.copytrading.active")}
                     </span>
                   ) : (
-                    <span className="rounded-full border border-border/30 bg-muted/30 px-2.5 py-1 text-[10px] font-bold text-muted-foreground capitalize">
-                      {trade.status}
+                    <span
+                      suppressHydrationWarning
+                      className="rounded-full border border-border/30 bg-muted/30 px-2.5 py-1 text-[10px] font-bold text-muted-foreground capitalize"
+                    >
+                      {t(`dashboard.copyHistory.${trade.status}`) ||
+                        trade.status}
                     </span>
                   )}
                 </div>
 
                 <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
                   <div>
-                    <p className="text-xs text-muted-foreground">Invested</p>
+                    <p
+                      suppressHydrationWarning
+                      className="text-xs text-muted-foreground"
+                    >
+                      {t("dashboard.copyHistory.colInvested")}
+                    </p>
                     <p className="font-mono font-bold text-foreground">
                       {formatCurrency(trade.investedAmount)}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-muted-foreground">P&L</p>
+                    <p
+                      suppressHydrationWarning
+                      className="text-xs text-muted-foreground"
+                    >
+                      {t("dashboard.copyHistory.colPnl")}
+                    </p>
                     <p
                       className={cn(
                         "mt-0.5 font-mono font-bold",
@@ -176,7 +223,12 @@ function HistoryTable({ trades }: { trades: HistoryItem[] }) {
                     </p>
                   </div>
                   <div className="col-span-2">
-                    <p className="text-xs text-muted-foreground">Date</p>
+                    <p
+                      suppressHydrationWarning
+                      className="text-xs text-muted-foreground"
+                    >
+                      {t("dashboard.copyHistory.colDate")}
+                    </p>
                     <p className="mt-0.5 text-xs text-foreground/80">
                       {new Date(trade.createdAt).toLocaleDateString()}
                     </p>
@@ -207,6 +259,7 @@ export default function CopytradingClient({
 }) {
   const { handleCopy } = useCopyTrader()
   const [page, setPage] = useState(1)
+  const { t } = useLanguage()
 
   // We keep dashboard-data for topTraders (auto refreshing)
   const { data: dashboardData } = useSWR("/api/user/dashboard-data", fetcher, {
@@ -237,11 +290,17 @@ export default function CopytradingClient({
           <Copy className="h-5 w-5 text-primary" />
         </div>
         <div>
-          <h1 className="text-2xl font-black tracking-tight text-foreground sm:text-3xl">
-            Copytrading
+          <h1
+            suppressHydrationWarning
+            className="text-2xl font-black tracking-tight text-foreground sm:text-3xl"
+          >
+            {t("dashboard.copytrading.title")}
           </h1>
-          <p className="mt-0.5 text-sm text-muted-foreground">
-            Mirror the best traders and grow your portfolio automatically.
+          <p
+            suppressHydrationWarning
+            className="mt-0.5 text-sm text-muted-foreground"
+          >
+            {t("dashboard.copytrading.subtitle")}
           </p>
         </div>
       </motion.div>
@@ -251,13 +310,18 @@ export default function CopytradingClient({
         <motion.div {...fu(0.1)} className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Star className="h-4 w-4 text-warning" />
-            <h2 className="text-base font-black">Top Traders</h2>
+            <h2 suppressHydrationWarning className="text-base font-black">
+              {t("dashboard.overview.topTraders")}
+            </h2>
           </div>
           <Link
             href="/dashboard/traders"
             className="flex items-center gap-1 text-xs font-bold text-primary transition-opacity hover:opacity-80"
           >
-            Browse All <ChevronRight className="h-3.5 w-3.5" />
+            <span suppressHydrationWarning>
+              {t("dashboard.overview.browseAll")}
+            </span>{" "}
+            <ChevronRight className="h-3.5 w-3.5" />
           </Link>
         </motion.div>
 
@@ -277,7 +341,9 @@ export default function CopytradingClient({
       <div className="flex flex-col gap-4">
         <motion.div {...fu(0.4)} className="flex items-center gap-2">
           <TrendingUp className="h-4 w-4 text-primary" />
-          <h2 className="text-base font-black">Copy History</h2>
+          <h2 suppressHydrationWarning className="text-base font-black">
+            {t("dashboard.copyHistory.title")}
+          </h2>
         </motion.div>
         <HistoryTable trades={history} />
         {totalPages > 1 && (

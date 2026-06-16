@@ -8,6 +8,7 @@ import { formatCurrency } from "@/lib/utils"
 import { type Trader } from "@/types"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { useLanguage } from "@/lib/i18n/context"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -69,7 +70,42 @@ export function TraderCard({
   onCopy,
   className,
 }: TraderCardProps) {
+  const { t } = useLanguage()
   const isLive = trader.status === "active" || trader.status === "live"
+  const minInvestment = trader.metrics?.minInvestment ?? trader.minCopy
+
+  const primaryStats = [
+    {
+      labelKey: "dashboard.traderCard.winRate",
+      value: `${trader.metrics?.winRate ?? trader.winRate}%`,
+      green: true,
+    },
+    {
+      labelKey: "dashboard.traderCard.monthly",
+      value: `+${trader.metrics?.monthlyReturn ?? trader.monthlyReturn}%`,
+      green: true,
+    },
+    {
+      labelKey: "dashboard.traderCard.yearly",
+      value: `+${trader.yearlyReturn ?? ((trader.metrics?.monthlyReturn ?? trader.monthlyReturn) * 12).toFixed(1)}%`,
+      green: true,
+    },
+  ]
+
+  const secondaryStats = [
+    {
+      labelKey: "dashboard.traderCard.experience",
+      value: `${trader.experienceYears ?? 5} yrs`,
+    },
+    {
+      labelKey: "dashboard.traderCard.copiers",
+      value: trader.copiers ?? (((trader.name?.length || 5) * 43) % 900) + 500,
+    },
+    {
+      labelKey: "dashboard.traderCard.share",
+      value: `${trader.metrics?.profitShareFee ?? trader.fee}%`,
+    },
+  ]
 
   return (
     <motion.div
@@ -131,6 +167,7 @@ export function TraderCard({
 
           {/* Status */}
           <span
+            suppressHydrationWarning
             className={cn(
               "rounded-full border px-2 py-0.5 text-[9px] font-black tracking-widest uppercase",
               isLive
@@ -138,35 +175,24 @@ export function TraderCard({
                 : "border-border/30 bg-muted/30 text-muted-foreground"
             )}
           >
-            {isLive ? "Live" : "Discontinued"}
+            {isLive
+              ? t("dashboard.traderCard.live")
+              : t("dashboard.traderCard.discontinued")}
           </span>
         </div>
 
         {/* ── Stats row: inline, 3 columns ───────────────────────── */}
         <div className="relative z-10 grid grid-cols-3 divide-x divide-border/30 border-y border-border/30 bg-muted/10">
-          {[
-            {
-              label: "Win Rate",
-              value: `${trader.metrics?.winRate ?? trader.winRate}%`,
-              green: true,
-            },
-            {
-              label: "Monthly",
-              value: `+${trader.metrics?.monthlyReturn ?? trader.monthlyReturn}%`,
-              green: true,
-            },
-            {
-              label: "Yearly",
-              value: `+${trader.yearlyReturn ?? ((trader.metrics?.monthlyReturn ?? trader.monthlyReturn) * 12).toFixed(1)}%`,
-              green: true,
-            },
-          ].map(({ label, value, green }) => (
+          {primaryStats.map(({ labelKey, value, green }) => (
             <div
-              key={label}
+              key={labelKey}
               className="flex flex-col items-center gap-0.5 py-2.5"
             >
-              <span className="text-[9px] font-medium tracking-wider text-muted-foreground uppercase">
-                {label}
+              <span
+                suppressHydrationWarning
+                className="text-[9px] font-medium tracking-wider text-muted-foreground uppercase"
+              >
+                {t(labelKey)}
               </span>
               <span
                 className={cn(
@@ -182,25 +208,16 @@ export function TraderCard({
 
         {/* ── Secondary stats: 3 columns ─────────────────────────── */}
         <div className="relative z-10 grid grid-cols-3 divide-x divide-border/20 bg-muted/5">
-          {[
-            { label: "Exp.", value: `${trader.experienceYears ?? 5} yrs` },
-            {
-              label: "Copiers",
-              value:
-                trader.copiers ??
-                (((trader.name?.length || 5) * 43) % 900) + 500,
-            },
-            {
-              label: "Share",
-              value: `${trader.metrics?.profitShareFee ?? trader.fee}%`,
-            },
-          ].map(({ label, value }) => (
+          {secondaryStats.map(({ labelKey, value }) => (
             <div
-              key={label}
+              key={labelKey}
               className="flex flex-col items-center gap-0.5 py-2"
             >
-              <span className="text-[9px] font-medium tracking-wider text-muted-foreground uppercase">
-                {label}
+              <span
+                suppressHydrationWarning
+                className="text-[9px] font-medium tracking-wider text-muted-foreground uppercase"
+              >
+                {t(labelKey)}
               </span>
               <span className="text-xs font-bold text-foreground">{value}</span>
             </div>
@@ -210,11 +227,14 @@ export function TraderCard({
         {/* ── Footer: min copy + button ──────────────────────────── */}
         <div className="relative z-10 flex items-center justify-between border-t border-border/30 px-4 py-3">
           <div>
-            <p className="text-[9px] tracking-wider text-muted-foreground uppercase">
-              Min. Copy
+            <p
+              suppressHydrationWarning
+              className="text-[9px] tracking-wider text-muted-foreground uppercase"
+            >
+              {t("dashboard.traderCard.minCopy")}
             </p>
             <p className="text-xs font-black text-foreground">
-              {formatCurrency(trader.metrics?.minInvestment ?? trader.minCopy)}
+              {formatCurrency(minInvestment)}
             </p>
           </div>
           {onCopy ? (
@@ -225,29 +245,42 @@ export function TraderCard({
                   className="h-7 rounded-lg border border-primary/20 bg-primary/10 px-4 text-[11px] font-bold text-primary shadow-none transition-all hover:border-primary/40 hover:bg-primary/20"
                   variant="ghost"
                 >
-                  Copy
+                  <span suppressHydrationWarning>
+                    {t("dashboard.traderCard.copyButton")}
+                  </span>
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Copy {trader.name}?</AlertDialogTitle>
+                  <AlertDialogTitle>
+                    <span suppressHydrationWarning>
+                      {t("dashboard.traderCard.dialogTitle").replace(
+                        "{{name}}",
+                        trader.name
+                      )}
+                    </span>
+                  </AlertDialogTitle>
                   <AlertDialogDescription>
-                    You are about to start copying{" "}
-                    <strong>{trader.name}</strong>. A minimum investment of{" "}
-                    {formatCurrency(
-                      trader.metrics?.minInvestment ?? trader.minCopy
-                    )}{" "}
-                    is required to open this copy position. Are you sure you
-                    want to proceed?
+                    <span suppressHydrationWarning>
+                      {t("dashboard.traderCard.dialogDesc")
+                        .replace("{{name}}", trader.name)
+                        .replace("{{amount}}", formatCurrency(minInvestment))}
+                    </span>
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogCancel>
+                    <span suppressHydrationWarning>
+                      {t("dashboard.traderCard.cancel")}
+                    </span>
+                  </AlertDialogCancel>
                   <AlertDialogAction
                     onClick={() => onCopy(trader)}
                     className="bg-primary text-primary-foreground hover:bg-primary/90"
                   >
-                    Confirm Copy
+                    <span suppressHydrationWarning>
+                      {t("dashboard.traderCard.confirmCopy")}
+                    </span>
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
@@ -259,7 +292,9 @@ export function TraderCard({
               className="h-7 rounded-lg border border-primary/20 bg-primary/10 px-4 text-[11px] font-bold text-primary shadow-none transition-all hover:border-primary/40 hover:bg-primary/20"
               variant="ghost"
             >
-              Copy
+              <span suppressHydrationWarning>
+                {t("dashboard.traderCard.copyButton")}
+              </span>
             </Button>
           )}
         </div>

@@ -9,11 +9,13 @@ import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Card } from "@/components/ui/card"
 import { Field, Input } from "@/components/dashboard/settings/shared"
+import { useLanguage } from "@/lib/i18n/context"
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
 export function ReferralsTab() {
   const { data: session } = useSession()
+  const { t } = useLanguage()
   const username =
     (session?.user as any)?.username || session?.user?.name || "User"
   const [copied, setCopied] = useState(false)
@@ -33,18 +35,22 @@ export function ReferralsTab() {
 
   const stats = [
     {
-      label: "Total Referrals",
+      label: t("dashboard.settings.tabs.refTotal"),
       value: data?.totalCount || "0",
       color: "text-primary",
     },
-    { label: "Active", value: data?.activeCount || "0", color: "text-profit" },
     {
-      label: "Pending",
+      label: t("dashboard.settings.tabs.refActive"),
+      value: data?.activeCount || "0",
+      color: "text-profit",
+    },
+    {
+      label: t("dashboard.settings.tabs.refPending"),
       value: data?.pendingCount || "0",
       color: "text-warning",
     },
     {
-      label: "Referral Deposits",
+      label: t("dashboard.settings.tabs.refDeposits"),
       value: `$${(data?.totalReferralDeposits || 0).toLocaleString()}`,
       color: "text-foreground",
     },
@@ -56,7 +62,10 @@ export function ReferralsTab() {
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {stats.map(({ label, value, color }) => (
           <Card key={label} className="flex flex-col gap-1 text-center">
-            <p className="text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
+            <p
+              suppressHydrationWarning
+              className="text-[10px] font-semibold tracking-wider text-muted-foreground uppercase"
+            >
               {label}
             </p>
             <p className={cn("text-2xl font-black", color)}>{value}</p>
@@ -66,10 +75,13 @@ export function ReferralsTab() {
 
       {/* Referral link */}
       <Card className="flex flex-col gap-4">
-        <p className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
-          Referral Programme
+        <p
+          suppressHydrationWarning
+          className="text-xs font-bold tracking-widest text-muted-foreground uppercase"
+        >
+          {t("dashboard.settings.tabs.refProgramme")}
         </p>
-        <Field label="Your Referral Link">
+        <Field label={t("dashboard.settings.tabs.refLinkTitle")}>
           <div className="flex gap-2">
             <Input
               readOnly
@@ -90,41 +102,54 @@ export function ReferralsTab() {
               ) : (
                 <Copy className="h-3.5 w-3.5" />
               )}
-              {copied ? "Copied!" : "Copy"}
+              <span suppressHydrationWarning>
+                {copied
+                  ? t("dashboard.settings.tabs.refCopied")
+                  : t("dashboard.settings.tabs.refCopy")}
+              </span>
             </button>
           </div>
         </Field>
-        <Field label="Your Referral ID">
+        <Field label={t("dashboard.settings.tabs.refIdTitle")}>
           <p className="text-sm font-black text-primary">{username}</p>
         </Field>
         <div className="rounded-xl border border-primary/15 bg-primary/5 p-3 text-xs leading-relaxed text-muted-foreground">
-          Share your link and earn rewards for every friend who registers and
-          deposits. Reach{" "}
-          <span className="font-bold text-foreground">Diamond</span> rank with 5
-          referrals and{" "}
-          <span className="font-bold text-foreground">Ambassador</span> with 12.
+          <span suppressHydrationWarning>
+            {t("dashboard.settings.tabs.refDesc")}
+          </span>{" "}
+          <span suppressHydrationWarning>
+            {t("dashboard.settings.tabs.refDescDiamond")}
+          </span>
         </div>
       </Card>
 
       {/* Referral table */}
       <Card className="flex flex-col gap-4">
-        <p className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
-          Your Referrals
+        <p
+          suppressHydrationWarning
+          className="text-xs font-bold tracking-widest text-muted-foreground uppercase"
+        >
+          {t("dashboard.settings.tabs.refTableTitle")}
         </p>
         <div className="hidden overflow-x-auto md:block">
           <table className="w-full min-w-[480px] text-sm">
             <thead>
               <tr className="border-b border-border/30">
-                {["Client Name", "Level", "Parent", "Status", "Date"].map(
-                  (h) => (
-                    <th
-                      key={h}
-                      className="px-2 pb-2.5 text-left text-[10px] font-bold tracking-wider text-muted-foreground uppercase first:pl-0"
-                    >
-                      {h}
-                    </th>
-                  )
-                )}
+                {[
+                  t("dashboard.settings.tabs.refClientName"),
+                  t("dashboard.settings.tabs.refLevel"),
+                  t("dashboard.settings.tabs.refParent"),
+                  t("dashboard.settings.tabs.refStatus"),
+                  t("dashboard.settings.tabs.refDate"),
+                ].map((h) => (
+                  <th
+                    key={h}
+                    suppressHydrationWarning
+                    className="px-2 pb-2.5 text-left text-[10px] font-bold tracking-wider text-muted-foreground uppercase first:pl-0"
+                  >
+                    {h}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
@@ -142,9 +167,10 @@ export function ReferralsTab() {
                 <tr>
                   <td
                     colSpan={5}
+                    suppressHydrationWarning
                     className="py-8 text-center text-xs text-muted-foreground"
                   >
-                    No referrals yet. Share your link to start earning!
+                    {t("dashboard.settings.tabs.refEmpty")}
                   </td>
                 </tr>
               )}
@@ -157,8 +183,11 @@ export function ReferralsTab() {
                     {r.name}
                   </td>
                   <td className="px-2 py-3">
-                    <span className="rounded-full border border-border/30 bg-muted/30 px-2 py-0.5 text-[10px] font-bold text-muted-foreground">
-                      Level {r.level}
+                    <span
+                      suppressHydrationWarning
+                      className="rounded-full border border-border/30 bg-muted/30 px-2 py-0.5 text-[10px] font-bold text-muted-foreground"
+                    >
+                      {t("dashboard.settings.tabs.refLevel")} {r.level}
                     </span>
                   </td>
                   <td className="px-2 py-3 text-xs text-muted-foreground">
@@ -197,8 +226,11 @@ export function ReferralsTab() {
             </div>
           )}
           {!isLoading && data?.referrals?.length === 0 && (
-            <div className="py-8 text-center text-xs text-muted-foreground">
-              No referrals yet. Share your link to start earning!
+            <div
+              suppressHydrationWarning
+              className="py-8 text-center text-xs text-muted-foreground"
+            >
+              {t("dashboard.settings.tabs.refEmpty")}
             </div>
           )}
           {data?.referrals?.map((r: any) => (
@@ -221,17 +253,35 @@ export function ReferralsTab() {
               </div>
               <div className="mt-1 grid grid-cols-2 gap-2 text-xs">
                 <div>
-                  <p className="text-[10px] text-muted-foreground">Level</p>
-                  <span className="rounded-full border border-border/30 bg-muted/30 px-2 py-0.5 text-[10px] font-bold text-muted-foreground">
-                    Level {r.level}
+                  <p
+                    suppressHydrationWarning
+                    className="text-[10px] text-muted-foreground"
+                  >
+                    {t("dashboard.settings.tabs.refLevel")}
+                  </p>
+                  <span
+                    suppressHydrationWarning
+                    className="rounded-full border border-border/30 bg-muted/30 px-2 py-0.5 text-[10px] font-bold text-muted-foreground"
+                  >
+                    {t("dashboard.settings.tabs.refLevel")} {r.level}
                   </span>
                 </div>
                 <div>
-                  <p className="text-[10px] text-muted-foreground">Parent</p>
+                  <p
+                    suppressHydrationWarning
+                    className="text-[10px] text-muted-foreground"
+                  >
+                    {t("dashboard.settings.tabs.refParent")}
+                  </p>
                   <p className="mt-0.5 text-muted-foreground">{username}</p>
                 </div>
                 <div className="col-span-2 mt-1">
-                  <p className="text-[10px] text-muted-foreground">Date</p>
+                  <p
+                    suppressHydrationWarning
+                    className="text-[10px] text-muted-foreground"
+                  >
+                    {t("dashboard.settings.tabs.refDate")}
+                  </p>
                   <p className="mt-0.5 text-muted-foreground">
                     {new Date(r.date).toLocaleDateString("en", {
                       month: "short",

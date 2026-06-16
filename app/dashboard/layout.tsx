@@ -22,7 +22,10 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { cn } from "@/lib/utils"
-
+import { useLanguage } from "@/lib/i18n/context"
+import { siteConfig } from "@/config/site"
+import { LanguageSelector } from "@/components/shared/language-selector"
+import { NotificationsPopover } from "@/components/dashboard/notifications-popover"
 import {
   Sidebar,
   SIDEBAR_EXPANDED,
@@ -54,9 +57,11 @@ function ProfileDropdown() {
     .toUpperCase()
     .slice(0, 2)
 
+  const { t } = useLanguage()
+
   async function handleSignOut() {
     setOpen(false)
-    toast.loading("Signing out…")
+    toast.loading(t("dashboard.sidebar.signingOut") || "Signing out…")
     await signOut({ redirect: false })
     toast.dismiss()
     router.push("/login")
@@ -132,7 +137,9 @@ function ProfileDropdown() {
                 className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-accent hover:text-foreground"
               >
                 <Settings className="h-4 w-4 text-muted-foreground" />
-                Settings
+                <span suppressHydrationWarning>
+                  {t("dashboard.sidebar.settings")}
+                </span>
               </Link>
             </div>
 
@@ -141,24 +148,33 @@ function ProfileDropdown() {
                 <AlertDialogTrigger asChild>
                   <button className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium text-destructive transition-colors hover:bg-destructive/10">
                     <LogOut className="h-4 w-4" />
-                    Sign out
+                    <span suppressHydrationWarning>
+                      {t("dashboard.sidebar.signOut")}
+                    </span>
                   </button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Sign out?</AlertDialogTitle>
+                    <AlertDialogTitle>
+                      {t("dashboard.sidebar.signOutConfirmTitle")?.replace(
+                        "{{name}}",
+                        siteConfig.name
+                      ) || `Sign out of ${siteConfig.name}?`}
+                    </AlertDialogTitle>
                     <AlertDialogDescription>
-                      You will be redirected to the login page. Any unsaved
-                      changes may be lost.
+                      {t("dashboard.sidebar.signOutConfirmDesc") ||
+                        "You will be redirected to the login page. Any unsaved changes may be lost."}
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel>
+                      {t("dashboard.sidebar.cancel") || "Cancel"}
+                    </AlertDialogCancel>
                     <AlertDialogAction
                       onClick={handleSignOut}
                       className="text-destructive-foreground bg-destructive hover:bg-destructive/90"
                     >
-                      Yes, sign out
+                      {t("dashboard.sidebar.yesSignOut") || "Yes, sign out"}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
@@ -204,6 +220,7 @@ export default function DashboardLayout({
       >
         {/* ── Top bar ── */}
         <header
+          suppressHydrationWarning
           className={cn(
             "fixed top-0 right-0 z-20 flex h-16 items-center gap-4 px-4 sm:px-6",
             "border-b border-border/30 bg-background/80 backdrop-blur-md",
@@ -223,11 +240,10 @@ export default function DashboardLayout({
           <div className="flex-1" />
 
           <div className="flex items-center gap-2">
+            <LanguageSelector />
+
             {/* Notifications */}
-            <button className="relative rounded-xl p-2 text-muted-foreground hover:bg-accent">
-              <Bell className="h-5 w-5" />
-              <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full border-2 border-background bg-primary" />
-            </button>
+            <NotificationsPopover />
 
             {/* Profile dropdown */}
             <ProfileDropdown />

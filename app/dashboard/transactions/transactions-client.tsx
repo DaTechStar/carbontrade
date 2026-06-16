@@ -14,6 +14,7 @@ import { formatCurrency } from "@/lib/utils"
 import { Transaction } from "@/types"
 import { cn } from "@/lib/utils"
 import { Card } from "@/components/ui/card"
+import { useLanguage } from "@/lib/i18n/context"
 import { EmptyState } from "@/components/shared/empty-state"
 import { SummaryStat } from "@/components/dashboard/transactions/summary-stat"
 import { TxRow } from "@/components/dashboard/transactions/tx-row"
@@ -38,6 +39,7 @@ const fu = (delay = 0) => ({
 export default function TransactionsClient({
   initialData,
 }: TransactionsClientProps) {
+  const { t } = useLanguage()
   const initialTransactions = initialData.data
   const [q, setQ] = useState("")
   const [typeFilter, setTypeFilter] = useState<Transaction["type"] | "all">(
@@ -79,16 +81,24 @@ export default function TransactionsClient({
         className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
       >
         <div>
-          <h1 className="text-2xl font-black tracking-tight sm:text-3xl">
-            Transactions
+          <h1
+            suppressHydrationWarning
+            className="text-2xl font-black tracking-tight sm:text-3xl"
+          >
+            {t("dashboard.transactions.title")}
           </h1>
-          <p className="mt-0.5 text-sm text-muted-foreground">
-            Track your deposits, withdrawals, and trading history
+          <p
+            suppressHydrationWarning
+            className="mt-0.5 text-sm text-muted-foreground"
+          >
+            {t("dashboard.transactions.subtitle")}
           </p>
         </div>
         <button className="flex w-full items-center justify-center gap-2 rounded-xl border border-border/30 bg-muted/20 px-4 py-2.5 text-xs font-bold transition-colors hover:bg-accent sm:w-auto">
           <Download className="h-3.5 w-3.5" />
-          Export CSV
+          <span suppressHydrationWarning>
+            {t("dashboard.transactions.exportCSV")}
+          </span>
         </button>
       </motion.div>
 
@@ -96,27 +106,27 @@ export default function TransactionsClient({
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <SummaryStat
           delay={0.1}
-          label="Total Inflow"
+          label={t("dashboard.transactions.totalInflow")}
           value={formatCurrency(totalIn)}
           icon={ArrowDownLeft}
           iconBg="bg-profit/15 text-profit"
-          sub="Completed deposits & profits"
+          sub={t("dashboard.transactions.completedDeposits")}
         />
         <SummaryStat
           delay={0.15}
-          label="Total Outflow"
+          label={t("dashboard.transactions.totalOutflow")}
           value={formatCurrency(totalOut)}
           icon={ArrowUpRight}
           iconBg="bg-loss/15 text-loss"
-          sub="Completed withdrawals"
+          sub={t("dashboard.transactions.completedWithdrawals")}
         />
         <SummaryStat
           delay={0.2}
-          label="Trading Profit"
+          label={t("dashboard.transactions.tradingProfit")}
           value={formatCurrency(totalProfit)}
           icon={TrendingUp}
           iconBg="bg-primary/15 text-primary"
-          sub="From copied trades"
+          sub={t("dashboard.transactions.fromCopiedTrades")}
         />
       </div>
 
@@ -130,7 +140,7 @@ export default function TransactionsClient({
               <input
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
-                placeholder="Search description or ID..."
+                placeholder={t("dashboard.transactions.searchPlaceholder")}
                 className="w-full rounded-xl border border-border/30 bg-muted/20 py-2.5 pr-4 pl-9 text-sm transition-colors placeholder:text-muted-foreground/50 focus:border-primary/40 focus:outline-none"
               />
             </div>
@@ -140,11 +150,12 @@ export default function TransactionsClient({
                 onChange={(e) => setTypeFilter(e.target.value as any)}
                 className="rounded-xl border border-border/30 bg-muted/20 px-3 py-2 text-xs font-semibold text-foreground focus:outline-none"
               >
-                {ALL_TYPES.map((t) => (
-                  <option key={t} value={t}>
-                    {t === "all"
-                      ? "All Types"
-                      : t
+                {ALL_TYPES.map((t_opt) => (
+                  <option key={t_opt} value={t_opt}>
+                    {t_opt === "all"
+                      ? t("dashboard.transactions.allTypes")
+                      : t(`dashboard.transactions.type_${t_opt}`) ||
+                        t_opt
                           .split("_")
                           .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
                           .join(" ")}
@@ -159,8 +170,9 @@ export default function TransactionsClient({
                 {ALL_STATUSES.map((s) => (
                   <option key={s} value={s}>
                     {s === "all"
-                      ? "All Statuses"
-                      : s.charAt(0).toUpperCase() + s.slice(1)}
+                      ? t("dashboard.transactions.allStatuses")
+                      : t(`dashboard.transactions.status_${s}`) ||
+                        s.charAt(0).toUpperCase() + s.slice(1)}
                   </option>
                 ))}
               </select>
@@ -171,11 +183,11 @@ export default function TransactionsClient({
           {filtered.length === 0 ? (
             <div className="p-8">
               <EmptyState
-                title="No transactions found"
+                title={t("dashboard.transactions.noTransactionsTitle")}
                 description={
                   q || typeFilter !== "all" || statusFilter !== "all"
-                    ? "Try adjusting your filters or search query."
-                    : "When you deposit or trade, your transactions will appear here."
+                    ? t("dashboard.transactions.noTransactionsFiltered")
+                    : t("dashboard.transactions.noTransactionsDesc")
                 }
               />
             </div>

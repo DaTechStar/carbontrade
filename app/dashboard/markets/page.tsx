@@ -19,6 +19,7 @@ import {
 import { cn } from "@/lib/utils"
 import { Card } from "@/components/ui/card"
 import { Skeleton } from "@/components/shared/skeleton"
+import { useLanguage } from "@/lib/i18n/context"
 
 // ─── Lazy-load TradingView widgets ────────────────────────────────────────────
 
@@ -133,6 +134,7 @@ const fu = (delay = 0) => ({
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function MarketsPage() {
+  const { t } = useLanguage()
   const [activeCategory, setActiveCategory] = useState<Category>("all")
   const [search, setSearch] = useState("")
   const [activeSymbol, setActiveSymbol] = useState(CHART_TABS[0])
@@ -155,11 +157,17 @@ export default function MarketsPage() {
           <BarChart2 className="h-5 w-5 text-primary" />
         </div>
         <div>
-          <h1 className="text-2xl font-black tracking-tight text-foreground sm:text-3xl">
-            Markets
+          <h1
+            suppressHydrationWarning
+            className="text-2xl font-black tracking-tight text-foreground sm:text-3xl"
+          >
+            {t("dashboard.markets.title")}
           </h1>
-          <p className="mt-0.5 text-sm text-muted-foreground">
-            Live prices, charts and market overview
+          <p
+            suppressHydrationWarning
+            className="mt-0.5 text-sm text-muted-foreground"
+          >
+            {t("dashboard.markets.subtitle")}
           </p>
         </div>
       </motion.div>
@@ -185,7 +193,10 @@ export default function MarketsPage() {
                   )}
                 >
                   <Icon className="h-3.5 w-3.5" />
-                  {label}
+                  <span suppressHydrationWarning>
+                    {t(`dashboard.markets.cat${label.replace(" ", "")}`) ||
+                      label}
+                  </span>
                 </button>
               ))}
 
@@ -195,7 +206,7 @@ export default function MarketsPage() {
                 <input
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search symbol…"
+                  placeholder={t("dashboard.markets.searchPlaceholder")}
                   className="w-36 rounded-xl border border-border/30 bg-muted/30 py-1.5 pr-3 pl-8 text-xs transition-colors placeholder:text-muted-foreground/50 focus:border-primary/40 focus:outline-none"
                 />
               </div>
@@ -204,8 +215,11 @@ export default function MarketsPage() {
             {/* Symbol tabs */}
             <div className="scrollbar-hide flex gap-2 overflow-x-auto pb-1">
               {filteredTabs.length === 0 ? (
-                <p className="py-1.5 text-xs text-muted-foreground">
-                  No symbols found
+                <p
+                  suppressHydrationWarning
+                  className="py-1.5 text-xs text-muted-foreground"
+                >
+                  {t("dashboard.markets.noSymbols")}
                 </p>
               ) : (
                 filteredTabs.map((tab) => (
@@ -266,7 +280,11 @@ export default function MarketsPage() {
                         : "text-muted-foreground hover:bg-accent hover:text-foreground"
                     )}
                   >
-                    {v === "advanced" ? "Chart" : "Technical"}
+                    <span suppressHydrationWarning>
+                      {v === "advanced"
+                        ? t("dashboard.markets.chartAdvanced")
+                        : t("dashboard.markets.chartTechnical")}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -300,10 +318,14 @@ export default function MarketsPage() {
           <Card padding="none" className="flex flex-1 flex-col overflow-hidden">
             <div className="flex items-center gap-2 border-b border-border/30 px-4 py-3">
               <Flame className="h-4 w-4 text-warning" />
-              <span className="text-sm font-bold">Market Overview</span>
+              <span suppressHydrationWarning className="text-sm font-bold">
+                {t("dashboard.markets.marketOverview")}
+              </span>
               <span className="ml-auto flex items-center gap-1 text-[10px] font-semibold text-profit">
                 <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-profit" />
-                Live
+                <span suppressHydrationWarning>
+                  {t("dashboard.markets.live")}
+                </span>
               </span>
             </div>
             <div className="h-[560px]">
@@ -314,7 +336,11 @@ export default function MarketsPage() {
                 autosize
                 showFloatingTooltip
                 showSymbolLogo
-                overviewTabs={OVERVIEW_TABS}
+                overviewTabs={OVERVIEW_TABS.map((tab) => ({
+                  ...tab,
+                  title:
+                    t(`dashboard.markets.cat${tab.originalTitle}`) || tab.title,
+                }))}
               />
             </div>
           </Card>
@@ -323,8 +349,11 @@ export default function MarketsPage() {
           <Card className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
               <TrendingUp className="h-4 w-4 text-primary" />
-              <span className="text-xs font-bold tracking-wider uppercase">
-                Quick Access
+              <span
+                suppressHydrationWarning
+                className="text-xs font-bold tracking-wider uppercase"
+              >
+                {t("dashboard.markets.quickAccess")}
               </span>
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -351,11 +380,19 @@ export default function MarketsPage() {
                       : "border-border/30 bg-muted/10"
                   )}
                 >
-                  <p className="text-[11px] font-bold text-foreground transition-colors group-hover:text-primary">
+                  <p
+                    suppressHydrationWarning
+                    className="text-[11px] font-bold text-foreground transition-colors group-hover:text-primary"
+                  >
                     {label}
                   </p>
-                  <p className="mt-0.5 text-[10px] text-muted-foreground capitalize">
-                    {cat}
+                  <p
+                    suppressHydrationWarning
+                    className="mt-0.5 text-[10px] text-muted-foreground capitalize"
+                  >
+                    {t(
+                      `dashboard.markets.cat${cat.charAt(0).toUpperCase() + cat.slice(1)}`
+                    ) || cat}
                   </p>
                 </button>
               ))}

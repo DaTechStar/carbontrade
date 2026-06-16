@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { formatCurrency } from "@/lib/utils"
 import { Tier } from "@/lib/rewards-config"
 import { TierBadge } from "@/components/dashboard/rewards/tier-badge"
+import { useLanguage } from "@/lib/i18n/context"
 
 function progressTo(tier: Tier, currentDeposit: number) {
   if (tier.minDeposit === 0) return 100
@@ -24,6 +25,7 @@ export function TierCard({
   isUnlocked: boolean
 }) {
   const [expanded, setExpanded] = useState(false)
+  const { t } = useLanguage()
   const locked = !isUnlocked && !isActive
 
   return (
@@ -59,28 +61,42 @@ export function TierCard({
                     : "text-foreground"
               )}
             >
-              {tier.name}
+              <span suppressHydrationWarning>
+                {t(`dashboard.rewards.tier_${tier.id}`) || tier.name}
+              </span>
             </span>
-            <span className="rounded-full border border-border/30 bg-muted/30 px-1.5 py-0.5 text-[10px] font-bold text-muted-foreground">
-              Level {tier.level}
+            <span
+              suppressHydrationWarning
+              className="rounded-full border border-border/30 bg-muted/30 px-1.5 py-0.5 text-[10px] font-bold text-muted-foreground"
+            >
+              {t("dashboard.rewards.cardLevel")} {tier.level}
             </span>
             {isActive && (
-              <span className="rounded-full border border-profit/20 bg-profit/10 px-2 py-0.5 text-[10px] font-black text-profit">
-                Current
+              <span
+                suppressHydrationWarning
+                className="rounded-full border border-profit/20 bg-profit/10 px-2 py-0.5 text-[10px] font-black text-profit"
+              >
+                {t("dashboard.rewards.cardCurrent")}
               </span>
             )}
           </div>
 
           <div className="mt-1 flex flex-wrap gap-x-4 gap-y-0.5">
-            <span className="text-[11px] text-muted-foreground">
-              Min.{" "}
+            <span
+              suppressHydrationWarning
+              className="text-[11px] text-muted-foreground"
+            >
+              {t("dashboard.rewards.cardMin")}{" "}
               <span className="font-semibold text-foreground">
                 {formatCurrency(tier.minDeposit)}
               </span>
             </span>
             {tier.bonus > 0 && (
-              <span className="text-[11px] text-muted-foreground">
-                Bonus{" "}
+              <span
+                suppressHydrationWarning
+                className="text-[11px] text-muted-foreground"
+              >
+                {t("dashboard.rewards.cardBonus")}{" "}
                 <span className="font-semibold text-profit">
                   {formatCurrency(tier.bonus)}
                 </span>
@@ -131,12 +147,13 @@ export function TierCard({
                   )}
                 />
                 <span
+                  suppressHydrationWarning
                   className={cn(
                     "text-xs leading-snug",
                     locked ? "text-muted-foreground/40" : "text-foreground/80"
                   )}
                 >
-                  {perk}
+                  {t(`dashboard.rewards.perks.${perk}`) || perk}
                 </span>
               </div>
             ))}
@@ -145,18 +162,18 @@ export function TierCard({
             <div className="flex flex-wrap gap-4 px-4 pb-4">
               <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                 <Users className="h-3.5 w-3.5" />
-                <span>
-                  Requires{" "}
+                <span suppressHydrationWarning>
+                  {t("dashboard.rewards.cardRequires")}{" "}
                   <span className="font-bold text-foreground">
                     {tier.minReferrals}
                   </span>{" "}
-                  direct referrals
+                  {t("dashboard.rewards.cardDirectRefs")}
                 </span>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                 <TrendingUp className="h-3.5 w-3.5" />
-                <span>
-                  Referral deposits ≥{" "}
+                <span suppressHydrationWarning>
+                  {t("dashboard.rewards.cardRefDeposits")}{" "}
                   <span className="font-bold text-foreground">
                     {formatCurrency(tier.minReferralDeposits)}
                   </span>

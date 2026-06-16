@@ -17,7 +17,10 @@ export function StatCard({
   return (
     <Card className="flex flex-col gap-3 transition-all duration-300 hover:border-primary/30">
       <div className="flex items-center justify-between">
-        <p className="text-[10px] leading-tight font-bold tracking-widest text-muted-foreground uppercase">
+        <p
+          suppressHydrationWarning
+          className="text-[10px] leading-tight font-bold tracking-widest text-muted-foreground uppercase"
+        >
           {label}
         </p>
         <div
@@ -29,11 +32,19 @@ export function StatCard({
           <Icon className="h-3.5 w-3.5" />
         </div>
       </div>
-      <p className="truncate text-xl font-black tracking-tight sm:text-2xl">
+      <p
+        suppressHydrationWarning
+        className="truncate text-xl font-black tracking-tight sm:text-2xl"
+      >
         {value}
       </p>
       {sub && (
-        <p className="truncate text-[10px] text-muted-foreground">{sub}</p>
+        <p
+          suppressHydrationWarning
+          className="truncate text-[10px] text-muted-foreground"
+        >
+          {sub}
+        </p>
       )}
     </Card>
   )

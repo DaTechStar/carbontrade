@@ -8,6 +8,7 @@ import { ArrowUpRight, ShieldCheck, Loader2, AlertCircle } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import Link from "next/link"
+import { useLanguage } from "@/lib/i18n/context"
 
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -44,6 +45,7 @@ export function WithdrawForm({
   kycStatus?: string
 }) {
   const router = useRouter()
+  const { t } = useLanguage()
   const [rates, setRates] = useState<{ BTC: number; ETH: number }>({
     BTC: 65000,
     ETH: 3500,
@@ -103,9 +105,7 @@ export function WithdrawForm({
     const method = form.getValues("method")
 
     if (!amount || amount < 10) {
-      toast.error(
-        "Please enter a valid amount (minimum 10 USD) before requesting OTP."
-      )
+      toast.error(t("dashboard.withdrawForm.errorMinAmount"))
       return
     }
 
@@ -123,7 +123,7 @@ export function WithdrawForm({
         throw new Error(data.error || "Failed to request OTP")
       }
 
-      toast.success("OTP sent to your email address!")
+      toast.success(t("dashboard.withdrawForm.errorOtpSent"))
       setOtpCooldown(60)
     } catch (error: any) {
       toast.error(error.message)
@@ -147,7 +147,7 @@ export function WithdrawForm({
         throw new Error(data.error || "Failed to submit withdrawal")
       }
 
-      toast.success("Withdrawal requested successfully!")
+      toast.success(t("dashboard.withdrawForm.success"))
       form.reset()
       router.push("/dashboard/transactions")
       router.refresh()
@@ -179,11 +179,17 @@ export function WithdrawForm({
           <ArrowUpRight className="h-5 w-5 text-loss" />
         </div>
         <div>
-          <h2 className="text-xl leading-none font-black tracking-tight text-foreground sm:text-2xl">
-            Withdraw Funds
+          <h2
+            suppressHydrationWarning
+            className="text-xl leading-none font-black tracking-tight text-foreground sm:text-2xl"
+          >
+            {t("dashboard.withdrawForm.title")}
           </h2>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Fast and secure payouts to your wallet
+          <p
+            suppressHydrationWarning
+            className="mt-1 text-xs text-muted-foreground"
+          >
+            {t("dashboard.withdrawForm.subtitle")}
           </p>
         </div>
       </div>
@@ -192,17 +198,23 @@ export function WithdrawForm({
         <div className="mb-6 flex gap-3 rounded-lg border border-loss/50 bg-loss/10 p-4 text-loss">
           <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
           <div className="flex flex-col gap-1">
-            <h5 className="leading-none font-bold tracking-tight">
-              KYC Verification Required
+            <h5
+              suppressHydrationWarning
+              className="leading-none font-bold tracking-tight"
+            >
+              {t("dashboard.withdrawForm.kycRequired")}
             </h5>
             <div className="text-sm opacity-90">
-              You must complete identity verification before you can withdraw
-              funds.{" "}
+              <span suppressHydrationWarning>
+                {t("dashboard.withdrawForm.kycDesc1")}
+              </span>{" "}
               <Link
                 href="/dashboard/settings"
                 className="font-bold underline hover:opacity-80"
               >
-                Complete KYC now
+                <span suppressHydrationWarning>
+                  {t("dashboard.withdrawForm.completeKyc")}
+                </span>
               </Link>
             </div>
           </div>
@@ -217,8 +229,11 @@ export function WithdrawForm({
               name="method"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-muted-foreground">
-                    Select Method
+                  <FormLabel
+                    suppressHydrationWarning
+                    className="text-muted-foreground"
+                  >
+                    {t("dashboard.withdrawForm.selectMethod")}
                   </FormLabel>
                   <FormControl>
                     <Select
@@ -237,8 +252,11 @@ export function WithdrawForm({
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-muted-foreground">
-                    Amount (USD)
+                  <FormLabel
+                    suppressHydrationWarning
+                    className="text-muted-foreground"
+                  >
+                    {t("dashboard.withdrawForm.amountUSD")}
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -259,18 +277,27 @@ export function WithdrawForm({
             name="walletAddress"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-muted-foreground">
-                  Wallet Address
+                <FormLabel
+                  suppressHydrationWarning
+                  className="text-muted-foreground"
+                >
+                  {t("dashboard.withdrawForm.walletAddress")}
                 </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Enter wallet address or bank details"
+                    placeholder={t(
+                      "dashboard.withdrawForm.walletAddressPlaceholder"
+                    )}
                     {...field}
                     className="h-11 bg-input/20"
                   />
                 </FormControl>
-                <p className="mt-1 text-[10px] text-muted-foreground">
-                  Prefill suggestion: 0x26E70Bcac871E41612Ea0bB3905731C378116913
+                <p
+                  suppressHydrationWarning
+                  className="mt-1 text-[10px] text-muted-foreground"
+                >
+                  {t("dashboard.withdrawForm.walletPrefill")}{" "}
+                  0x26E70Bcac871E41612Ea0bB3905731C378116913
                 </p>
                 <FormMessage />
               </FormItem>
@@ -282,12 +309,15 @@ export function WithdrawForm({
             name="network"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-muted-foreground">
-                  Network (optional)
+                <FormLabel
+                  suppressHydrationWarning
+                  className="text-muted-foreground"
+                >
+                  {t("dashboard.withdrawForm.network")}
                 </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="ERC20 / TRC20 / BTC"
+                    placeholder={t("dashboard.withdrawForm.networkPlaceholder")}
                     {...field}
                     className="h-11 bg-input/20"
                   />
@@ -302,13 +332,16 @@ export function WithdrawForm({
             name="otp"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-muted-foreground">
-                  OTP (sent to your email)
+                <FormLabel
+                  suppressHydrationWarning
+                  className="text-muted-foreground"
+                >
+                  {t("dashboard.withdrawForm.otp")}
                 </FormLabel>
                 <div className="flex gap-2">
                   <FormControl>
                     <Input
-                      placeholder="Enter OTP"
+                      placeholder={t("dashboard.withdrawForm.otpPlaceholder")}
                       {...field}
                       className="h-11 flex-1 bg-input/20"
                     />
@@ -320,13 +353,18 @@ export function WithdrawForm({
                     disabled={isRequestingOtp || otpCooldown > 0}
                     className="h-11 shrink-0 px-4 font-bold"
                   >
-                    {isRequestingOtp ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : otpCooldown > 0 ? (
-                      `Resend in ${otpCooldown}s`
-                    ) : (
-                      "Request OTP"
-                    )}
+                    <span suppressHydrationWarning>
+                      {isRequestingOtp ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : otpCooldown > 0 ? (
+                        t("dashboard.withdrawForm.resendIn")?.replace(
+                          "{{seconds}}",
+                          String(otpCooldown)
+                        ) || `Resend in ${otpCooldown}s`
+                      ) : (
+                        t("dashboard.withdrawForm.requestOtp")
+                      )}
+                    </span>
                   </Button>
                 </div>
                 <FormMessage />
@@ -335,8 +373,11 @@ export function WithdrawForm({
           />
 
           <div className="space-y-2 pt-1">
-            <label className="block text-sm font-medium text-muted-foreground">
-              Amount in Crypto
+            <label
+              suppressHydrationWarning
+              className="block text-sm font-medium text-muted-foreground"
+            >
+              {t("dashboard.withdrawForm.amountCrypto")}
             </label>
             <Input
               value={cryptoAmount}
@@ -356,7 +397,11 @@ export function WithdrawForm({
               ) : (
                 <ShieldCheck className="h-4 w-4" />
               )}
-              {isSubmitting ? "Processing..." : "Review & Withdraw"}
+              <span suppressHydrationWarning>
+                {isSubmitting
+                  ? t("dashboard.withdrawForm.processing")
+                  : t("dashboard.withdrawForm.reviewWithdraw")}
+              </span>
             </span>
             <div className="absolute inset-0 translate-y-full bg-background/20 transition-transform duration-300 ease-out group-hover/btn:translate-y-0" />
           </Button>

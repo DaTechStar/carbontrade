@@ -2,6 +2,11 @@ import { NextResponse } from "next/server"
 import connectToDatabase from "@/lib/db"
 import { User } from "@/lib/models"
 import bcrypt from "bcryptjs"
+import { Resend } from "resend"
+import { render } from "@react-email/render"
+import WelcomeEmail from "@/emails/welcome"
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
   try {
@@ -50,6 +55,27 @@ export async function POST(req: Request) {
         totalProfit: 0,
       },
     })
+
+    if (process.env.RESEND_API_KEY) {
+      try {
+        const emailHtml = await render(WelcomeEmail({ name: newUser.name }))
+        const fromEmail =
+          process.env.RESEND_FROM_EMAIL ||
+          "CarbonTrade <noreply@carbontrade.com>"
+
+        // Send email asynchronously
+        resend.emails
+          .send({
+            from: fromEmail,
+            to: newUser.email,
+            subject: "Welcome to CarbonTrade!",
+            html: emailHtml,
+          })
+          .catch((err) => console.error("Resend non-fatal error:", err))
+      } catch (emailErr) {
+        console.error("Failed to render/send welcome email:", emailErr)
+      }
+    }
 
     return NextResponse.json(
       { message: "User registered successfully", userId: newUser._id },

@@ -8,6 +8,7 @@ import { Trader } from "@/types"
 import { cn } from "@/lib/utils"
 import { TraderCard } from "@/components/dashboard/trader-card"
 import { toast } from "sonner"
+import { useLanguage } from "@/lib/i18n/context"
 
 import { useCopyTrader } from "@/hooks/use-copy-trader"
 
@@ -37,6 +38,7 @@ export default function TradersClient({
   initialTraders: Trader[]
 }) {
   const { handleCopy } = useCopyTrader()
+  const { t } = useLanguage()
   const [search, setSearch] = useState("")
   const [sortKey, setSortKey] = useState<string>("monthlyReturn")
   const [sortOpen, setSortOpen] = useState(false)
@@ -71,6 +73,11 @@ export default function TradersClient({
   const currentSortLabel =
     SORT_OPTIONS.find((o) => o.value === sortKey)?.label ?? "Sort"
 
+  const translateSortOption = (opt: string) =>
+    t(`dashboard.traders.sort_${opt}`)
+  const translateBadgeOption = (opt: string) =>
+    t(`dashboard.traders.badge_${opt}`)
+
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 pt-6 pb-16">
       {/* Header */}
@@ -84,12 +91,20 @@ export default function TradersClient({
           <Users className="h-5 w-5 text-primary" />
         </div>
         <div>
-          <h1 className="text-2xl font-black tracking-tight text-foreground sm:text-3xl">
-            Copy Traders
+          <h1
+            suppressHydrationWarning
+            className="text-2xl font-black tracking-tight text-foreground sm:text-3xl"
+          >
+            {t("dashboard.traders.title")}
           </h1>
-          <p className="mt-0.5 text-sm text-muted-foreground">
-            Choose from {initialTraders.length} professional traders and copy
-            their strategies
+          <p
+            suppressHydrationWarning
+            className="mt-0.5 text-sm text-muted-foreground"
+          >
+            {t("dashboard.traders.subtitle")?.replace(
+              "{{count}}",
+              String(initialTraders.length)
+            )}
           </p>
         </div>
       </motion.div>
@@ -107,7 +122,7 @@ export default function TradersClient({
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search traders by name, bio, or specialization..."
+            placeholder={t("dashboard.traders.searchPlaceholder")}
             className="h-11 w-full rounded-xl border border-border/50 bg-card/60 pr-4 pl-10 text-sm text-foreground backdrop-blur-md transition-all placeholder:text-muted-foreground focus:border-primary/50 focus:ring-1 focus:ring-primary/30 focus:outline-none"
           />
         </div>
@@ -119,7 +134,7 @@ export default function TradersClient({
             className="flex h-11 items-center gap-2 rounded-xl border border-border/50 bg-card/60 px-4 text-sm font-bold whitespace-nowrap text-foreground backdrop-blur-md transition-all hover:border-primary/40"
           >
             <TrendingUp className="h-4 w-4 text-primary" />
-            {currentSortLabel}
+            <span suppressHydrationWarning>{translateSortOption(sortKey)}</span>
             <ChevronDown
               className={cn(
                 "h-4 w-4 text-muted-foreground transition-transform",
@@ -143,7 +158,9 @@ export default function TradersClient({
                       : "text-muted-foreground"
                   )}
                 >
-                  {opt.label}
+                  <span suppressHydrationWarning>
+                    {translateSortOption(opt.value)}
+                  </span>
                 </button>
               ))}
             </div>
@@ -169,7 +186,9 @@ export default function TradersClient({
                 : "border-border/40 bg-muted/30 text-muted-foreground hover:border-primary/30 hover:text-foreground"
             )}
           >
-            {opt.label}
+            <span suppressHydrationWarning>
+              {translateBadgeOption(opt.value)}
+            </span>
           </button>
         ))}
       </motion.div>
@@ -181,12 +200,15 @@ export default function TradersClient({
         transition={{ duration: 0.3, delay: 0.2 }}
         className="-mt-2 text-xs text-muted-foreground"
       >
-        Showing{" "}
-        <span className="font-bold text-foreground">{filtered.length}</span> of{" "}
+        <span suppressHydrationWarning>{t("dashboard.traders.showing")}</span>{" "}
+        <span className="font-bold text-foreground">{filtered.length}</span>{" "}
+        <span suppressHydrationWarning>{t("dashboard.traders.of")}</span>{" "}
         <span className="font-bold text-foreground">
           {initialTraders.length}
         </span>{" "}
-        traders
+        <span suppressHydrationWarning>
+          {t("dashboard.traders.traders_count")}
+        </span>
       </motion.p>
 
       {/* Trader Grid */}
@@ -204,8 +226,8 @@ export default function TradersClient({
       ) : (
         <div className="flex flex-col items-center justify-center gap-3 py-20 text-center">
           <Users className="h-10 w-10 text-muted-foreground/30" />
-          <p className="text-sm text-muted-foreground">
-            No traders match your search.
+          <p suppressHydrationWarning className="text-sm text-muted-foreground">
+            {t("dashboard.traders.noTraders")}
           </p>
           <button
             onClick={() => {
@@ -214,7 +236,9 @@ export default function TradersClient({
             }}
             className="text-xs font-bold text-primary hover:opacity-80"
           >
-            Clear filters
+            <span suppressHydrationWarning>
+              {t("dashboard.traders.clearFilters")}
+            </span>
           </button>
         </div>
       )}

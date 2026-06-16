@@ -19,6 +19,7 @@ import { formatCurrency } from "@/lib/utils"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { EmptyState } from "@/components/shared/empty-state"
+import { useLanguage } from "@/lib/i18n/context"
 import { Transaction } from "@/types"
 
 export function Transactions({
@@ -26,9 +27,10 @@ export function Transactions({
 }: {
   recentTransactions: Transaction[]
 }) {
+  const { t } = useLanguage()
   const [q, setQ] = useState("")
-  const rows = recentTransactions.filter((t) =>
-    t.description.toLowerCase().includes(q.toLowerCase())
+  const rows = recentTransactions.filter((tx) =>
+    tx.description.toLowerCase().includes(q.toLowerCase())
   )
 
   const iconMap: Record<string, React.ElementType> = {
@@ -52,13 +54,15 @@ export function Transactions({
     <Card className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
         <BarChart2 className="h-4 w-4 shrink-0 text-secondary" />
-        <h3 className="flex-1 text-sm font-bold">Recent Transactions</h3>
+        <h3 suppressHydrationWarning className="flex-1 text-sm font-bold">
+          {t("dashboard.transactions.title")}
+        </h3>
         <a
           href="/dashboard/transactions"
           className="flex items-center gap-1 text-xs font-semibold text-primary hover:opacity-80"
         >
           <ChevronRight className="h-3.5 w-3.5" />
-          All
+          {t("dashboard.transactions.all")}
         </a>
       </div>
       <div className="relative">
@@ -66,15 +70,15 @@ export function Transactions({
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Search transactions…"
+          placeholder={t("dashboard.transactions.searchPlaceholder")}
           className="w-full rounded-xl border border-border/30 bg-muted/40 py-2 pr-3 pl-8 text-xs transition-colors placeholder:text-muted-foreground/50 focus:border-primary/40 focus:outline-none"
         />
       </div>
       {rows.length === 0 ? (
         <EmptyState
           compact
-          title="No transactions"
-          description="Your history will appear here."
+          title={t("dashboard.transactions.noTransactionsTitle")}
+          description={t("dashboard.transactions.noTransactionsDesc")}
         />
       ) : (
         <div className="flex flex-col gap-0.5">

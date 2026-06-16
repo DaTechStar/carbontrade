@@ -17,9 +17,11 @@ import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { Card } from "@/components/ui/card"
 import { submitKycDocument } from "@/app/actions/kyc"
+import { useLanguage } from "@/lib/i18n/context"
 
 export function KycTab({ user }: { user: any }) {
   const [isPending, startTransition] = useTransition()
+  const { t } = useLanguage()
 
   const [fileFront, setFileFront] = useState<File | null>(null)
   const [previewFront, setPreviewFront] = useState<string | null>(null)
@@ -47,11 +49,11 @@ export function KycTab({ user }: { user: any }) {
     if (e.target.files && e.target.files[0]) {
       const selectedFile = e.target.files[0]
       if (selectedFile.size > 5 * 1024 * 1024) {
-        toast.error("File size must be less than 5MB")
+        toast.error(t("dashboard.settings.tabs.kycFileSize"))
         return
       }
       if (!selectedFile.type.startsWith("image/")) {
-        toast.error("Please upload an image file (JPG, PNG, etc.)")
+        toast.error(t("dashboard.settings.tabs.kycFileFormat"))
         return
       }
 
@@ -85,7 +87,7 @@ export function KycTab({ user }: { user: any }) {
 
   const handleUpload = () => {
     if (!fileFront || !fileBack) {
-      toast.error("Please select both front and back images of your ID")
+      toast.error(t("dashboard.settings.tabs.kycSelectBoth"))
       return
     }
 
@@ -98,7 +100,7 @@ export function KycTab({ user }: { user: any }) {
       if (res?.error) {
         toast.error(res.error)
       } else {
-        toast.success("Documents submitted successfully!")
+        toast.success(t("dashboard.settings.tabs.kycSuccess"))
         handleRemove("front")
         handleRemove("back")
       }
@@ -143,23 +145,26 @@ export function KycTab({ user }: { user: any }) {
             )}
           </div>
           <div className="flex-1">
-            <h3 className="text-xl font-black">
+            <h3 suppressHydrationWarning className="text-xl font-black">
               {status === "verified"
-                ? "Identity Verified"
+                ? t("dashboard.settings.tabs.kycVerified")
                 : status === "pending"
-                  ? "Verification Pending"
+                  ? t("dashboard.settings.tabs.kycPending")
                   : status === "rejected"
-                    ? "Verification Rejected"
-                    : "Identity Verification (KYC)"}
+                    ? t("dashboard.settings.tabs.kycRejected")
+                    : t("dashboard.settings.tabs.kycTitle")}
             </h3>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p
+              suppressHydrationWarning
+              className="mt-1 text-sm text-muted-foreground"
+            >
               {status === "verified"
-                ? "Your identity has been successfully verified. You have full access to all features."
+                ? t("dashboard.settings.tabs.kycDescVerified")
                 : status === "pending"
-                  ? "Your documents are currently under review by our team. This usually takes 1-2 business days."
+                  ? t("dashboard.settings.tabs.kycDescPending")
                   : status === "rejected"
-                    ? "Unfortunately, your documents were rejected. Please upload clear, valid images of your government-issued ID."
-                    : "Verification is required by financial regulations to enable withdrawals, increase your deposit limits, and unlock full trading features."}
+                    ? t("dashboard.settings.tabs.kycDescRejected")
+                    : t("dashboard.settings.tabs.kycDescUnverified")}
             </p>
           </div>
         </div>
@@ -206,7 +211,10 @@ export function KycTab({ user }: { user: any }) {
                         onClick={() => handleRemove("front")}
                         className="mt-1 flex items-center gap-1 text-xs font-bold text-loss hover:underline"
                       >
-                        <XCircle className="h-3 w-3" /> Remove
+                        <XCircle className="h-3 w-3" />{" "}
+                        <span suppressHydrationWarning>
+                          {t("dashboard.settings.tabs.kycRemove")}
+                        </span>
                       </button>
                     </div>
                   </div>
@@ -215,17 +223,25 @@ export function KycTab({ user }: { user: any }) {
                     <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-secondary/10">
                       <ImageIcon className="h-6 w-6 text-secondary" />
                     </div>
-                    <p className="text-sm font-bold text-foreground">
-                      Front of ID
+                    <p
+                      suppressHydrationWarning
+                      className="text-sm font-bold text-foreground"
+                    >
+                      {t("dashboard.settings.tabs.kycFrontId")}
                     </p>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      Upload the front side of your document
+                    <p
+                      suppressHydrationWarning
+                      className="mt-1 text-xs text-muted-foreground"
+                    >
+                      {t("dashboard.settings.tabs.kycFrontDesc")}
                     </p>
                     <button
                       onClick={() => fileInputRefFront.current?.click()}
                       className="mt-4 rounded-xl bg-secondary px-5 py-2.5 text-xs font-bold text-secondary-foreground transition-opacity hover:opacity-90"
                     >
-                      Select Image
+                      <span suppressHydrationWarning>
+                        {t("dashboard.settings.tabs.kycSelectBtn")}
+                      </span>
                     </button>
                   </div>
                 )}
@@ -270,7 +286,10 @@ export function KycTab({ user }: { user: any }) {
                         onClick={() => handleRemove("back")}
                         className="mt-1 flex items-center gap-1 text-xs font-bold text-loss hover:underline"
                       >
-                        <XCircle className="h-3 w-3" /> Remove
+                        <XCircle className="h-3 w-3" />{" "}
+                        <span suppressHydrationWarning>
+                          {t("dashboard.settings.tabs.kycRemove")}
+                        </span>
                       </button>
                     </div>
                   </div>
@@ -279,17 +298,25 @@ export function KycTab({ user }: { user: any }) {
                     <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-secondary/10">
                       <ImageIcon className="h-6 w-6 text-secondary" />
                     </div>
-                    <p className="text-sm font-bold text-foreground">
-                      Back of ID
+                    <p
+                      suppressHydrationWarning
+                      className="text-sm font-bold text-foreground"
+                    >
+                      {t("dashboard.settings.tabs.kycBackId")}
                     </p>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      Upload the back side of your document
+                    <p
+                      suppressHydrationWarning
+                      className="mt-1 text-xs text-muted-foreground"
+                    >
+                      {t("dashboard.settings.tabs.kycBackDesc")}
                     </p>
                     <button
                       onClick={() => fileInputRefBack.current?.click()}
                       className="mt-4 rounded-xl bg-secondary px-5 py-2.5 text-xs font-bold text-secondary-foreground transition-opacity hover:opacity-90"
                     >
-                      Select Image
+                      <span suppressHydrationWarning>
+                        {t("dashboard.settings.tabs.kycSelectBtn")}
+                      </span>
                     </button>
                   </div>
                 )}
@@ -304,12 +331,16 @@ export function KycTab({ user }: { user: any }) {
               {isPending ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Uploading Documents...
+                  <span suppressHydrationWarning>
+                    {t("dashboard.settings.tabs.kycUploading")}
+                  </span>
                 </>
               ) : (
                 <>
                   <Upload className="h-4 w-4" />
-                  Submit Documents
+                  <span suppressHydrationWarning>
+                    {t("dashboard.settings.tabs.kycSubmit")}
+                  </span>
                 </>
               )}
             </button>
@@ -318,18 +349,23 @@ export function KycTab({ user }: { user: any }) {
       </Card>
 
       <Card className="flex flex-col gap-4 p-6">
-        <h4 className="text-sm font-bold">Document Guidelines</h4>
+        <h4 suppressHydrationWarning className="text-sm font-bold">
+          {t("dashboard.settings.tabs.kycGuideTitle")}
+        </h4>
         <div className="space-y-3 text-sm text-muted-foreground">
           <ul className="list-disc space-y-1 pl-5">
-            <li>Ensure all four corners of the document are visible.</li>
-            <li>
-              The image must be clear and not blurry. Avoid glare or shadows.
+            <li suppressHydrationWarning>
+              {t("dashboard.settings.tabs.kycGuide1")}
             </li>
-            <li>Supported formats: JPG, PNG. Maximum size: 5MB per image.</li>
+            <li suppressHydrationWarning>
+              {t("dashboard.settings.tabs.kycGuide2")}
+            </li>
+            <li suppressHydrationWarning>
+              {t("dashboard.settings.tabs.kycGuide3")}
+            </li>
           </ul>
-          <p className="mt-4">
-            Your documents are securely encrypted and stored strictly in
-            accordance with international data protection laws.
+          <p suppressHydrationWarning className="mt-4">
+            {t("dashboard.settings.tabs.kycGuide4")}
           </p>
         </div>
       </Card>

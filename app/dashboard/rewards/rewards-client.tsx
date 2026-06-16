@@ -5,10 +5,11 @@ import { Crown, ArrowRight, Gift, Users, Lock, Check } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { formatCurrency } from "@/lib/utils"
-import { Card } from "@/components/ui/card"
 import { TIERS } from "@/lib/rewards-config"
+import { useLanguage } from "@/lib/i18n/context"
 import { TierBadge } from "@/components/dashboard/rewards/tier-badge"
 import { TierCard } from "@/components/dashboard/rewards/tier-card"
+import { Card } from "@/components/ui/card"
 
 const fu = (delay = 0) => ({
   initial: { opacity: 0, y: 14 },
@@ -34,6 +35,7 @@ export default function RewardsClient({
   const progressPct = nextTier
     ? Math.min(100, Math.round((currentDeposit / nextTier.minDeposit) * 100))
     : 100
+  const { t } = useLanguage()
 
   return (
     <div className="flex w-full flex-col gap-8 pb-12">
@@ -43,11 +45,17 @@ export default function RewardsClient({
           <Crown className="h-5 w-5 text-purple-400" />
         </div>
         <div>
-          <h1 className="text-2xl font-black tracking-tight sm:text-3xl">
-            Rewards & Ranks
+          <h1
+            suppressHydrationWarning
+            className="text-2xl font-black tracking-tight sm:text-3xl"
+          >
+            {t("dashboard.rewards.title")}
           </h1>
-          <p className="mt-0.5 text-sm text-muted-foreground">
-            Unlock exclusive benefits as you grow
+          <p
+            suppressHydrationWarning
+            className="mt-0.5 text-sm text-muted-foreground"
+          >
+            {t("dashboard.rewards.subtitle")}
           </p>
         </div>
       </motion.div>
@@ -69,29 +77,46 @@ export default function RewardsClient({
 
             {/* Status text */}
             <div className="min-w-0 flex-1">
-              <p className="mb-1 text-xs font-bold tracking-widest text-muted-foreground uppercase">
-                Your current rank
+              <p
+                suppressHydrationWarning
+                className="mb-1 text-xs font-bold tracking-widest text-muted-foreground uppercase"
+              >
+                {t("dashboard.rewards.yourRank")}
               </p>
               <div className="flex flex-wrap items-baseline gap-3">
                 <h2
+                  suppressHydrationWarning
                   className={cn(
                     "text-3xl font-black tracking-tight",
                     currentTier.color
                   )}
                 >
-                  {currentTier.name}
+                  {t(`dashboard.rewards.tier_${currentTier.id}`) ||
+                    currentTier.name}
                 </h2>
-                <span className="text-sm font-bold text-muted-foreground">
-                  Level {currentTier.level} of {TIERS.length}
+                <span
+                  suppressHydrationWarning
+                  className="text-sm font-bold text-muted-foreground"
+                >
+                  {t("dashboard.rewards.levelOf")
+                    ?.replace("{{level}}", String(currentTier.level))
+                    .replace("{{total}}", String(TIERS.length))}
                 </span>
               </div>
               {nextTier && (
                 <div className="mt-3">
                   <div className="mb-1.5 flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground">
-                      Progress to{" "}
-                      <span className={cn("font-bold", nextTier.color)}>
-                        {nextTier.name}
+                    <span
+                      suppressHydrationWarning
+                      className="text-xs text-muted-foreground"
+                    >
+                      {t("dashboard.rewards.progressTo")}{" "}
+                      <span
+                        suppressHydrationWarning
+                        className={cn("font-bold", nextTier.color)}
+                      >
+                        {t(`dashboard.rewards.tier_${nextTier.id}`) ||
+                          nextTier.name}
                       </span>
                     </span>
                     <span className="text-xs font-bold text-foreground">
@@ -113,14 +138,22 @@ export default function RewardsClient({
                       }}
                     />
                   </div>
-                  <p className="mt-1.5 text-xs text-muted-foreground">
-                    Deposit{" "}
-                    <span className="font-bold text-foreground">
-                      {formatCurrency(
-                        Math.max(0, nextTier.minDeposit - currentDeposit)
+                  <p
+                    suppressHydrationWarning
+                    className="mt-1.5 text-xs text-muted-foreground"
+                  >
+                    {t("dashboard.rewards.depositMore")
+                      ?.replace(
+                        "{{amount}}",
+                        formatCurrency(
+                          Math.max(0, nextTier.minDeposit - currentDeposit)
+                        )
+                      )
+                      .replace(
+                        "{{tier}}",
+                        t(`dashboard.rewards.tier_${nextTier.id}`) ||
+                          nextTier.name
                       )}
-                    </span>{" "}
-                    more to unlock {nextTier.name}
                   </p>
                 </div>
               )}
@@ -129,15 +162,24 @@ export default function RewardsClient({
             {/* Stats */}
             <div className="flex shrink-0 flex-row gap-4 sm:flex-col sm:gap-3">
               {[
-                { label: "My Deposit", value: formatCurrency(currentDeposit) },
-                { label: "Referrals", value: String(currentReferrals) },
                 {
-                  label: "Ref. Deposits",
+                  label: t("dashboard.rewards.myDeposit"),
+                  value: formatCurrency(currentDeposit),
+                },
+                {
+                  label: t("dashboard.rewards.referrals"),
+                  value: String(currentReferrals),
+                },
+                {
+                  label: t("dashboard.rewards.refDeposits"),
                   value: formatCurrency(currentReferralDeposits),
                 },
               ].map(({ label, value }) => (
                 <div key={label} className="text-center sm:text-right">
-                  <p className="text-[10px] tracking-wider text-muted-foreground uppercase">
+                  <p
+                    suppressHydrationWarning
+                    className="text-[10px] tracking-wider text-muted-foreground uppercase"
+                  >
                     {label}
                   </p>
                   <p className="text-sm font-black text-foreground">{value}</p>
@@ -150,8 +192,11 @@ export default function RewardsClient({
 
       {/* ── Tier progression track ── */}
       <motion.div {...fu(0.15)}>
-        <p className="mb-4 text-xs font-bold tracking-widest text-muted-foreground uppercase">
-          All Tiers
+        <p
+          suppressHydrationWarning
+          className="mb-4 text-xs font-bold tracking-widest text-muted-foreground uppercase"
+        >
+          {t("dashboard.rewards.allTiers")}
         </p>
         <div className="scrollbar-hide flex items-center gap-0 overflow-x-auto pb-3">
           {TIERS.map((tier, i) => {
@@ -186,6 +231,7 @@ export default function RewardsClient({
                     />
                   </div>
                   <span
+                    suppressHydrationWarning
                     className={cn(
                       "text-[10px] font-semibold whitespace-nowrap",
                       isActive
@@ -195,7 +241,7 @@ export default function RewardsClient({
                           : "text-muted-foreground"
                     )}
                   >
-                    {tier.name}
+                    {t(`dashboard.rewards.tier_${tier.id}`) || tier.name}
                   </span>
                 </div>
                 {i < TIERS.length - 1 && (
@@ -216,8 +262,11 @@ export default function RewardsClient({
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
         {/* Tier list */}
         <motion.div {...fu(0.2)} className="flex flex-col gap-3 xl:col-span-2">
-          <p className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
-            Tier Details
+          <p
+            suppressHydrationWarning
+            className="text-xs font-bold tracking-widest text-muted-foreground uppercase"
+          >
+            {t("dashboard.rewards.tierDetails")}
           </p>
           {TIERS.map((tier) => (
             <TierCard
@@ -249,11 +298,18 @@ export default function RewardsClient({
                 <div className="flex items-center gap-2">
                   <TierBadge tier={nextTier} size="sm" />
                   <div>
-                    <p className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
-                      Next rank
+                    <p
+                      suppressHydrationWarning
+                      className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase"
+                    >
+                      {t("dashboard.rewards.nextRank")}
                     </p>
-                    <p className={cn("text-sm font-black", nextTier.color)}>
-                      {nextTier.name}
+                    <p
+                      suppressHydrationWarning
+                      className={cn("text-sm font-black", nextTier.color)}
+                    >
+                      {t(`dashboard.rewards.tier_${nextTier.id}`) ||
+                        nextTier.name}
                     </p>
                   </div>
                 </div>
@@ -261,24 +317,26 @@ export default function RewardsClient({
                 <div className="flex flex-col gap-2.5">
                   {[
                     {
-                      label: "Required Deposit",
+                      label: t("dashboard.rewards.reqDeposit"),
                       value: formatCurrency(nextTier.minDeposit),
                       diff:
                         formatCurrency(
                           Math.max(0, nextTier.minDeposit - currentDeposit)
-                        ) + " to go",
+                        ) +
+                        " " +
+                        t("dashboard.rewards.toGo"),
                     },
                     {
-                      label: "Bonus on Unlock",
+                      label: t("dashboard.rewards.bonusUnlock"),
                       value: formatCurrency(nextTier.bonus),
                       diff: null,
                     },
                     ...(nextTier.minReferrals > 0
                       ? [
                           {
-                            label: "Referrals Needed",
+                            label: t("dashboard.rewards.refsNeeded"),
                             value: String(nextTier.minReferrals),
-                            diff: `${Math.max(0, nextTier.minReferrals - currentReferrals)} more`,
+                            diff: `${Math.max(0, nextTier.minReferrals - currentReferrals)} ${t("dashboard.rewards.more")}`,
                           },
                         ]
                       : []),
@@ -287,7 +345,10 @@ export default function RewardsClient({
                       key={label}
                       className="flex items-center justify-between"
                     >
-                      <span className="text-xs text-muted-foreground">
+                      <span
+                        suppressHydrationWarning
+                        className="text-xs text-muted-foreground"
+                      >
                         {label}
                       </span>
                       <div className="text-right">
@@ -295,7 +356,10 @@ export default function RewardsClient({
                           {value}
                         </span>
                         {diff && (
-                          <p className="text-[10px] text-muted-foreground">
+                          <p
+                            suppressHydrationWarning
+                            className="text-[10px] text-muted-foreground"
+                          >
                             {diff}
                           </p>
                         )}
@@ -324,7 +388,10 @@ export default function RewardsClient({
                     nextTier.gradient
                   )}
                 >
-                  Deposit to Rank Up <ArrowRight className="h-3.5 w-3.5" />
+                  <span suppressHydrationWarning>
+                    {t("dashboard.rewards.depositToRankUp")}
+                  </span>{" "}
+                  <ArrowRight className="h-3.5 w-3.5" />
                 </a>
               </div>
             </Card>
@@ -336,12 +403,15 @@ export default function RewardsClient({
               <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary/15">
                 <Gift className="h-4 w-4 text-primary" />
               </div>
-              <p className="text-sm font-bold">Boost with Referrals</p>
+              <p suppressHydrationWarning className="text-sm font-bold">
+                {t("dashboard.rewards.boostWithRefs")}
+              </p>
             </div>
-            <p className="text-xs leading-relaxed text-muted-foreground">
-              Refer friends to accelerate your rank. Higher tiers like Diamond
-              and Ambassador require active referrals with minimum deposit
-              volumes.
+            <p
+              suppressHydrationWarning
+              className="text-xs leading-relaxed text-muted-foreground"
+            >
+              {t("dashboard.rewards.boostDesc")}
             </p>
             <div className="flex flex-col gap-1.5">
               {[
@@ -354,11 +424,17 @@ export default function RewardsClient({
                 >
                   <span className="text-xs text-muted-foreground">{tier}</span>
                   <div className="flex items-center gap-3">
-                    <span className="text-[10px] text-muted-foreground">
-                      {refs} refs
+                    <span
+                      suppressHydrationWarning
+                      className="text-[10px] text-muted-foreground"
+                    >
+                      {refs} {t("dashboard.rewards.refsShort")}
                     </span>
-                    <span className="text-[10px] font-bold text-foreground">
-                      {deposits} vol.
+                    <span
+                      suppressHydrationWarning
+                      className="text-[10px] font-bold text-foreground"
+                    >
+                      {deposits} {t("dashboard.rewards.volShort")}
                     </span>
                   </div>
                 </div>
@@ -366,14 +442,19 @@ export default function RewardsClient({
             </div>
             <button className="flex items-center justify-center gap-2 rounded-xl border border-primary/20 bg-primary/10 py-2 text-xs font-bold text-primary transition-all hover:bg-primary/20">
               <Users className="h-3.5 w-3.5" />
-              View Referral Programme
+              <span suppressHydrationWarning>
+                {t("dashboard.rewards.viewRefProg")}
+              </span>
             </button>
           </Card>
 
           {/* Perks summary */}
           <Card className="flex flex-col gap-3">
-            <p className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
-              Your Active Perks
+            <p
+              suppressHydrationWarning
+              className="text-xs font-bold tracking-widest text-muted-foreground uppercase"
+            >
+              {t("dashboard.rewards.activePerks")}
             </p>
             {currentTier.perks.map((perk) => (
               <div key={perk} className="flex items-start gap-2">
@@ -383,8 +464,11 @@ export default function RewardsClient({
                     currentTier.color
                   )}
                 />
-                <span className="text-xs leading-snug text-foreground/80">
-                  {perk}
+                <span
+                  suppressHydrationWarning
+                  className="text-xs leading-snug text-foreground/80"
+                >
+                  {t(`dashboard.rewards.perks.${perk}`) || perk}
                 </span>
               </div>
             ))}

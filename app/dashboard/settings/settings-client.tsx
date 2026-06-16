@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { User, Link2, Lock, ShieldCheck, FileCheck } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { useLanguage } from "@/lib/i18n/context"
 import { ProfileTab } from "@/components/dashboard/settings/profile-tab"
 import { ReferralsTab } from "@/components/dashboard/settings/referrals-tab"
 import { PasswordTab } from "@/components/dashboard/settings/password-tab"
@@ -13,13 +14,7 @@ import { KycTab } from "@/components/dashboard/settings/kyc-tab"
 
 type Tab = "profile" | "referrals" | "password" | "security" | "kyc"
 
-const TABS: { id: Tab; label: string; icon: React.ElementType }[] = [
-  { id: "profile", label: "Profile", icon: User },
-  { id: "referrals", label: "Referrals", icon: Link2 },
-  { id: "password", label: "Password", icon: Lock },
-  { id: "security", label: "Security", icon: ShieldCheck },
-  { id: "kyc", label: "Identity (KYC)", icon: FileCheck },
-]
+// TABS defined inside component
 
 export default function SettingsClient({
   initialUser,
@@ -29,6 +24,19 @@ export default function SettingsClient({
   initialSessions?: any[]
 }) {
   const [tab, setTab] = useState<Tab>("profile")
+  const { t } = useLanguage()
+
+  const TABS: { id: Tab; label: string; icon: React.ElementType }[] = [
+    { id: "profile", label: t("dashboard.settings.profile"), icon: User },
+    { id: "referrals", label: t("dashboard.settings.referrals"), icon: Link2 },
+    { id: "password", label: t("dashboard.settings.password"), icon: Lock },
+    {
+      id: "security",
+      label: t("dashboard.settings.security"),
+      icon: ShieldCheck,
+    },
+    { id: "kyc", label: t("dashboard.settings.kyc"), icon: FileCheck },
+  ]
 
   const content: Record<Tab, React.ReactNode> = {
     profile: <ProfileTab user={initialUser} />,
@@ -51,11 +59,17 @@ export default function SettingsClient({
           <User className="h-5 w-5 text-muted-foreground" />
         </div>
         <div>
-          <h1 className="text-2xl font-black tracking-tight sm:text-3xl">
-            Settings
+          <h1
+            suppressHydrationWarning
+            className="text-2xl font-black tracking-tight sm:text-3xl"
+          >
+            {t("dashboard.settings.title")}
           </h1>
-          <p className="mt-0.5 text-sm text-muted-foreground">
-            Manage your account, security and preferences
+          <p
+            suppressHydrationWarning
+            className="mt-0.5 text-sm text-muted-foreground"
+          >
+            {t("dashboard.settings.subtitle")}
           </p>
         </div>
       </motion.div>
@@ -80,7 +94,7 @@ export default function SettingsClient({
             )}
           >
             <Icon className="h-4 w-4 shrink-0" />
-            {label}
+            <span suppressHydrationWarning>{label}</span>
           </button>
         ))}
       </motion.div>

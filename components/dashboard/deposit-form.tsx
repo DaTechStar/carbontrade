@@ -8,6 +8,7 @@ import * as z from "zod"
 import QRCode from "react-qr-code"
 import { Copy, ArrowDownLeft, ShieldCheck, Wallet } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { useLanguage } from "@/lib/i18n/context"
 
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -39,6 +40,7 @@ export function DepositForm({
   }[]
 }) {
   const router = useRouter()
+  const { t } = useLanguage()
   const [step, setStep] = useState<1 | 2>(1)
   const [copied, setCopied] = useState(false)
   const [fileBase64, setFileBase64] = useState("")
@@ -119,11 +121,17 @@ export function DepositForm({
               <ArrowDownLeft className="h-5 w-5 text-profit" />
             </div>
             <div>
-              <h2 className="text-xl leading-none font-black tracking-tight text-foreground sm:text-2xl">
-                Start Deposit
+              <h2
+                suppressHydrationWarning
+                className="text-xl leading-none font-black tracking-tight text-foreground sm:text-2xl"
+              >
+                {t("dashboard.depositForm.title")}
               </h2>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Add funds securely to your portfolio
+              <p
+                suppressHydrationWarning
+                className="mt-1 text-xs text-muted-foreground"
+              >
+                {t("dashboard.depositForm.subtitle")}
               </p>
             </div>
           </div>
@@ -136,8 +144,11 @@ export function DepositForm({
                   name="method"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-muted-foreground">
-                        Select Method
+                      <FormLabel
+                        suppressHydrationWarning
+                        className="text-muted-foreground"
+                      >
+                        {t("dashboard.depositForm.selectMethod")}
                       </FormLabel>
                       <FormControl>
                         <Select
@@ -159,8 +170,11 @@ export function DepositForm({
                   name="amount"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-muted-foreground">
-                        Amount (USD)
+                      <FormLabel
+                        suppressHydrationWarning
+                        className="text-muted-foreground"
+                      >
+                        {t("dashboard.depositForm.amountUSD")}
                       </FormLabel>
                       <FormControl>
                         <Input
@@ -177,8 +191,11 @@ export function DepositForm({
               </div>
 
               <div className="space-y-2">
-                <label className="block text-sm font-medium text-muted-foreground">
-                  Amount in Crypto
+                <label
+                  suppressHydrationWarning
+                  className="block text-sm font-medium text-muted-foreground"
+                >
+                  {t("dashboard.depositForm.amountCrypto")}
                 </label>
                 <Input
                   value={cryptoAmount}
@@ -188,8 +205,11 @@ export function DepositForm({
               </div>
 
               <div className="space-y-2">
-                <label className="block text-sm font-medium text-muted-foreground">
-                  Minimum Deposit
+                <label
+                  suppressHydrationWarning
+                  className="block text-sm font-medium text-muted-foreground"
+                >
+                  {t("dashboard.depositForm.minDeposit")}
                 </label>
                 <Input
                   value="50"
@@ -202,7 +222,9 @@ export function DepositForm({
                 type="submit"
                 className="group/btn relative mt-4 h-12 w-full overflow-hidden border-none bg-gradient-to-r from-primary to-secondary text-base font-bold text-primary-foreground shadow-lg transition-all hover:opacity-90"
               >
-                <span className="relative z-10">Proceed to Deposit</span>
+                <span suppressHydrationWarning className="relative z-10">
+                  {t("dashboard.depositForm.proceed")}
+                </span>
                 <div className="absolute inset-0 translate-y-full bg-background/20 transition-transform duration-300 ease-out group-hover/btn:translate-y-0" />
               </Button>
             </form>
@@ -215,17 +237,28 @@ export function DepositForm({
               <Wallet className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <h2 className="text-lg leading-none font-black text-foreground sm:text-xl">
-                Complete Transfer
+              <h2
+                suppressHydrationWarning
+                className="text-lg leading-none font-black text-foreground sm:text-xl"
+              >
+                {t("dashboard.depositForm.completeTransfer")}
               </h2>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Send exact crypto amount
+              <p
+                suppressHydrationWarning
+                className="mt-1 text-xs text-muted-foreground"
+              >
+                {t("dashboard.depositForm.sendExact")}
               </p>
             </div>
           </div>
 
           <div className="space-y-1">
-            <p className="text-sm text-muted-foreground">Send exactly:</p>
+            <p
+              suppressHydrationWarning
+              className="text-sm text-muted-foreground"
+            >
+              {t("dashboard.depositForm.sendExactly")}
+            </p>
             <p className="text-xl font-bold tracking-tight text-primary">
               {cryptoAmount}{" "}
               <span className="text-sm uppercase">
@@ -235,8 +268,11 @@ export function DepositForm({
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-muted-foreground">
-              To this Wallet Address:
+            <label
+              suppressHydrationWarning
+              className="block text-sm font-medium text-muted-foreground"
+            >
+              {t("dashboard.depositForm.walletAddress")}
             </label>
             <div className="flex gap-2">
               <Input
@@ -250,7 +286,11 @@ export function DepositForm({
                 variant="default"
                 className="h-11 shrink-0 px-4 font-bold"
               >
-                {copied ? "Copied" : "Copy"}
+                <span suppressHydrationWarning>
+                  {copied
+                    ? t("dashboard.depositForm.copied")
+                    : t("dashboard.depositForm.copy")}
+                </span>
               </Button>
             </div>
           </div>
@@ -264,8 +304,11 @@ export function DepositForm({
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-muted-foreground">
-              Upload Payment Proof
+            <label
+              suppressHydrationWarning
+              className="block text-sm font-medium text-muted-foreground"
+            >
+              {t("dashboard.depositForm.uploadProof")}
             </label>
             <Input
               type="file"
@@ -315,9 +358,7 @@ export function DepositForm({
 
                   if (!res.ok) throw new Error("Upload failed")
 
-                  toast.success(
-                    "Deposit submitted! It is now pending admin verification."
-                  )
+                  toast.success(t("dashboard.depositForm.success"))
                   setStep(1)
                   form.reset()
                   setFileBase64("")
@@ -328,17 +369,22 @@ export function DepositForm({
                   mutate("/api/user/transactions-data")
                   router.refresh()
                 } catch (err) {
-                  toast.error("Failed to submit deposit. Please try again.")
+                  toast.error(t("dashboard.depositForm.error"))
                 } finally {
                   setIsSubmitting(false)
                 }
               }}
             >
               {isSubmitting ? (
-                "Submitting..."
+                <span suppressHydrationWarning>
+                  {t("dashboard.depositForm.submitting")}
+                </span>
               ) : (
                 <>
-                  <ShieldCheck className="mr-2 h-4 w-4" /> I Have Paid
+                  <ShieldCheck className="mr-2 h-4 w-4" />{" "}
+                  <span suppressHydrationWarning>
+                    {t("dashboard.depositForm.havePaid")}
+                  </span>
                 </>
               )}
             </Button>
@@ -351,7 +397,9 @@ export function DepositForm({
               }}
               disabled={isSubmitting}
             >
-              Cancel Request
+              <span suppressHydrationWarning>
+                {t("dashboard.depositForm.cancelRequest")}
+              </span>
             </Button>
           </div>
         </div>

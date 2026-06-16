@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
 import { signOut } from "next-auth/react"
 import { toast } from "sonner"
+import { useLanguage } from "@/lib/i18n/context"
 import { cn } from "@/lib/utils"
 import { siteConfig } from "@/config/site"
 import {
@@ -47,39 +48,6 @@ interface NavItem {
   icon: React.ElementType
   children?: { label: string; href: string }[]
 }
-
-const navGroups: { group: string; items: NavItem[] }[] = [
-  {
-    group: "Overview",
-    items: [
-      { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-      { label: "Payments", href: "/dashboard/payments", icon: CreditCard },
-    ],
-  },
-  {
-    group: "Copy Trading",
-    items: [
-      { label: "Copytrading", href: "/dashboard/copytrading", icon: Copy },
-      { label: "Traders", href: "/dashboard/traders", icon: Users },
-      {
-        label: "Transactions",
-        href: "/dashboard/transactions",
-        icon: ArrowLeftRight,
-      },
-    ],
-  },
-  {
-    group: "Tools",
-    items: [
-      { label: "Markets", href: "/dashboard/markets", icon: BarChart2 },
-      {
-        label: "Rewards & Ranks",
-        href: "/dashboard/rewards",
-        icon: ShieldCheck,
-      },
-    ],
-  },
-]
 
 // ─── NavLink ──────────────────────────────────────────────────────────────────
 
@@ -130,7 +98,9 @@ function NavLink({
         />
         {!collapsed && (
           <>
-            <span className="flex-1 truncate">{item.label}</span>
+            <span suppressHydrationWarning className="flex-1 truncate">
+              {item.label}
+            </span>
             {hasChildren && (
               <ChevronRight
                 className={cn(
@@ -143,7 +113,10 @@ function NavLink({
         )}
         {/* Tooltip when collapsed */}
         {collapsed && (
-          <span className="absolute left-full z-50 ml-3 hidden rounded-lg border border-border/50 bg-popover px-2.5 py-1.5 text-xs font-medium whitespace-nowrap shadow-xl group-hover:block">
+          <span
+            suppressHydrationWarning
+            className="absolute left-full z-50 ml-3 hidden rounded-lg border border-border/50 bg-popover px-2.5 py-1.5 text-xs font-medium whitespace-nowrap shadow-xl group-hover:block"
+          >
             {item.label}
           </span>
         )}
@@ -199,9 +172,63 @@ export function Sidebar({
   setMobileOpen,
 }: SidebarProps) {
   const router = useRouter()
+  const { t } = useLanguage()
+
+  const navGroups: { group: string; items: NavItem[] }[] = [
+    {
+      group: t("dashboard.sidebar.overviewGroup"),
+      items: [
+        {
+          label: t("dashboard.sidebar.dashboard"),
+          href: "/dashboard",
+          icon: LayoutDashboard,
+        },
+        {
+          label: t("dashboard.sidebar.payments"),
+          href: "/dashboard/payments",
+          icon: CreditCard,
+        },
+      ],
+    },
+    {
+      group: t("dashboard.sidebar.copyTradingGroup"),
+      items: [
+        {
+          label: t("dashboard.sidebar.copyTrading"),
+          href: "/dashboard/copytrading",
+          icon: Copy,
+        },
+        {
+          label: t("dashboard.sidebar.traders"),
+          href: "/dashboard/traders",
+          icon: Users,
+        },
+        {
+          label: t("dashboard.sidebar.transactions"),
+          href: "/dashboard/transactions",
+          icon: ArrowLeftRight,
+        },
+      ],
+    },
+    {
+      group: t("dashboard.sidebar.toolsGroup"),
+      items: [
+        {
+          label: t("dashboard.sidebar.markets"),
+          href: "/dashboard/markets",
+          icon: BarChart2,
+        },
+        {
+          label: t("dashboard.sidebar.rewards"),
+          href: "/dashboard/rewards",
+          icon: ShieldCheck,
+        },
+      ],
+    },
+  ]
 
   async function handleSignOut() {
-    toast.loading("Signing out…")
+    toast.loading(t("dashboard.sidebar.signingOut") || "Signing out…")
     await signOut({ redirect: false })
     toast.dismiss()
     router.push("/login")
@@ -224,6 +251,7 @@ export function Sidebar({
 
       {/* Sidebar — CSS width, no framer-motion animate on width */}
       <aside
+        suppressHydrationWarning
         style={{ width: collapsed ? SIDEBAR_COLLAPSED : SIDEBAR_EXPANDED }}
         className={cn(
           "fixed top-0 left-0 z-40 flex h-full flex-col",
@@ -293,7 +321,10 @@ export function Sidebar({
           {navGroups.map(({ group, items }) => (
             <div key={group} className="flex flex-col gap-0.5">
               {!collapsed && (
-                <p className="mb-1 px-3 text-[10px] font-bold tracking-widest text-muted-foreground/40 uppercase">
+                <p
+                  suppressHydrationWarning
+                  className="mb-1 px-3 text-[10px] font-bold tracking-widest text-muted-foreground/40 uppercase"
+                >
                   {group}
                 </p>
               )}
@@ -319,7 +350,11 @@ export function Sidebar({
             )}
           >
             <Settings className="h-4 w-4 shrink-0 text-sidebar-foreground/40" />
-            {!collapsed && <span>Settings</span>}
+            {!collapsed && (
+              <span suppressHydrationWarning>
+                {t("dashboard.sidebar.settings")}
+              </span>
+            )}
           </Link>
 
           {/* Sign out with confirm dialog */}
@@ -332,26 +367,35 @@ export function Sidebar({
                 )}
               >
                 <LogOut className="h-4 w-4 shrink-0" />
-                {!collapsed && <span>Sign out</span>}
+                {!collapsed && (
+                  <span suppressHydrationWarning>
+                    {t("dashboard.sidebar.signOut")}
+                  </span>
+                )}
               </button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
                 <AlertDialogTitle>
-                  Sign out of {siteConfig.name}?
+                  {t("dashboard.sidebar.signOutConfirmTitle")?.replace(
+                    "{{name}}",
+                    siteConfig.name
+                  ) || `Sign out of ${siteConfig.name}?`}
                 </AlertDialogTitle>
                 <AlertDialogDescription>
-                  You will be redirected to the login page. Any unsaved changes
-                  may be lost.
+                  {t("dashboard.sidebar.signOutConfirmDesc") ||
+                    "You will be redirected to the login page. Any unsaved changes may be lost."}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel>
+                  {t("dashboard.sidebar.cancel") || "Cancel"}
+                </AlertDialogCancel>
                 <AlertDialogAction
                   onClick={handleSignOut}
                   className="text-destructive-foreground bg-destructive hover:bg-destructive/90"
                 >
-                  Yes, sign out
+                  {t("dashboard.sidebar.yesSignOut") || "Yes, sign out"}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

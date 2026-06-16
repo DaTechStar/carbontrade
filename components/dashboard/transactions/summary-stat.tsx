@@ -27,7 +27,10 @@ export function SummaryStat({
     >
       <Card className="flex flex-col gap-3 transition-all duration-300 hover:border-primary/30">
         <div className="flex items-center justify-between">
-          <p className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">
+          <p
+            suppressHydrationWarning
+            className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase"
+          >
             {label}
           </p>
           <div
@@ -40,7 +43,14 @@ export function SummaryStat({
           </div>
         </div>
         <p className="text-xl font-black tracking-tight sm:text-2xl">{value}</p>
-        {sub && <p className="text-[10px] text-muted-foreground">{sub}</p>}
+        {sub && (
+          <p
+            suppressHydrationWarning
+            className="text-[10px] text-muted-foreground"
+          >
+            {sub}
+          </p>
+        )}
       </Card>
     </motion.div>
   )

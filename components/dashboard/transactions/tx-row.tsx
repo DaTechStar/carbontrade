@@ -7,8 +7,10 @@ import { cn } from "@/lib/utils"
 import { formatCurrency } from "@/lib/utils"
 import { Transaction } from "@/types"
 import { TYPE_CONFIG, STATUS_CONFIG } from "@/lib/transactions-config"
+import { useLanguage } from "@/lib/i18n/context"
 
 export function TxRow({ tx, i }: { tx: Transaction; i: number }) {
+  const { t } = useLanguage()
   const cfg = TYPE_CONFIG[tx.type as Transaction["type"]] || {
     label: tx.type || "Unknown",
     icon: Layers,
@@ -74,15 +76,21 @@ export function TxRow({ tx, i }: { tx: Transaction; i: number }) {
       </div>
 
       {/* Type badge */}
-      <span className="hidden shrink-0 rounded-full border border-border/30 bg-muted/30 px-2 py-0.5 text-[10px] font-bold text-muted-foreground sm:block">
-        {cfg.label}
+      <span
+        suppressHydrationWarning
+        className="hidden shrink-0 rounded-full border border-border/30 bg-muted/30 px-2 py-0.5 text-[10px] font-bold text-muted-foreground sm:block"
+      >
+        {t(`dashboard.transactions.type_${tx.type}`) || cfg.label}
       </span>
 
       {/* Status */}
       <div className="hidden shrink-0 items-center gap-1.5 md:flex">
         <div className={cn("h-1.5 w-1.5 rounded-full", status.dot)} />
-        <span className={cn("text-[11px] font-semibold", status.text)}>
-          {status.label}
+        <span
+          suppressHydrationWarning
+          className={cn("text-[11px] font-semibold", status.text)}
+        >
+          {t(`dashboard.transactions.status_${tx.status}`) || status.label}
         </span>
       </div>
 

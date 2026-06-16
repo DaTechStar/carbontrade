@@ -21,6 +21,7 @@ import { Transaction, DashboardStats, CopyPosition, Trader } from "@/types"
 import { formatCurrency } from "@/lib/utils"
 import { TraderCard } from "@/components/dashboard/trader-card"
 import { useCopyTrader } from "@/hooks/use-copy-trader"
+import { useLanguage } from "@/lib/i18n/context"
 
 // Extracted Components
 import { AlertBanner } from "@/components/dashboard/overview/alert-banner"
@@ -61,6 +62,7 @@ export default function DashboardPage({
     kyc: kycStatus !== "verified",
   })
   const { handleCopy } = useCopyTrader()
+  const { t } = useLanguage()
 
   const { data } = useSWR("/api/user/dashboard-data", fetcher, {
     fallbackData: {
@@ -79,51 +81,57 @@ export default function DashboardPage({
 
   const statCards = [
     {
-      label: "Total Equity",
+      id: "total-equity",
+      label: t("dashboard.overview.totalEquity"),
       value: formatCurrency(stats.equity),
       icon: Wallet,
       iconBg: "bg-primary/15 text-primary",
-      sub: "Updated now",
+      sub: t("dashboard.overview.updatedNow"),
     },
     {
-      label: "Available Margin",
+      id: "available-margin",
+      label: t("dashboard.overview.availableMargin"),
       value: formatCurrency(stats.available),
       icon: ArrowDownLeft,
       iconBg: "bg-profit-bg text-profit",
-      sub: "Free to trade",
+      sub: t("dashboard.overview.freeToTrade"),
     },
     {
-      label: "Invested",
+      id: "invested",
+      label: t("dashboard.overview.invested"),
       value: formatCurrency(stats.invested),
       icon: Layers,
       iconBg: "bg-secondary/15 text-secondary",
-      sub: "Active positions",
+      sub: t("dashboard.overview.activePositions"),
     },
     {
-      label: "Total Profit",
+      id: "total-profit",
+      label: t("dashboard.overview.totalProfit"),
       value: formatCurrency(stats.totalProfit),
       icon: TrendingUp,
       iconBg: "bg-profit/15 text-profit",
-      sub: "All time",
+      sub: t("dashboard.overview.allTime"),
     },
     {
-      label: "Free Margin",
+      id: "free-margin",
+      label: t("dashboard.overview.freeMargin"),
       value: formatCurrency(stats.freeMargin),
       icon: Activity,
       iconBg: "bg-warning-bg text-warning",
-      sub: "Available cash",
+      sub: t("dashboard.overview.availableCash"),
     },
     {
-      label: "Open Positions",
+      id: "open-positions",
+      label: t("dashboard.overview.openPositions"),
       value: String(stats.openPositions),
       icon: Copy,
       iconBg: "bg-primary/15 text-primary",
-      sub: "Live now",
+      sub: t("dashboard.overview.liveNow"),
     },
   ]
 
   return (
-    <div className="flex w-full flex-col gap-5 pb-10">
+    <div suppressHydrationWarning className="flex w-full flex-col gap-5 pb-10">
       {/* ── Banners ── */}
       {(banners.balance || banners.kyc) && (
         <motion.div {...fu(0)} className="flex flex-col gap-2">
@@ -131,8 +139,8 @@ export default function DashboardPage({
             <AlertBanner
               icon={AlertTriangle}
               variant="warning"
-              message="Your balance is empty. Make a"
-              linkText="Deposit"
+              message={t("dashboard.overview.emptyBalance")}
+              linkText={t("dashboard.overview.deposit")}
               href="/dashboard/payments"
               onDismiss={() => setBanners((b) => ({ ...b, balance: false }))}
             />
@@ -141,8 +149,8 @@ export default function DashboardPage({
             <AlertBanner
               icon={Shield}
               variant="info"
-              message="Complete your identity verification. Provide"
-              linkText="KYC Data"
+              message={t("dashboard.overview.completeKyc")}
+              linkText={t("dashboard.overview.kycData")}
               href="/dashboard/settings"
               onDismiss={() => setBanners((b) => ({ ...b, kyc: false }))}
             />
@@ -160,11 +168,17 @@ export default function DashboardPage({
             year: "numeric",
           })}
         </p>
-        <h1 className="text-gradient text-2xl font-black tracking-tight sm:text-3xl">
-          Welcome back, {displayName}!
+        <h1
+          suppressHydrationWarning
+          className="text-gradient text-2xl font-black tracking-tight sm:text-3xl"
+        >
+          {t("dashboard.overview.welcomeBack")}, {displayName}!
         </h1>
-        <p className="mt-1 text-xs text-muted-foreground">
-          Here&apos;s your portfolio snapshot for today.
+        <p
+          suppressHydrationWarning
+          className="mt-1 text-xs text-muted-foreground"
+        >
+          {t("dashboard.overview.portfolioSnapshot")}
         </p>
       </motion.div>
 
@@ -174,7 +188,7 @@ export default function DashboardPage({
         className="grid grid-cols-2 gap-3 sm:grid-cols-3 2xl:grid-cols-6"
       >
         {statCards.map((c) => (
-          <StatCard key={c.label} {...c} />
+          <StatCard key={c.id} {...c} />
         ))}
       </motion.div>
 
@@ -196,14 +210,18 @@ export default function DashboardPage({
         <div className="mb-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Users className="h-4 w-4 text-primary" />
-            <h2 className="text-sm font-bold">Top Traders to Copy</h2>
+            <h2 suppressHydrationWarning className="text-sm font-bold">
+              {t("dashboard.overview.topTraders")}
+            </h2>
           </div>
           <a
             href="/dashboard/copytrading"
             className="flex items-center gap-1 text-xs font-semibold text-primary hover:opacity-80"
           >
             <ChevronRight className="h-3.5 w-3.5" />
-            Browse All
+            <span suppressHydrationWarning>
+              {t("dashboard.overview.browseAll")}
+            </span>
           </a>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">

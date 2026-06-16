@@ -8,9 +8,11 @@ import { cn } from "@/lib/utils"
 import { Card } from "@/components/ui/card"
 import { Field, Input } from "@/components/dashboard/settings/shared"
 import { changePassword } from "@/app/actions/user"
+import { useLanguage } from "@/lib/i18n/context"
 
 export function PasswordTab() {
   const [isPending, startTransition] = useTransition()
+  const { t } = useLanguage()
 
   const [passwords, setPasswords] = useState({
     current: "",
@@ -28,17 +30,17 @@ export function PasswordTab() {
     e.preventDefault()
 
     if (!passwords.current || !passwords.new || !passwords.confirm) {
-      toast.error("Please fill in all fields")
+      toast.error(t("dashboard.settings.tabs.pwdFillAll"))
       return
     }
 
     if (passwords.new !== passwords.confirm) {
-      toast.error("New passwords do not match")
+      toast.error(t("dashboard.settings.tabs.pwdNotMatch"))
       return
     }
 
     if (passwords.new.length < 8) {
-      toast.error("New password must be at least 8 characters long")
+      toast.error(t("dashboard.settings.tabs.pwdLength"))
       return
     }
 
@@ -47,7 +49,7 @@ export function PasswordTab() {
       if (res?.error) {
         toast.error(res.error)
       } else {
-        toast.success("Password changed successfully!")
+        toast.success(t("dashboard.settings.tabs.pwdSuccess"))
         setPasswords({ current: "", new: "", confirm: "" })
       }
     })
@@ -70,8 +72,11 @@ export function PasswordTab() {
     <div className="flex max-w-lg flex-col gap-6">
       <form onSubmit={handleSubmit}>
         <Card className="flex flex-col gap-5">
-          <p className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
-            Change Password
+          <p
+            suppressHydrationWarning
+            className="text-xs font-bold tracking-widest text-muted-foreground uppercase"
+          >
+            {t("dashboard.settings.tabs.pwdChangeTitle")}
           </p>
 
           {(["current", "new", "confirm"] as const).map((field) => (
@@ -79,10 +84,10 @@ export function PasswordTab() {
               key={field}
               label={
                 field === "current"
-                  ? "Current Password"
+                  ? t("dashboard.settings.tabs.pwdCurrent")
                   : field === "new"
-                    ? "New Password"
-                    : "Confirm New Password"
+                    ? t("dashboard.settings.tabs.pwdNew")
+                    : t("dashboard.settings.tabs.pwdConfirm")
               }
             >
               <div className="relative">
@@ -113,7 +118,12 @@ export function PasswordTab() {
 
           {/* Strength indicator */}
           <div className="flex flex-col gap-1.5">
-            <p className="text-xs text-muted-foreground">Password strength</p>
+            <p
+              suppressHydrationWarning
+              className="text-xs text-muted-foreground"
+            >
+              {t("dashboard.settings.tabs.pwdStrength")}
+            </p>
             <div className="flex gap-1">
               {[0, 1, 2, 3].map((i) => (
                 <div
@@ -131,8 +141,11 @@ export function PasswordTab() {
                 />
               ))}
             </div>
-            <p className="text-[10px] text-muted-foreground">
-              Use 12+ characters with uppercase, numbers & symbols
+            <p
+              suppressHydrationWarning
+              className="text-[10px] text-muted-foreground"
+            >
+              {t("dashboard.settings.tabs.pwdRequirement")}
             </p>
           </div>
 
@@ -142,24 +155,34 @@ export function PasswordTab() {
             className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-bold text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
           >
             {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
-            Update Password
+            <span suppressHydrationWarning>
+              {t("dashboard.settings.tabs.pwdUpdateBtn")}
+            </span>
           </button>
         </Card>
       </form>
 
       <Card className="flex flex-col gap-3 border-muted/30">
-        <p className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
-          Password Tips
+        <p
+          suppressHydrationWarning
+          className="text-xs font-bold tracking-widest text-muted-foreground uppercase"
+        >
+          {t("dashboard.settings.tabs.pwdTipsTitle")}
         </p>
         {[
-          "Never share your password with anyone",
-          "Use a unique password not used on other sites",
-          "Enable two-factor authentication for extra security",
-          "Change your password regularly every 90 days",
+          t("dashboard.settings.tabs.pwdTip1"),
+          t("dashboard.settings.tabs.pwdTip2"),
+          t("dashboard.settings.tabs.pwdTip3"),
+          t("dashboard.settings.tabs.pwdTip4"),
         ].map((tip) => (
           <div key={tip} className="flex items-start gap-2">
             <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
-            <p className="text-xs text-muted-foreground">{tip}</p>
+            <p
+              suppressHydrationWarning
+              className="text-xs text-muted-foreground"
+            >
+              {tip}
+            </p>
           </div>
         ))}
       </Card>

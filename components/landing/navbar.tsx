@@ -62,7 +62,7 @@ export function Navbar() {
                 href={link.href}
                 className="group relative text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
               >
-                <span>{t(link.titleKey)}</span>
+                <span suppressHydrationWarning>{t(link.titleKey)}</span>
                 <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-primary transition-all duration-300 group-hover:w-full" />
               </Link>
             ))}
@@ -80,13 +80,17 @@ export function Navbar() {
                 asChild
                 className="font-semibold hover:bg-transparent hover:text-primary"
               >
-                <Link href="/login">{t("common.navbar.logIn")}</Link>
+                <Link href="/login" suppressHydrationWarning>
+                  {t("common.navbar.logIn")}
+                </Link>
               </Button>
               <Button
                 asChild
                 className="border-glow rounded-full bg-primary px-6 font-semibold text-primary-foreground hover:bg-primary/90"
               >
-                <Link href="/register">{t("common.navbar.signUp")}</Link>
+                <Link href="/register" suppressHydrationWarning>
+                  {t("common.navbar.signUp")}
+                </Link>
               </Button>
             </div>
 
@@ -122,7 +126,7 @@ export function Navbar() {
                   className="text-2xl font-bold transition-colors hover:text-primary"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <span>{t(link.titleKey)}</span>
+                  <span suppressHydrationWarning>{t(link.titleKey)}</span>
                 </Link>
               ))}
               <div className="mt-8 flex w-full max-w-xs flex-col gap-4">
@@ -131,13 +135,17 @@ export function Navbar() {
                   asChild
                   className="h-12 w-full rounded-full border-border/50 text-lg"
                 >
-                  <Link href="/login">{t("common.navbar.logIn")}</Link>
+                  <Link href="/login" suppressHydrationWarning>
+                    {t("common.navbar.logIn")}
+                  </Link>
                 </Button>
                 <Button
                   asChild
                   className="border-glow h-12 w-full rounded-full bg-primary text-lg text-primary-foreground hover:bg-primary/90"
                 >
-                  <Link href="/register">{t("common.navbar.signUp")}</Link>
+                  <Link href="/register" suppressHydrationWarning>
+                    {t("common.navbar.signUp")}
+                  </Link>
                 </Button>
               </div>
             </div>
