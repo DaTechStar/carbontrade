@@ -18,6 +18,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ShieldCheck,
+  UserCircle,
 } from "lucide-react"
 import {
   AlertDialog,
@@ -45,6 +46,7 @@ interface AdminSidebarProps {
 const navItems = [
   { name: "Overview", href: "/admin", icon: LayoutDashboard },
   { name: "Users", href: "/admin/users", icon: Users },
+  { name: "Traders", href: "/admin/traders", icon: UserCircle },
   { name: "KYC Reviews", href: "/admin/kyc", icon: ShieldCheck },
   { name: "Deposits", href: "/admin/deposits", icon: ArrowDownToLine },
   { name: "Withdrawals", href: "/admin/withdrawals", icon: ArrowUpFromLine },
