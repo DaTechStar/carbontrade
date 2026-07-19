@@ -12,6 +12,8 @@ function ThemeProvider({
       attribute="class"
       defaultTheme="dark"
       forcedTheme="dark"
+      disableTransitionOnChange
+      nonce=""
       {...props}
     >
       <ThemeHotkey />

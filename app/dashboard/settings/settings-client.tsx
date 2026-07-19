@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { User, Link2, Lock, ShieldCheck, FileCheck } from "lucide-react"
+import { useRouter, usePathname } from "next/navigation"
 
 import { cn } from "@/lib/utils"
 import { useLanguage } from "@/lib/i18n/context"
@@ -14,17 +14,18 @@ import { KycTab } from "@/components/dashboard/settings/kyc-tab"
 
 type Tab = "profile" | "referrals" | "password" | "security" | "kyc"
 
-// TABS defined inside component
-
 export default function SettingsClient({
   initialUser,
   initialSessions = [],
+  activeTab,
 }: {
   initialUser: any
   initialSessions?: any[]
+  activeTab: Tab
 }) {
-  const [tab, setTab] = useState<Tab>("profile")
   const { t } = useLanguage()
+  const router = useRouter()
+  const pathname = usePathname()
 
   const TABS: { id: Tab; label: string; icon: React.ElementType }[] = [
     { id: "profile", label: t("dashboard.settings.profile"), icon: User },
@@ -44,6 +45,13 @@ export default function SettingsClient({
     password: <PasswordTab />,
     security: <SecurityTab sessions={initialSessions} />,
     kyc: <KycTab user={initialUser} />,
+  }
+
+  const handleTabChange = (tab: Tab) => {
+    const params = new URLSearchParams()
+    if (tab !== "profile") params.set("tab", tab)
+    const query = params.toString()
+    router.push(query ? `${pathname}?${query}` : pathname)
   }
 
   return (
@@ -85,10 +93,10 @@ export default function SettingsClient({
           <button
             key={id}
             id={`settings-tab-${id}`}
-            onClick={() => setTab(id)}
+            onClick={() => handleTabChange(id)}
             className={cn(
               "flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold whitespace-nowrap transition-all",
-              tab === id
+              activeTab === id
                 ? "border border-border/40 bg-background text-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground"
             )}
@@ -102,13 +110,13 @@ export default function SettingsClient({
       {/* Tab content */}
       <AnimatePresence mode="wait">
         <motion.div
-          key={tab}
+          key={activeTab}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -6 }}
           transition={{ duration: 0.25 }}
         >
-          {content[tab]}
+          {content[activeTab]}
         </motion.div>
       </AnimatePresence>
     </div>

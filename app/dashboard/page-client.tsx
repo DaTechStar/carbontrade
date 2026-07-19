@@ -151,7 +151,7 @@ export default function DashboardPage({
               variant="info"
               message={t("dashboard.overview.completeKyc")}
               linkText={t("dashboard.overview.kycData")}
-              href="/dashboard/settings"
+              href="/dashboard/settings?tab=kyc"
               onDismiss={() => setBanners((b) => ({ ...b, kyc: false }))}
             />
           )}

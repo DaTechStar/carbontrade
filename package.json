@@ -11,7 +11,8 @@
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit",
     "prepare": "husky",
-    "seed": "npx tsx --env-file=.env.local scripts/seedTraders.ts"
+    "seed": "npx tsx --env-file=.env.local scripts/seedTraders.ts",
+    "seed:admin": "npx tsx --env-file=.env.local scripts/seedAdmin.ts"
   },
   "lint-staged": {
     "*.{ts,tsx}": [

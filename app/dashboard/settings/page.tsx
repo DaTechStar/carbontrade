@@ -6,11 +6,31 @@ import { redirect } from "next/navigation"
 
 export const dynamic = "force-dynamic"
 
-export default async function SettingsPage() {
+type Tab = "profile" | "referrals" | "password" | "security" | "kyc"
+const VALID_TABS: Tab[] = [
+  "profile",
+  "referrals",
+  "password",
+  "security",
+  "kyc",
+]
+
+type SearchParams = Promise<{ tab?: string }>
+
+export default async function SettingsPage({
+  searchParams,
+}: {
+  searchParams: SearchParams
+}) {
   const session = await auth()
   if (!session || !session.user) {
     redirect("/login")
   }
+
+  const { tab } = await searchParams
+  const activeTab: Tab = VALID_TABS.includes(tab as Tab)
+    ? (tab as Tab)
+    : "profile"
 
   await connectToDatabase()
 
@@ -57,6 +77,7 @@ export default async function SettingsPage() {
     <SettingsClient
       initialUser={serializedUser}
       initialSessions={serializedSessions}
+      activeTab={activeTab}
     />
   )
 }

@@ -1,14 +1,14 @@
 import connectToDatabase from "@/lib/db"
 import { PlatformSettings } from "@/lib/models"
 import SettingsClient from "./settings-client"
-import { siteConfig } from "@/config/site"
+
+export const dynamic = "force-dynamic"
 
 export default async function AdminSettingsPage() {
   await connectToDatabase()
 
   let settings = await PlatformSettings.findOne().lean()
   if (!settings) {
-    // Seed default payment methods if missing
     settings = await PlatformSettings.create({
       paymentMethods: [
         {
@@ -50,7 +50,6 @@ export default async function AdminSettingsPage() {
     })
   }
 
-  // Serialize to pass to client
   const serializedMethods = settings.paymentMethods.map((m: any) => ({
     id: m.id,
     label: m.label,
@@ -69,7 +68,6 @@ export default async function AdminSettingsPage() {
           Manage payment methods, wallets, and platform configurations.
         </p>
       </div>
-
       <SettingsClient initialPaymentMethods={serializedMethods} />
     </div>
   )

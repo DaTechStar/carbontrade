@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
 import { signOut } from "next-auth/react"
 import { toast } from "sonner"
@@ -22,6 +22,7 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
+  FileCheck,
 } from "lucide-react"
 import {
   AlertDialog,
@@ -47,6 +48,9 @@ interface NavItem {
   href: string
   icon: React.ElementType
   children?: { label: string; href: string }[]
+  /** If set, active state is based on matching path + this tab param (null = no tab param) */
+  matchPath?: string
+  matchTab?: string | null
 }
 
 // ─── NavLink ──────────────────────────────────────────────────────────────────
@@ -61,10 +65,14 @@ function NavLink({
   onNavigate?: () => void
 }) {
   const pathname = usePathname()
+  const searchParams = useSearchParams()
   const [open, setOpen] = useState(false)
   const hasChildren = !!item.children?.length
-  const isActive =
-    pathname === item.href || item.children?.some((c) => pathname === c.href)
+  const currentTab = searchParams.get("tab")
+  const isActive = item.matchPath
+    ? pathname === item.matchPath &&
+      (item.matchTab === null ? !currentTab : currentTab === item.matchTab)
+    : pathname === item.href || item.children?.some((c) => pathname === c.href)
 
   return (
     <div>
@@ -151,6 +159,69 @@ function NavLink({
         )}
       </AnimatePresence>
     </div>
+  )
+}
+
+// ─── FooterLink ───────────────────────────────────────────────────────────────
+
+function FooterLink({
+  href,
+  icon: Icon,
+  label,
+  collapsed,
+  onNavigate,
+  matchPath,
+  matchTab,
+}: {
+  href: string
+  icon: React.ElementType
+  label: string
+  collapsed: boolean
+  onNavigate?: () => void
+  matchPath?: string
+  matchTab?: string | null
+}) {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const currentTab = searchParams.get("tab")
+  const isActive = matchPath
+    ? pathname === matchPath &&
+      (matchTab === null ? !currentTab : currentTab === matchTab)
+    : pathname === href
+
+  return (
+    <Link
+      href={href}
+      onClick={onNavigate}
+      className={cn(
+        "group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
+        "hover:bg-sidebar-accent",
+        isActive
+          ? "border border-primary/20 bg-primary/15 text-primary"
+          : "text-sidebar-foreground/70",
+        collapsed && "justify-center px-0"
+      )}
+    >
+      {isActive && (
+        <span className="absolute top-1/2 left-0 h-5 w-0.5 -translate-y-1/2 rounded-full bg-primary" />
+      )}
+      <Icon
+        className={cn(
+          "h-4 w-4 shrink-0",
+          isActive ? "text-primary" : "text-sidebar-foreground/50"
+        )}
+      />
+      {!collapsed && (
+        <span suppressHydrationWarning className="flex-1 truncate">
+          {label}
+        </span>
+      )}
+      {collapsed && (
+        <span className="absolute left-full z-50 ml-3 hidden rounded-lg border border-border/50 bg-popover px-2.5 py-1.5 text-xs font-medium whitespace-nowrap shadow-xl group-hover:block">
+          {label}
+        </span>
+      )}
+    </Link>
   )
 }
 
@@ -342,20 +413,26 @@ export function Sidebar({
 
         {/* ── Footer ── */}
         <div className="flex shrink-0 flex-col gap-0.5 border-t border-sidebar-border p-2">
-          <Link
+          {/* KYC shortcut */}
+          <FooterLink
+            href="/dashboard/settings?tab=kyc"
+            matchPath="/dashboard/settings"
+            matchTab="kyc"
+            icon={FileCheck}
+            label="KYC Verification"
+            collapsed={collapsed}
+            onNavigate={() => setMobileOpen(false)}
+          />
+          {/* Settings */}
+          <FooterLink
             href="/dashboard/settings"
-            className={cn(
-              "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent",
-              collapsed && "justify-center px-0"
-            )}
-          >
-            <Settings className="h-4 w-4 shrink-0 text-sidebar-foreground/40" />
-            {!collapsed && (
-              <span suppressHydrationWarning>
-                {t("dashboard.sidebar.settings")}
-              </span>
-            )}
-          </Link>
+            matchPath="/dashboard/settings"
+            matchTab={null}
+            icon={Settings}
+            label={t("dashboard.sidebar.settings")}
+            collapsed={collapsed}
+            onNavigate={() => setMobileOpen(false)}
+          />
 
           {/* Sign out with confirm dialog */}
           <AlertDialog>
