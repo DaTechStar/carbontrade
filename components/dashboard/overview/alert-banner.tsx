@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -28,7 +29,7 @@ export function AlertBanner({
       <Icon className="h-4 w-4 shrink-0" />
       <span className="flex-1 text-xs text-foreground/80 sm:text-sm">
         {message}{" "}
-        <a
+        <Link
           href={href}
           className={cn(
             "font-semibold underline underline-offset-2",
@@ -36,7 +37,7 @@ export function AlertBanner({
           )}
         >
           {linkText}
-        </a>
+        </Link>
         .
       </span>
       {onDismiss && (
