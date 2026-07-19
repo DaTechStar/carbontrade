@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, Suspense } from "react"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
@@ -65,14 +65,10 @@ function NavLink({
   onNavigate?: () => void
 }) {
   const pathname = usePathname()
-  const searchParams = useSearchParams()
   const [open, setOpen] = useState(false)
   const hasChildren = !!item.children?.length
-  const currentTab = searchParams.get("tab")
-  const isActive = item.matchPath
-    ? pathname === item.matchPath &&
-      (item.matchTab === null ? !currentTab : currentTab === item.matchTab)
-    : pathname === item.href || item.children?.some((c) => pathname === c.href)
+  const isActive =
+    pathname === item.href || item.children?.some((c) => pathname === c.href)
 
   return (
     <div>
@@ -413,26 +409,29 @@ export function Sidebar({
 
         {/* ── Footer ── */}
         <div className="flex shrink-0 flex-col gap-0.5 border-t border-sidebar-border p-2">
-          {/* KYC shortcut */}
-          <FooterLink
-            href="/dashboard/settings?tab=kyc"
-            matchPath="/dashboard/settings"
-            matchTab="kyc"
-            icon={FileCheck}
-            label="KYC Verification"
-            collapsed={collapsed}
-            onNavigate={() => setMobileOpen(false)}
-          />
-          {/* Settings */}
-          <FooterLink
-            href="/dashboard/settings"
-            matchPath="/dashboard/settings"
-            matchTab={null}
-            icon={Settings}
-            label={t("dashboard.sidebar.settings")}
-            collapsed={collapsed}
-            onNavigate={() => setMobileOpen(false)}
-          />
+          {/* KYC + Settings — wrapped in Suspense because FooterLink uses
+              useSearchParams(), which requires a Suspense boundary to avoid
+              opting all dashboard pages out of static prerendering. */}
+          <Suspense fallback={null}>
+            <FooterLink
+              href="/dashboard/settings?tab=kyc"
+              matchPath="/dashboard/settings"
+              matchTab="kyc"
+              icon={FileCheck}
+              label="KYC Verification"
+              collapsed={collapsed}
+              onNavigate={() => setMobileOpen(false)}
+            />
+            <FooterLink
+              href="/dashboard/settings"
+              matchPath="/dashboard/settings"
+              matchTab={null}
+              icon={Settings}
+              label={t("dashboard.sidebar.settings")}
+              collapsed={collapsed}
+              onNavigate={() => setMobileOpen(false)}
+            />
+          </Suspense>
 
           {/* Sign out with confirm dialog */}
           <AlertDialog>
