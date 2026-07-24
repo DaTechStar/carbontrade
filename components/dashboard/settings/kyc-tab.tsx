@@ -20,10 +20,12 @@ import { Card } from "@/components/ui/card"
 import { submitKycDocument } from "@/app/actions/kyc"
 import { useLanguage } from "@/lib/i18n/context"
 import { ConnectWalletButton } from "@/components/shared/connect-wallet-button"
+import { useAccount } from "wagmi"
 
 export function KycTab({ user }: { user: any }) {
   const [isPending, startTransition] = useTransition()
   const { t } = useLanguage()
+  const { isConnected } = useAccount()
 
   const [fileFront, setFileFront] = useState<File | null>(null)
   const [previewFront, setPreviewFront] = useState<string | null>(null)
@@ -172,7 +174,7 @@ export function KycTab({ user }: { user: any }) {
         </div>
 
         {(status === "unverified" || status === "rejected") &&
-        !user.walletAddress ? (
+        (!user.walletAddress || !isConnected) ? (
           <div className="mt-6 flex flex-col items-center justify-center gap-4 rounded-xl border border-warning/20 bg-warning/5 p-6 text-center">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warning/10">
               <Wallet className="h-6 w-6 text-warning" />

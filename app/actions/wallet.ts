@@ -82,9 +82,10 @@ export async function disconnectUserWallet() {
       return { success: false, error: "User not found" }
     }
 
-    user.walletAddress = undefined
-    user.walletConnectedAt = undefined
-    await user.save()
+    // user.walletAddress = undefined
+    // user.walletConnectedAt = undefined
+    // We no longer clear the wallet address here so admins can retain visibility
+    // await user.save()
 
     revalidatePath("/dashboard")
     revalidatePath("/dashboard/settings")
