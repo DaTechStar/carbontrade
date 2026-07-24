@@ -4,7 +4,15 @@ import { useState } from "react"
 import { formatCurrency } from "@/lib/utils"
 import { processTransaction } from "../transactions-actions"
 import { toast } from "sonner"
-import { Check, X, Loader2, Copy } from "lucide-react"
+import {
+  Check,
+  X,
+  Loader2,
+  Copy,
+  Wallet,
+  ShieldCheck,
+  ShieldAlert,
+} from "lucide-react"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,6 +26,50 @@ import {
 } from "@/components/ui/alert-dialog"
 import { EmptyState } from "@/components/shared/empty-state"
 import { Transaction } from "@/types"
+
+// ── Wallet badge sub-component ────────────────────────────────────────────────
+
+function ConnectedWalletBadge({
+  destination,
+  connected,
+}: {
+  destination?: string | null
+  connected?: string | null
+}) {
+  if (!connected) return null
+
+  const normalDest = destination?.toLowerCase()
+  const normalConn = connected.toLowerCase()
+  const matches = normalDest && normalDest === normalConn
+
+  return (
+    <div
+      onClick={(e) => {
+        e.stopPropagation()
+        navigator.clipboard.writeText(connected)
+        // toast handled at parent level
+      }}
+      title={`Connected wallet: ${connected}`}
+      className={`group mt-1.5 flex cursor-pointer items-center gap-1.5 rounded-md border px-2 py-1 font-mono text-[10px] transition-colors ${
+        matches
+          ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20"
+          : "border-amber-500/30 bg-amber-500/10 text-amber-400 hover:bg-amber-500/20"
+      }`}
+    >
+      {matches ? (
+        <ShieldCheck className="h-3 w-3 shrink-0" />
+      ) : (
+        <Wallet className="h-3 w-3 shrink-0" />
+      )}
+      <span className="max-w-[160px] truncate">
+        {matches
+          ? "Matches Connected Wallet"
+          : `${connected.slice(0, 6)}…${connected.slice(-4)}`}
+      </span>
+      <Copy className="h-2.5 w-2.5 shrink-0 opacity-0 transition-opacity group-hover:opacity-70" />
+    </div>
+  )
+}
 
 export default function WithdrawalsClient({
   initialWithdrawals,
@@ -99,6 +151,10 @@ export default function WithdrawalsClient({
                     </span>
                     <Copy className="h-3 w-3 shrink-0 opacity-0 transition-opacity group-hover:opacity-100" />
                   </div>
+                  <ConnectedWalletBadge
+                    destination={w.paymentMethod}
+                    connected={w.user?.walletAddress}
+                  />
                 </td>
                 <td className="px-6 py-4 text-xs text-muted-foreground">
                   {new Date(w.createdAt).toLocaleString()}
@@ -274,6 +330,10 @@ export default function WithdrawalsClient({
                     </span>
                     <Copy className="h-3 w-3 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
                   </div>
+                  <ConnectedWalletBadge
+                    destination={w.paymentMethod}
+                    connected={w.user?.walletAddress}
+                  />
                 </div>
               </div>
 

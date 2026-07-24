@@ -9,7 +9,7 @@ export default async function AdminWithdrawalsPage() {
     type: "withdrawal",
     status: "pending",
   })
-    .populate("userId", "name email username")
+    .populate("userId", "name email username walletAddress")
     .sort({ createdAt: -1 })
     .lean()
 
@@ -29,6 +29,7 @@ export default async function AdminWithdrawalsPage() {
           name: w.userId.name,
           email: w.userId.email,
           username: w.userId.username,
+          walletAddress: w.userId.walletAddress || null,
         }
       : undefined,
   }))

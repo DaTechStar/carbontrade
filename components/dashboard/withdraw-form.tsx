@@ -4,11 +4,18 @@ import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { ArrowUpRight, ShieldCheck, Loader2, AlertCircle } from "lucide-react"
+import {
+  ArrowUpRight,
+  ShieldCheck,
+  Loader2,
+  AlertCircle,
+  Wallet,
+} from "lucide-react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import Link from "next/link"
 import { useLanguage } from "@/lib/i18n/context"
+import { ConnectWalletButton } from "@/components/shared/connect-wallet-button"
 
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -41,8 +48,10 @@ const METHODS = [
 
 export function WithdrawForm({
   kycStatus = "unverified",
+  userWalletAddress,
 }: {
   kycStatus?: string
+  userWalletAddress?: string | null
 }) {
   const router = useRouter()
   const { t } = useLanguage()
@@ -91,11 +100,18 @@ export function WithdrawForm({
     defaultValues: {
       method: "USDC",
       amount: 0,
-      walletAddress: "",
+      walletAddress: userWalletAddress || "",
       network: "",
       otp: "",
     },
   })
+
+  // Sync prefilled wallet address when prop changes
+  useEffect(() => {
+    if (userWalletAddress) {
+      form.setValue("walletAddress", userWalletAddress)
+    }
+  }, [userWalletAddress, form])
 
   const amountValue = form.watch("amount")
   const methodValue = form.watch("method")
@@ -193,6 +209,24 @@ export function WithdrawForm({
           </p>
         </div>
       </div>
+
+      {/* Wallet connection gate */}
+      {!userWalletAddress && (
+        <div className="mb-6 flex flex-col items-center gap-3 rounded-xl border border-warning/30 bg-warning/5 p-5 text-center">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-warning/10">
+            <Wallet className="h-5 w-5 text-warning" />
+          </div>
+          <div>
+            <h5 className="font-bold text-foreground">
+              Wallet Connection Required
+            </h5>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Connect your Web3 wallet to enable withdrawals.
+            </p>
+          </div>
+          <ConnectWalletButton className="mt-1" />
+        </div>
+      )}
 
       {kycStatus !== "verified" && (
         <div className="mb-6 flex gap-3 rounded-lg border border-loss/50 bg-loss/10 p-4 text-loss">
@@ -388,7 +422,9 @@ export function WithdrawForm({
 
           <Button
             type="submit"
-            disabled={isSubmitting || kycStatus !== "verified"}
+            disabled={
+              isSubmitting || kycStatus !== "verified" || !userWalletAddress
+            }
             className="group/btn relative mt-4 h-12 w-full overflow-hidden border-none bg-gradient-to-r from-primary to-secondary text-base font-bold text-primary-foreground shadow-lg transition-all hover:opacity-90 disabled:opacity-50"
           >
             <span className="relative z-10 flex items-center gap-2">

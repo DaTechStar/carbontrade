@@ -12,6 +12,9 @@ export interface User {
   role: "USER" | "ADMIN"
   tierLevel: number
   country: string
+  kycStatus?: "unverified" | "pending" | "verified" | "rejected"
+  walletAddress?: string
+  walletConnectedAt?: string
   balance: number
   balances: {
     available: number

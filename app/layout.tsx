@@ -3,6 +3,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/lib/i18n/context"
 import { NextAuthProvider } from "@/components/providers/next-auth-provider"
+import Web3Provider from "@/components/providers/web3-provider"
 import { cn } from "@/lib/utils"
 import { Toaster } from "sonner"
 import { TawkChat } from "@/components/tawk-chat"
@@ -36,13 +37,15 @@ export default function RootLayout({
       </head>
       <body suppressHydrationWarning>
         <NextAuthProvider>
-          <LanguageProvider>
-            <ThemeProvider>
-              {children}
-              <Toaster position="top-right" richColors />
-              <TawkChat />
-            </ThemeProvider>
-          </LanguageProvider>
+          <Web3Provider>
+            <LanguageProvider>
+              <ThemeProvider>
+                {children}
+                <Toaster position="top-right" richColors />
+                <TawkChat />
+              </ThemeProvider>
+            </LanguageProvider>
+          </Web3Provider>
         </NextAuthProvider>
       </body>
     </html>

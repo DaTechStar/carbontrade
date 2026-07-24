@@ -4,9 +4,48 @@ import { useEffect, useState } from "react"
 import { formatCurrency } from "@/lib/utils"
 import { toggleUserStatus } from "./actions"
 import { toast } from "sonner"
-import { Ban, CheckCircle2, Loader2 } from "lucide-react"
+import { Ban, CheckCircle2, Loader2, Wallet, Copy, Check } from "lucide-react"
 import { EmptyState } from "@/components/shared/empty-state"
 import { User } from "@/types"
+
+function WalletCell({ address }: { address?: string | null }) {
+  const [copied, setCopied] = useState(false)
+
+  const copyAddress = () => {
+    if (!address) return
+    navigator.clipboard.writeText(address)
+    setCopied(true)
+    toast.success("Wallet address copied")
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  if (!address) {
+    return (
+      <span className="inline-flex items-center gap-1.5 rounded-full border border-border/40 bg-muted/30 px-2.5 py-1 text-[10px] font-medium text-muted-foreground">
+        <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40" />
+        Not Connected
+      </span>
+    )
+  }
+
+  const truncated = `${address.slice(0, 6)}...${address.slice(-4)}`
+
+  return (
+    <button
+      onClick={copyAddress}
+      title={address}
+      className="flex items-center gap-1.5 rounded-lg border border-emerald-500/20 bg-emerald-950/20 px-2.5 py-1 font-mono text-[10px] font-medium text-emerald-400 transition-colors hover:bg-emerald-900/30"
+    >
+      <Wallet className="h-3 w-3" />
+      {truncated}
+      {copied ? (
+        <Check className="h-3 w-3 text-emerald-400" />
+      ) : (
+        <Copy className="h-3 w-3 opacity-60" />
+      )}
+    </button>
+  )
+}
 
 export default function UsersClient({
   initialUsers,
@@ -61,6 +100,7 @@ export default function UsersClient({
               <th className="px-6 py-4 font-semibold">Contact Info</th>
               <th className="px-6 py-4 font-semibold">Details</th>
               <th className="px-6 py-4 font-semibold">Balance</th>
+              <th className="px-6 py-4 font-semibold">Wallet</th>
               <th className="px-6 py-4 font-semibold">Status</th>
               <th className="px-6 py-4 text-right font-semibold">Actions</th>
             </tr>
@@ -103,6 +143,9 @@ export default function UsersClient({
                   {formatCurrency(user.balance)}
                 </td>
                 <td className="px-6 py-4">
+                  <WalletCell address={(user as any).walletAddress} />
+                </td>
+                <td className="px-6 py-4">
                   {user.isActive ? (
                     <span className="inline-flex items-center gap-1.5 rounded-full border border-profit/20 bg-profit-bg px-2.5 py-1 text-[10px] font-bold text-profit">
                       <span className="h-1.5 w-1.5 rounded-full bg-profit" />
@@ -139,7 +182,7 @@ export default function UsersClient({
             ))}
             {initialUsers.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-6 py-12">
+                <td colSpan={7} className="px-6 py-12">
                   <EmptyState
                     title="No users found"
                     description="There are currently no registered users."
@@ -208,6 +251,10 @@ export default function UsersClient({
                   <p className="text-xs text-muted-foreground">
                     {user.phoneNumber}
                   </p>
+                </div>
+                <div className="col-span-2">
+                  <p className="mb-1 text-xs text-muted-foreground">Wallet</p>
+                  <WalletCell address={(user as any).walletAddress} />
                 </div>
               </div>
 

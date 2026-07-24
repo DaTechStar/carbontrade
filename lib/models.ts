@@ -19,6 +19,8 @@ export interface IUser extends Document {
   kycStatus: "unverified" | "pending" | "verified" | "rejected"
   kycDocumentUrlFront?: string
   kycDocumentUrlBack?: string
+  walletAddress?: string
+  walletConnectedAt?: Date
   balances: {
     available: number
     invested: number
@@ -57,6 +59,8 @@ const UserSchema: Schema = new Schema(
     },
     kycDocumentUrlFront: { type: String },
     kycDocumentUrlBack: { type: String },
+    walletAddress: { type: String, sparse: true },
+    walletConnectedAt: { type: Date },
     balances: {
       available: { type: Number, default: 0 },
       invested: { type: Number, default: 0 },

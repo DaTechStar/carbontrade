@@ -25,6 +25,7 @@ import { cn } from "@/lib/utils"
 import { useLanguage } from "@/lib/i18n/context"
 import { siteConfig } from "@/config/site"
 import { LanguageSelector } from "@/components/shared/language-selector"
+import { ConnectWalletButton } from "@/components/shared/connect-wallet-button"
 import { NotificationsPopover } from "@/components/dashboard/notifications-popover"
 import {
   Sidebar,
@@ -240,6 +241,7 @@ export default function DashboardLayout({
           <div className="flex-1" />
 
           <div className="flex items-center gap-2">
+            <ConnectWalletButton variant="outline" className="hidden sm:flex" />
             <LanguageSelector />
 
             {/* Notifications */}

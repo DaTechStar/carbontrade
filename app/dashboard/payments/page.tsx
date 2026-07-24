@@ -9,10 +9,13 @@ export default async function PaymentsPage() {
   const session = await auth()
 
   let kycStatus = "unverified"
+  let userWalletAddress: string | null = null
+
   if (session?.user) {
     const user = await User.findById(session.user.id).lean()
     if (user) {
       kycStatus = (user as any).kycStatus || "unverified"
+      userWalletAddress = (user as any).walletAddress || null
     }
   }
 
@@ -66,7 +69,11 @@ export default async function PaymentsPage() {
 
   return (
     <Suspense fallback={null}>
-      <PaymentsClient paymentMethods={paymentMethods} kycStatus={kycStatus} />
+      <PaymentsClient
+        paymentMethods={paymentMethods}
+        kycStatus={kycStatus}
+        userWalletAddress={userWalletAddress}
+      />
     </Suspense>
   )
 }

@@ -55,6 +55,10 @@ export default async function SettingsPage({
     kycStatus: (user as any).kycStatus || "unverified",
     kycDocumentUrlFront: (user as any).kycDocumentUrlFront || null,
     kycDocumentUrlBack: (user as any).kycDocumentUrlBack || null,
+    walletAddress: (user as any).walletAddress || null,
+    walletConnectedAt: (user as any).walletConnectedAt
+      ? (user as any).walletConnectedAt.toISOString()
+      : null,
   }
 
   const deviceSessions = await DeviceSession.find({

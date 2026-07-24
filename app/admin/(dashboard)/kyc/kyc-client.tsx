@@ -1,7 +1,15 @@
 "use client"
 
 import { useState, useTransition } from "react"
-import { CheckCircle2, XCircle, Eye, Loader2 } from "lucide-react"
+import {
+  CheckCircle2,
+  XCircle,
+  Eye,
+  Loader2,
+  Wallet,
+  Copy,
+  Check,
+} from "lucide-react"
 import { toast } from "sonner"
 import Image from "next/image"
 
@@ -24,9 +32,39 @@ type PendingUser = {
   name: string
   email: string
   country: string
+  walletAddress?: string | null
   kycDocumentUrlFront: string
   kycDocumentUrlBack: string
   submittedAt: string
+}
+
+function WalletBadge({ address }: { address: string }) {
+  const [copied, setCopied] = useState(false)
+
+  const copy = () => {
+    navigator.clipboard.writeText(address)
+    setCopied(true)
+    toast.success("Wallet address copied")
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  const truncated = `${address.slice(0, 8)}...${address.slice(-6)}`
+
+  return (
+    <button
+      onClick={copy}
+      title={address}
+      className="mt-1 inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-950/20 px-2.5 py-0.5 font-mono text-[10px] font-medium text-emerald-400 transition-colors hover:bg-emerald-900/30"
+    >
+      <Wallet className="h-3 w-3" />
+      {truncated}
+      {copied ? (
+        <Check className="h-3 w-3 text-emerald-400" />
+      ) : (
+        <Copy className="h-3 w-3 opacity-60" />
+      )}
+    </button>
+  )
 }
 
 export default function KycClient({
@@ -136,8 +174,21 @@ export default function KycClient({
               <div>
                 <h3 className="font-bold">Review ID Documents</h3>
                 <p className="text-xs text-muted-foreground">
-                  Reviewing documents for {previewUser.name}
+                  Reviewing documents for{" "}
+                  <span className="font-semibold text-foreground">
+                    {previewUser.name}
+                  </span>{" "}
+                  · <span>{previewUser.email}</span>
                 </p>
+                {/* Connected Wallet Badge */}
+                {previewUser.walletAddress ? (
+                  <WalletBadge address={previewUser.walletAddress} />
+                ) : (
+                  <span className="mt-1 inline-flex items-center gap-1.5 rounded-full border border-border/40 bg-muted/30 px-2.5 py-0.5 text-[10px] font-medium text-muted-foreground">
+                    <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40" />
+                    No wallet connected
+                  </span>
+                )}
               </div>
               <button
                 onClick={() => setPreviewUser(null)}

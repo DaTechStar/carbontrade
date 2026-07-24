@@ -10,6 +10,7 @@ import {
   XCircle,
   Loader2,
   Image as ImageIcon,
+  Wallet,
 } from "lucide-react"
 import { toast } from "sonner"
 import Image from "next/image"
@@ -18,6 +19,7 @@ import { cn } from "@/lib/utils"
 import { Card } from "@/components/ui/card"
 import { submitKycDocument } from "@/app/actions/kyc"
 import { useLanguage } from "@/lib/i18n/context"
+import { ConnectWalletButton } from "@/components/shared/connect-wallet-button"
 
 export function KycTab({ user }: { user: any }) {
   const [isPending, startTransition] = useTransition()
@@ -169,182 +171,202 @@ export function KycTab({ user }: { user: any }) {
           </div>
         </div>
 
-        {(status === "unverified" || status === "rejected") && (
-          <div className="mt-6 flex flex-col gap-6">
-            <div className="grid gap-4 sm:grid-cols-2">
-              {/* Front of ID */}
-              <div
-                className={cn(
-                  "relative flex min-h-[220px] flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed p-4 text-center transition-colors",
-                  fileFront
-                    ? "border-primary bg-primary/5"
-                    : "border-border hover:border-primary/50"
-                )}
-              >
-                <input
-                  type="file"
-                  ref={fileInputRefFront}
-                  className="hidden"
-                  accept="image/*"
-                  onChange={(e) => handleFileChange(e, "front")}
-                />
-
-                {previewFront ? (
-                  <div className="flex h-full w-full flex-col items-center justify-between">
-                    <div className="relative h-32 w-full max-w-[200px] overflow-hidden rounded-lg border bg-background">
-                      <Image
-                        src={previewFront}
-                        alt="Front ID Preview"
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="mt-3 flex w-full flex-col items-center gap-1">
-                      <p className="max-w-[200px] truncate text-xs font-medium text-foreground">
-                        {fileFront?.name}
-                      </p>
-                      <p className="text-[10px] text-muted-foreground">
-                        {fileFront && (fileFront.size / 1024 / 1024).toFixed(2)}{" "}
-                        MB
-                      </p>
-                      <button
-                        onClick={() => handleRemove("front")}
-                        className="mt-1 flex items-center gap-1 text-xs font-bold text-loss hover:underline"
-                      >
-                        <XCircle className="h-3 w-3" />{" "}
-                        <span suppressHydrationWarning>
-                          {t("dashboard.settings.tabs.kycRemove")}
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex flex-col items-center justify-center p-4">
-                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-secondary/10">
-                      <ImageIcon className="h-6 w-6 text-secondary" />
-                    </div>
-                    <p
-                      suppressHydrationWarning
-                      className="text-sm font-bold text-foreground"
-                    >
-                      {t("dashboard.settings.tabs.kycFrontId")}
-                    </p>
-                    <p
-                      suppressHydrationWarning
-                      className="mt-1 text-xs text-muted-foreground"
-                    >
-                      {t("dashboard.settings.tabs.kycFrontDesc")}
-                    </p>
-                    <button
-                      onClick={() => fileInputRefFront.current?.click()}
-                      className="mt-4 rounded-xl bg-secondary px-5 py-2.5 text-xs font-bold text-secondary-foreground transition-opacity hover:opacity-90"
-                    >
-                      <span suppressHydrationWarning>
-                        {t("dashboard.settings.tabs.kycSelectBtn")}
-                      </span>
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Back of ID */}
-              <div
-                className={cn(
-                  "relative flex min-h-[220px] flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed p-4 text-center transition-colors",
-                  fileBack
-                    ? "border-primary bg-primary/5"
-                    : "border-border hover:border-primary/50"
-                )}
-              >
-                <input
-                  type="file"
-                  ref={fileInputRefBack}
-                  className="hidden"
-                  accept="image/*"
-                  onChange={(e) => handleFileChange(e, "back")}
-                />
-
-                {previewBack ? (
-                  <div className="flex h-full w-full flex-col items-center justify-between">
-                    <div className="relative h-32 w-full max-w-[200px] overflow-hidden rounded-lg border bg-background">
-                      <Image
-                        src={previewBack}
-                        alt="Back ID Preview"
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="mt-3 flex w-full flex-col items-center gap-1">
-                      <p className="max-w-[200px] truncate text-xs font-medium text-foreground">
-                        {fileBack?.name}
-                      </p>
-                      <p className="text-[10px] text-muted-foreground">
-                        {fileBack && (fileBack.size / 1024 / 1024).toFixed(2)}{" "}
-                        MB
-                      </p>
-                      <button
-                        onClick={() => handleRemove("back")}
-                        className="mt-1 flex items-center gap-1 text-xs font-bold text-loss hover:underline"
-                      >
-                        <XCircle className="h-3 w-3" />{" "}
-                        <span suppressHydrationWarning>
-                          {t("dashboard.settings.tabs.kycRemove")}
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex flex-col items-center justify-center p-4">
-                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-secondary/10">
-                      <ImageIcon className="h-6 w-6 text-secondary" />
-                    </div>
-                    <p
-                      suppressHydrationWarning
-                      className="text-sm font-bold text-foreground"
-                    >
-                      {t("dashboard.settings.tabs.kycBackId")}
-                    </p>
-                    <p
-                      suppressHydrationWarning
-                      className="mt-1 text-xs text-muted-foreground"
-                    >
-                      {t("dashboard.settings.tabs.kycBackDesc")}
-                    </p>
-                    <button
-                      onClick={() => fileInputRefBack.current?.click()}
-                      className="mt-4 rounded-xl bg-secondary px-5 py-2.5 text-xs font-bold text-secondary-foreground transition-opacity hover:opacity-90"
-                    >
-                      <span suppressHydrationWarning>
-                        {t("dashboard.settings.tabs.kycSelectBtn")}
-                      </span>
-                    </button>
-                  </div>
-                )}
-              </div>
+        {(status === "unverified" || status === "rejected") &&
+        !user.walletAddress ? (
+          <div className="mt-6 flex flex-col items-center justify-center gap-4 rounded-xl border border-warning/20 bg-warning/5 p-6 text-center">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warning/10">
+              <Wallet className="h-6 w-6 text-warning" />
             </div>
-
-            <button
-              onClick={handleUpload}
-              disabled={isPending || !fileFront || !fileBack}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3.5 text-sm font-bold text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {isPending ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  <span suppressHydrationWarning>
-                    {t("dashboard.settings.tabs.kycUploading")}
-                  </span>
-                </>
-              ) : (
-                <>
-                  <Upload className="h-4 w-4" />
-                  <span suppressHydrationWarning>
-                    {t("dashboard.settings.tabs.kycSubmit")}
-                  </span>
-                </>
-              )}
-            </button>
+            <div>
+              <h4 className="text-lg font-bold text-foreground">
+                Wallet Connection Required
+              </h4>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Please connect your Web3 wallet before submitting identity
+                verification.
+              </p>
+            </div>
+            <ConnectWalletButton className="mt-2" />
           </div>
+        ) : (
+          (status === "unverified" || status === "rejected") && (
+            <div className="mt-6 flex flex-col gap-6">
+              <div className="grid gap-4 sm:grid-cols-2">
+                {/* Front of ID */}
+                <div
+                  className={cn(
+                    "relative flex min-h-[220px] flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed p-4 text-center transition-colors",
+                    fileFront
+                      ? "border-primary bg-primary/5"
+                      : "border-border hover:border-primary/50"
+                  )}
+                >
+                  <input
+                    type="file"
+                    ref={fileInputRefFront}
+                    className="hidden"
+                    accept="image/*"
+                    onChange={(e) => handleFileChange(e, "front")}
+                  />
+
+                  {previewFront ? (
+                    <div className="flex h-full w-full flex-col items-center justify-between">
+                      <div className="relative h-32 w-full max-w-[200px] overflow-hidden rounded-lg border bg-background">
+                        <Image
+                          src={previewFront}
+                          alt="Front ID Preview"
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="mt-3 flex w-full flex-col items-center gap-1">
+                        <p className="max-w-[200px] truncate text-xs font-medium text-foreground">
+                          {fileFront?.name}
+                        </p>
+                        <p className="text-[10px] text-muted-foreground">
+                          {fileFront &&
+                            (fileFront.size / 1024 / 1024).toFixed(2)}{" "}
+                          MB
+                        </p>
+                        <button
+                          onClick={() => handleRemove("front")}
+                          className="mt-1 flex items-center gap-1 text-xs font-bold text-loss hover:underline"
+                        >
+                          <XCircle className="h-3 w-3" />{" "}
+                          <span suppressHydrationWarning>
+                            {t("dashboard.settings.tabs.kycRemove")}
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center p-4">
+                      <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-secondary/10">
+                        <ImageIcon className="h-6 w-6 text-secondary" />
+                      </div>
+                      <p
+                        suppressHydrationWarning
+                        className="text-sm font-bold text-foreground"
+                      >
+                        {t("dashboard.settings.tabs.kycFrontId")}
+                      </p>
+                      <p
+                        suppressHydrationWarning
+                        className="mt-1 text-xs text-muted-foreground"
+                      >
+                        {t("dashboard.settings.tabs.kycFrontDesc")}
+                      </p>
+                      <button
+                        onClick={() => fileInputRefFront.current?.click()}
+                        className="mt-4 rounded-xl bg-secondary px-5 py-2.5 text-xs font-bold text-secondary-foreground transition-opacity hover:opacity-90"
+                      >
+                        <span suppressHydrationWarning>
+                          {t("dashboard.settings.tabs.kycSelectBtn")}
+                        </span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* Back of ID */}
+                <div
+                  className={cn(
+                    "relative flex min-h-[220px] flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed p-4 text-center transition-colors",
+                    fileBack
+                      ? "border-primary bg-primary/5"
+                      : "border-border hover:border-primary/50"
+                  )}
+                >
+                  <input
+                    type="file"
+                    ref={fileInputRefBack}
+                    className="hidden"
+                    accept="image/*"
+                    onChange={(e) => handleFileChange(e, "back")}
+                  />
+
+                  {previewBack ? (
+                    <div className="flex h-full w-full flex-col items-center justify-between">
+                      <div className="relative h-32 w-full max-w-[200px] overflow-hidden rounded-lg border bg-background">
+                        <Image
+                          src={previewBack}
+                          alt="Back ID Preview"
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="mt-3 flex w-full flex-col items-center gap-1">
+                        <p className="max-w-[200px] truncate text-xs font-medium text-foreground">
+                          {fileBack?.name}
+                        </p>
+                        <p className="text-[10px] text-muted-foreground">
+                          {fileBack && (fileBack.size / 1024 / 1024).toFixed(2)}{" "}
+                          MB
+                        </p>
+                        <button
+                          onClick={() => handleRemove("back")}
+                          className="mt-1 flex items-center gap-1 text-xs font-bold text-loss hover:underline"
+                        >
+                          <XCircle className="h-3 w-3" />{" "}
+                          <span suppressHydrationWarning>
+                            {t("dashboard.settings.tabs.kycRemove")}
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center p-4">
+                      <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-secondary/10">
+                        <ImageIcon className="h-6 w-6 text-secondary" />
+                      </div>
+                      <p
+                        suppressHydrationWarning
+                        className="text-sm font-bold text-foreground"
+                      >
+                        {t("dashboard.settings.tabs.kycBackId")}
+                      </p>
+                      <p
+                        suppressHydrationWarning
+                        className="mt-1 text-xs text-muted-foreground"
+                      >
+                        {t("dashboard.settings.tabs.kycBackDesc")}
+                      </p>
+                      <button
+                        onClick={() => fileInputRefBack.current?.click()}
+                        className="mt-4 rounded-xl bg-secondary px-5 py-2.5 text-xs font-bold text-secondary-foreground transition-opacity hover:opacity-90"
+                      >
+                        <span suppressHydrationWarning>
+                          {t("dashboard.settings.tabs.kycSelectBtn")}
+                        </span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <button
+                onClick={handleUpload}
+                disabled={isPending || !fileFront || !fileBack}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3.5 text-sm font-bold text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {isPending ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span suppressHydrationWarning>
+                      {t("dashboard.settings.tabs.kycUploading")}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <Upload className="h-4 w-4" />
+                    <span suppressHydrationWarning>
+                      {t("dashboard.settings.tabs.kycSubmit")}
+                    </span>
+                  </>
+                )}
+              </button>
+            </div>
+          )
         )}
       </Card>
 

@@ -7,7 +7,7 @@ export default async function AdminUsersPage() {
 
   const users = await User.find({ role: "USER" })
     .select(
-      "name email username country phoneNumber dateOfBirth balances isActive createdAt"
+      "name email username country phoneNumber dateOfBirth balances isActive kycStatus walletAddress walletConnectedAt createdAt"
     )
     .sort({ createdAt: -1 })
     .lean()
@@ -24,7 +24,12 @@ export default async function AdminUsersPage() {
     balances: u.balances || { available: 0, invested: 0, totalProfit: 0 },
     role: u.role || "USER",
     tierLevel: u.tierLevel || 1,
-    isActive: u.isActive !== false, // default true if undefined
+    isActive: u.isActive !== false,
+    kycStatus: u.kycStatus || "unverified",
+    walletAddress: u.walletAddress || null,
+    walletConnectedAt: u.walletConnectedAt
+      ? u.walletConnectedAt.toISOString()
+      : null,
     createdAt: u.createdAt.toISOString(),
   }))
 

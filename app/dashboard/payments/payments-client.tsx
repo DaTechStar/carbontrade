@@ -11,9 +11,11 @@ import { useLanguage } from "@/lib/i18n/context"
 export function PaymentsClient({
   paymentMethods,
   kycStatus,
+  userWalletAddress,
 }: {
   paymentMethods: any[]
   kycStatus: string
+  userWalletAddress?: string | null
 }) {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -119,7 +121,10 @@ export function PaymentsClient({
             value="withdraw"
             className="mt-0 focus-visible:ring-0 focus-visible:outline-none"
           >
-            <WithdrawForm kycStatus={kycStatus} />
+            <WithdrawForm
+              kycStatus={kycStatus}
+              userWalletAddress={userWalletAddress}
+            />
           </TabsContent>
         </Tabs>
       </motion.div>

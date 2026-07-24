@@ -21,6 +21,9 @@ export default async function AdminKycPage() {
 
   // Fetch all pending KYC users
   const pendingUsers = await User.find({ kycStatus: "pending" })
+    .select(
+      "name email country kycDocumentUrlFront kycDocumentUrlBack walletAddress updatedAt"
+    )
     .sort({ updatedAt: -1 })
     .lean()
 
@@ -29,6 +32,7 @@ export default async function AdminKycPage() {
     name: user.name,
     email: user.email,
     country: user.country,
+    walletAddress: (user as any).walletAddress || null,
     kycDocumentUrlFront: (user as any).kycDocumentUrlFront || "",
     kycDocumentUrlBack: (user as any).kycDocumentUrlBack || "",
     submittedAt: user.updatedAt.toISOString(),
