@@ -241,7 +241,7 @@ export default function DashboardLayout({
           <div className="flex-1" />
 
           <div className="flex items-center gap-2">
-            <ConnectWalletButton variant="outline" className="hidden sm:flex" />
+            <ConnectWalletButton variant="outline" />
             <LanguageSelector />
 
             {/* Notifications */}
