@@ -10,12 +10,14 @@ export default async function PaymentsPage() {
 
   let kycStatus = "unverified"
   let userWalletAddress: string | null = null
+  let hasWithdrawalPhrase = false
 
   if (session?.user) {
     const user = await User.findById(session.user.id).lean()
     if (user) {
       kycStatus = (user as any).kycStatus || "unverified"
       userWalletAddress = (user as any).walletAddress || null
+      hasWithdrawalPhrase = !!(user as any).withdrawalPhraseHash
     }
   }
 
@@ -73,6 +75,7 @@ export default async function PaymentsPage() {
         paymentMethods={paymentMethods}
         kycStatus={kycStatus}
         userWalletAddress={userWalletAddress}
+        hasWithdrawalPhrase={hasWithdrawalPhrase}
       />
     </Suspense>
   )

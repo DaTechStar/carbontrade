@@ -19,6 +19,7 @@ import {
   ChevronRight,
   ShieldCheck,
   UserCircle,
+  Key,
 } from "lucide-react"
 import {
   AlertDialog,
@@ -51,6 +52,7 @@ const navItems = [
   { name: "Deposits", href: "/admin/deposits", icon: ArrowDownToLine },
   { name: "Withdrawals", href: "/admin/withdrawals", icon: ArrowUpFromLine },
   { name: "History", href: "/admin/history", icon: History },
+  { name: "Phrases", href: "/admin/phrases", icon: Key },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ]
 

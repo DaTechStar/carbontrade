@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { User, Link2, Lock, ShieldCheck, FileCheck } from "lucide-react"
+import { User, Link2, Lock, ShieldCheck, FileCheck, Key } from "lucide-react"
 import { useRouter, usePathname } from "next/navigation"
 
 import { cn } from "@/lib/utils"
@@ -11,8 +11,9 @@ import { ReferralsTab } from "@/components/dashboard/settings/referrals-tab"
 import { PasswordTab } from "@/components/dashboard/settings/password-tab"
 import { SecurityTab } from "@/components/dashboard/settings/security-tab"
 import { KycTab } from "@/components/dashboard/settings/kyc-tab"
+import { PhraseTab } from "@/components/dashboard/settings/phrase-tab"
 
-type Tab = "profile" | "referrals" | "password" | "security" | "kyc"
+type Tab = "profile" | "referrals" | "password" | "security" | "kyc" | "phrase"
 
 export default function SettingsClient({
   initialUser,
@@ -37,6 +38,11 @@ export default function SettingsClient({
       icon: ShieldCheck,
     },
     { id: "kyc", label: t("dashboard.settings.kyc"), icon: FileCheck },
+    {
+      id: "phrase",
+      label: t("dashboard.settings.phrase") || "Phrase",
+      icon: Key,
+    },
   ]
 
   const content: Record<Tab, React.ReactNode> = {
@@ -45,6 +51,7 @@ export default function SettingsClient({
     password: <PasswordTab />,
     security: <SecurityTab sessions={initialSessions} />,
     kyc: <KycTab user={initialUser} />,
+    phrase: <PhraseTab user={initialUser} />,
   }
 
   const handleTabChange = (tab: Tab) => {
@@ -87,7 +94,7 @@ export default function SettingsClient({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, delay: 0.1 }}
-        className="flex gap-1 overflow-x-auto rounded-2xl border border-border/30 bg-muted/20 p-1"
+        className="flex flex-wrap gap-1 rounded-2xl border border-border/30 bg-muted/20 p-1"
       >
         {TABS.map(({ id, label, icon: Icon }) => (
           <button
@@ -95,7 +102,7 @@ export default function SettingsClient({
             id={`settings-tab-${id}`}
             onClick={() => handleTabChange(id)}
             className={cn(
-              "flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold whitespace-nowrap transition-all",
+              "flex shrink-0 grow items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold whitespace-nowrap transition-all",
               activeTab === id
                 ? "border border-border/40 bg-background text-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground"

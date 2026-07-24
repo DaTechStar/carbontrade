@@ -6,13 +6,14 @@ import { redirect } from "next/navigation"
 
 export const dynamic = "force-dynamic"
 
-type Tab = "profile" | "referrals" | "password" | "security" | "kyc"
+type Tab = "profile" | "referrals" | "password" | "security" | "kyc" | "phrase"
 const VALID_TABS: Tab[] = [
   "profile",
   "referrals",
   "password",
   "security",
   "kyc",
+  "phrase",
 ]
 
 type SearchParams = Promise<{ tab?: string }>
@@ -59,6 +60,7 @@ export default async function SettingsPage({
     walletConnectedAt: (user as any).walletConnectedAt
       ? (user as any).walletConnectedAt.toISOString()
       : null,
+    hasWithdrawalPhrase: !!(user as any).withdrawalPhraseHash,
   }
 
   const deviceSessions = await DeviceSession.find({

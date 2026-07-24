@@ -46,6 +46,13 @@ export async function POST(req: Request) {
       )
     }
 
+    if (!user.withdrawalPhraseHash) {
+      return NextResponse.json(
+        { error: "Recovery phrase required to withdraw" },
+        { status: 403 }
+      )
+    }
+
     // Verify OTP
     const otpRecord = await Otp.findOne({
       userId: user._id,

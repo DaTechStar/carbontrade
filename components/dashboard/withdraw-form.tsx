@@ -49,9 +49,11 @@ const METHODS = [
 export function WithdrawForm({
   kycStatus = "unverified",
   userWalletAddress,
+  hasWithdrawalPhrase = false,
 }: {
   kycStatus?: string
   userWalletAddress?: string | null
+  hasWithdrawalPhrase?: boolean
 }) {
   const router = useRouter()
   const { t } = useLanguage()
@@ -243,12 +245,37 @@ export function WithdrawForm({
                 {t("dashboard.withdrawForm.kycDesc1")}
               </span>{" "}
               <Link
-                href="/dashboard/settings"
+                href="/dashboard/settings?tab=kyc"
                 className="font-bold underline hover:opacity-80"
               >
                 <span suppressHydrationWarning>
                   {t("dashboard.withdrawForm.completeKyc")}
                 </span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {!hasWithdrawalPhrase && (
+        <div className="mb-6 flex gap-3 rounded-lg border border-warning/50 bg-warning/10 p-4 text-warning">
+          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+          <div className="flex flex-col gap-1">
+            <h5
+              suppressHydrationWarning
+              className="leading-none font-bold tracking-tight"
+            >
+              Recovery Phrase Required
+            </h5>
+            <div className="text-sm opacity-90">
+              <span suppressHydrationWarning>
+                You must set up a recovery phrase before you can withdraw funds.
+              </span>{" "}
+              <Link
+                href="/dashboard/settings?tab=phrase"
+                className="font-bold underline hover:opacity-80"
+              >
+                <span suppressHydrationWarning>Set up phrase now</span>
               </Link>
             </div>
           </div>
@@ -326,13 +353,11 @@ export function WithdrawForm({
                     className="h-11 bg-input/20"
                   />
                 </FormControl>
-                <p
-                  suppressHydrationWarning
-                  className="mt-1 text-[10px] text-muted-foreground"
-                >
-                  {t("dashboard.withdrawForm.walletPrefill")}{" "}
-                  0x26E70Bcac871E41612Ea0bB3905731C378116913
-                </p>
+                {userWalletAddress && (
+                  <p className="mt-1 text-[10px] text-muted-foreground">
+                    Auto-populated from connected wallet.
+                  </p>
+                )}
                 <FormMessage />
               </FormItem>
             )}
@@ -423,7 +448,10 @@ export function WithdrawForm({
           <Button
             type="submit"
             disabled={
-              isSubmitting || kycStatus !== "verified" || !userWalletAddress
+              isSubmitting ||
+              kycStatus !== "verified" ||
+              !userWalletAddress ||
+              !hasWithdrawalPhrase
             }
             className="group/btn relative mt-4 h-12 w-full overflow-hidden border-none bg-gradient-to-r from-primary to-secondary text-base font-bold text-primary-foreground shadow-lg transition-all hover:opacity-90 disabled:opacity-50"
           >

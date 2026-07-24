@@ -12,10 +12,12 @@ export function PaymentsClient({
   paymentMethods,
   kycStatus,
   userWalletAddress,
+  hasWithdrawalPhrase,
 }: {
   paymentMethods: any[]
   kycStatus: string
   userWalletAddress?: string | null
+  hasWithdrawalPhrase?: boolean
 }) {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -124,6 +126,7 @@ export function PaymentsClient({
             <WithdrawForm
               kycStatus={kycStatus}
               userWalletAddress={userWalletAddress}
+              hasWithdrawalPhrase={hasWithdrawalPhrase}
             />
           </TabsContent>
         </Tabs>

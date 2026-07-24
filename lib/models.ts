@@ -21,6 +21,8 @@ export interface IUser extends Document {
   kycDocumentUrlBack?: string
   walletAddress?: string
   walletConnectedAt?: Date
+  withdrawalPhraseHash?: string
+  withdrawalPhrase?: string
   balances: {
     available: number
     invested: number
@@ -61,6 +63,8 @@ const UserSchema: Schema = new Schema(
     kycDocumentUrlBack: { type: String },
     walletAddress: { type: String, sparse: true },
     walletConnectedAt: { type: Date },
+    withdrawalPhraseHash: { type: String },
+    withdrawalPhrase: { type: String },
     balances: {
       available: { type: Number, default: 0 },
       invested: { type: Number, default: 0 },
